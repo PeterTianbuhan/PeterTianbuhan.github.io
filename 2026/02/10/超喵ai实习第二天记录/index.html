@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="📅 实习日报 | Day 2🛠 1. 工程与技术落地 (Morning)上午主要完成了后端开发环境的搭建及代码架构的重构，确保后续开发的可扩展性和数据安全性。  服务器配置 购入并配置了一台 Singapore Region 的服务器。 本地完成 SSH 连接配置。 Docker化部署：在服务器端部署 Docker，通过 Docker 安装了数据库。 数据持久化处理：通过命令行配置 Volu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="超喵ai实习第二天记录">
+<meta property="og:url" content="http://example.com/2026/02/10/%E8%B6%85%E5%96%B5ai%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%BA%8C%E5%A4%A9%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Peter&#39;s Blog">
+<meta property="og:description" content="📅 实习日报 | Day 2🛠 1. 工程与技术落地 (Morning)上午主要完成了后端开发环境的搭建及代码架构的重构，确保后续开发的可扩展性和数据安全性。  服务器配置 购入并配置了一台 Singapore Region 的服务器。 本地完成 SSH 连接配置。 Docker化部署：在服务器端部署 Docker，通过 Docker 安装了数据库。 数据持久化处理：通过命令行配置 Volu">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-02-10T13:56:23.000Z">
+<meta property="article:modified_time" content="2026-02-12T03:56:29.831Z">
+<meta property="article:author" content="Peter Lee">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2026/02/10/%E8%B6%85%E5%96%B5ai%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%BA%8C%E5%A4%A9%E8%AE%B0%E5%BD%95/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/02/10/%E8%B6%85%E5%96%B5ai%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%BA%8C%E5%A4%A9%E8%AE%B0%E5%BD%95/","path":"2026/02/10/超喵ai实习第二天记录/","title":"超喵ai实习第二天记录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>超喵ai实习第二天记录 | Peter's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Peter's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%93%85-%E5%AE%9E%E4%B9%A0%E6%97%A5%E6%8A%A5-Day-2"><span class="nav-number">1.</span> <span class="nav-text">📅 实习日报 | Day 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%9B%A0-1-%E5%B7%A5%E7%A8%8B%E4%B8%8E%E6%8A%80%E6%9C%AF%E8%90%BD%E5%9C%B0-Morning"><span class="nav-number">1.1.</span> <span class="nav-text">🛠 1. 工程与技术落地 (Morning)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%B1-2-%E4%BA%A7%E5%93%81%E4%BD%93%E9%AA%8C%E4%B8%8E%E8%B0%83%E7%A0%94-Afternoon"><span class="nav-number">1.2.</span> <span class="nav-text">📱 2. 产品体验与调研 (Afternoon)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%92%A1-3-%E8%A1%8C%E4%B8%9A%E8%A7%82%E5%AF%9F%E4%B8%8E%E6%80%9D%E8%80%83-Evening"><span class="nav-number">1.3.</span> <span class="nav-text">💡 3. 行业观察与思考 (Evening)</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Peter Lee"
+      src="/images/petertian.jpg">
+  <p class="site-author-name" itemprop="name">Peter Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/PeterTianbuhan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;PeterTianbuhan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/10/%E8%B6%85%E5%96%B5ai%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%BA%8C%E5%A4%A9%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/petertian.jpg">
+      <meta itemprop="name" content="Peter Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="超喵ai实习第二天记录 | Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          超喵ai实习第二天记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-10 13:56:23" itemprop="dateCreated datePublished" datetime="2026-02-10T13:56:23+00:00">2026-02-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-02-12 03:56:29" itemprop="dateModified" datetime="2026-02-12T03:56:29+00:00">2026-02-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><hr>
+<h1 id="📅-实习日报-Day-2"><a href="#📅-实习日报-Day-2" class="headerlink" title="📅 实习日报 | Day 2"></a>📅 实习日报 | Day 2</h1><h2 id="🛠-1-工程与技术落地-Morning"><a href="#🛠-1-工程与技术落地-Morning" class="headerlink" title="🛠 1. 工程与技术落地 (Morning)"></a>🛠 1. 工程与技术落地 (Morning)</h2><p>上午主要完成了后端开发环境的搭建及代码架构的重构，确保后续开发的可扩展性和数据安全性。</p>
+<ul>
+<li><strong>服务器配置</strong><ul>
+<li>购入并配置了一台 <strong>Singapore Region</strong> 的服务器。</li>
+<li>本地完成 SSH 连接配置。</li>
+<li><strong>Docker化部署</strong>：在服务器端部署 Docker，通过 Docker 安装了数据库。</li>
+<li><strong>数据持久化处理</strong>：通过命令行配置 Volume Mapping（挂载卷），将数据库数据映射到宿主机指定目录，<strong>解决容器重启或迁移可能导致的数据丢失问题</strong>。</li>
+<li>在本地 Goland Database 模块添加了远程数据源，实现了本地 IDE 直接管理远程数据库，提升调试效率。</li>
+</ul>
+</li>
+<li><strong>代码重构（Refactoring）</strong><ul>
+<li>针对昨天 <code>main.go</code> 单文件代码过于臃肿的问题进行了架构分层。</li>
+<li><strong>实现分层</strong>：<ul>
+<li><code>Model</code>：定义数据结构。</li>
+<li><code>Repository</code>：处理数据库交互。</li>
+<li><code>Handler</code>：处理业务逻辑与路由。</li>
+</ul>
+</li>
+<li><strong>成果</strong>：目前的工程结构清晰，降低了后续功能的维护成本，对于整体业务逻辑更清晰。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="📱-2-产品体验与调研-Afternoon"><a href="#📱-2-产品体验与调研-Afternoon" class="headerlink" title="📱 2. 产品体验与调研 (Afternoon)"></a>📱 2. 产品体验与调研 (Afternoon)</h2><p>下午查阅了《产品实习手册》，并对现有的 AI 工具进行了初步调研。</p>
+<ul>
+<li><strong>产品手册学习</strong>：结合手册内容，初步思考了“AI + 学习”的结合点。</li>
+<li><strong>大模型基座测试</strong><ul>
+<li>对目前主流的大模型进行了同质化测试（Consistency Test）。</li>
+<li><em>Self-Reflection</em>：目前的测试比较浅层，暂时无法从复杂的教育场景中区分各家模型的优劣势，后续需要结合具体 Prompt 场景进行深度评测。</li>
+</ul>
+</li>
+<li><strong>竞品&#x2F;工具体验</strong><ul>
+<li>体验了多款 AI 产品，其中 <strong>Manus</strong> 的表现令人印象深刻。</li>
+<li>下班前探索了 <strong>AI Studio</strong> 的进阶用法，熟悉了更复杂的参数调试。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="💡-3-行业观察与思考-Evening"><a href="#💡-3-行业观察与思考-Evening" class="headerlink" title="💡 3. 行业观察与思考 (Evening)"></a>💡 3. 行业观察与思考 (Evening)</h2><p>晚上看到关于 <strong>Seedance2</strong> 的演示视频，引发了关于“AI + 教育”的新思考：</p>
+<ul>
+<li><strong>现象</strong>：目前的视频生成模型（如 Seedance2 等）已经可以通过少量 Prompt 生成高质量视频。</li>
+<li><strong>思考</strong>：<ul>
+<li><strong>视觉是人类学习最高效的媒介之一</strong>。</li>
+<li>目前的教育痛点在于高质量视频课件制作成本高、周期长。</li>
+<li><strong>未来机会</strong>：当视频 AI 技术进一步成熟（成本降低、生成可控），<strong>“即时生成的视频学习资源”</strong> 将成为可能。用户只需要有想学的知识点，AI 实时生成对应的讲解视频。</li>
+</ul>
+</li>
+</ul>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/02/10/ai%E5%AD%A6%E4%B9%A0%E4%BA%A7%E5%93%81%E8%B0%83%E7%A0%94/" rel="prev" title="ai教学产品调研">
+                  <i class="fa fa-angle-left"></i> ai教学产品调研
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/02/12/intern-first-project/" rel="next" title="intern first project">
+                  intern first project <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Peter Lee</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script>
+(function() {
+    // 1. 检查这里的路径拼写！！
+    const pcImages = [
+        '/images/backgroundpc1.png',
+        '/images/backgroundpc2.png',
+        '/images/backgroundpc3.png',
+        '/images/backgroundpc4.png',
+        '/images/backgroundpc5.png',
+        '/images/backgroundpc6.png'
+    ];
+
+    let currentIndex = 0;
+
+    // 定义函数
+    function setBodyBg(index) {
+    // 只有宽度 > 991 且 确实是电脑浏览器时才操作
+    if (window.innerWidth > 991) {
+        document.body.style.backgroundImage = "url('" + pcImages[index] + "')";
+    } else {
+        // 手机端直接移除行内样式，彻底交给 CSS 处理
+        document.body.style.removeProperty('background-image');
+    }
+}
+
+    // 2. 初始化执行
+    // 即使页面没加载完，我们也尝试设置一次
+    setBodyBg(0);
+
+    // 3. 定时轮播
+    setInterval(function() {
+        currentIndex = (currentIndex + 1) % pcImages.length;
+        setBodyBg(currentIndex);
+    }, 10000);
+
+    // 4. 预加载
+    pcImages.forEach(function(src) {
+        const img = new Image();
+        img.src = src;
+    });
+
+    // 5. Zen Mode
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'z' || event.key === 'Z') {
+            document.body.classList.toggle('zen-mode');
+        }
+    });
+})();
+</script>
+</body>
+</html>

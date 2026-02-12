@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Peter&#39;s Blog">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Peter&#39;s Blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Peter Lee">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Peter's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Peter's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Peter Lee"
+      src="/images/petertian.jpg">
+  <p class="site-author-name" itemprop="name">Peter Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/PeterTianbuhan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;PeterTianbuhan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/12/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/petertian.jpg">
+      <meta itemprop="name" content="Peter Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/02/12/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-12 03:56:29" itemprop="dateCreated datePublished" datetime="2026-02-12T03:56:29+00:00">2026-02-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/02/12/hello-world/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/12/intern-first-project/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/petertian.jpg">
+      <meta itemprop="name" content="Peter Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/02/12/intern-first-project/" class="post-title-link" itemprop="url">intern first project</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-02-12 03:37:17 / 修改时间：03:56:29" itemprop="dateCreated datePublished" datetime="2026-02-12T03:37:17+00:00">2026-02-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>实习项目报告：AI 交互式网页数据反馈系统原型（天平测量未知质量）</p>
+<h3 id="项目背景与问题定义"><a href="#项目背景与问题定义" class="headerlink" title="项目背景与问题定义"></a>项目背景与问题定义</h3><ul>
+<li>本项目旨在把课堂中的“知识点交互网页”从演示工具升级为学习数据工具，解决：</li>
+<li>学生在网页中的关键交互行为未被记录，教师无法判断真实理解程度<br>仅记录“点击次数”缺乏教学意义，需要更关注误区路径、纠错次数、步骤耗时等（手册强调：学习行为 → 理解判断 → 教学决策）</li>
+<li>本原型选择的具体场景为：利用天平测量未知物体质量实验，通过“砝码 + 游码”的操作过程，采集具有教学意义的过程数据，并在教师端形成可读反馈。</li>
+</ul>
+<h3 id="项目目标（对照任务手册）"><a href="#项目目标（对照任务手册）" class="headerlink" title="项目目标（对照任务手册）"></a>项目目标（对照任务手册）</h3><ul>
+<li>记录学生交互行为：拖拽砝码、使用提示、提交答案、工具误用等<br>生成结构化学习数据：以会话（session）与轮次（round）组织 JSON 数据</li>
+<li>教师端可视化反馈：提供总览（均值&#x2F;极值&#x2F;标准差）与单次实验明细<br>形成闭环：学生端完成并正确后自动提交数据 → 教师端刷新查看统计与流程</li>
+</ul>
+<h3 id="原型总体设计"><a href="#原型总体设计" class="headerlink" title="原型总体设计"></a>原型总体设计</h3><ul>
+<li>学生端（交互实验页）</li>
+<li>核心交互：拖拽砝码到右托盘，使天平平衡；支持游码（0–5g，0.1g 精度）微调</li>
+<li>实验机制：未知质量随机生成（范围 5–98g，部分轮次带 0.1g 小数）</li>
+<li>工具规则：砝码需用“镊子”，游码需用“手拿”，并记录工具误用<br>防遗忘上报：学生提交正确时自动把数据写入教师端数据源（localStorage），同时保留手动“提交给教师”按钮</li>
+<li>教师端（数据反馈页）</li>
+<li>总览视图：面向“全体学生&#x2F;全体轮次”的关键指标统计（均值、标准差、最小、最大）</li>
+<li>明细视图：按会话（学生）查看每轮指标 + 学生操作流程（砝码加&#x2F;减序列）</li>
+<li>数据治理能力：支持删除某条会话数据；支持导入学生导出的 JSON 文件</li>
+</ul>
+<h3 id="数据结构与采集内容（结构化-JSON）"><a href="#数据结构与采集内容（结构化-JSON）" class="headerlink" title="数据结构与采集内容（结构化 JSON）"></a>数据结构与采集内容（结构化 JSON）</h3><ul>
+<li>学生端数据按两层组织：</li>
+<li>会话级（session）：session_id、student_name、started_at、rounds[]、tool_errors[]</li>
+<li>轮次级（round）：unknown_mass、behavior（过程）、understanding（理解判断）</li>
+<li>采集重点（与手册“行为层 + 理解判断层”一致）：</li>
+<li>行为层：拖拽记录、砝码盘状态变化、纠错、提示使用、步骤耗时</li>
+<li>理解判断层：首次提交是否正确、总提交次数、典型错误提交路径、完成方式（直接命中&#x2F;试错&#x2F;使用提示）</li>
+</ul>
+<h3 id="教师端指标定义（本期验收重点）"><a href="#教师端指标定义（本期验收重点）" class="headerlink" title="教师端指标定义（本期验收重点）"></a>教师端指标定义（本期验收重点）</h3><ul>
+<li>教师端展示 5 类指标（每项提供均值、标准差、最小、最大）：</li>
+<li>学生初次提交成功率：understanding.first_try_correct 的比例</li>
+<li>学生平均提交次数：understanding.total_attempts 的均值</li>
+<li>学生错误操作次数：behavior.tool_errors.length 的均值（如手拿砝码、镊子夹未知物体等）</li>
+<li>学生冗余操作次数：<br>规则：第一次放置砝码不计冗余；之后每次“拿出再放入同一重量”计 1 次冗余</li>
+<li>实现思路：检测“移除某重量后下一次再次添加该重量”<br>学生利用提示次数：behavior.hint_used_count 的均值<br>同时在单轮明细里展示学生操作流程（例如：添加 20g → 添加 10g → 移除 10g → 添加 5g …），用于快速复盘学生策略与可能的误区。</li>
+</ul>
+<h3 id="当前实现结果（可交付物）"><a href="#当前实现结果（可交付物）" class="headerlink" title="当前实现结果（可交付物）"></a>当前实现结果（可交付物）</h3><ul>
+<li>学生端可运行交互网页：完成砝码拖拽、游码微调、随机未知质量、多轮尝试</li>
+<li>结构化数据采集：支持导出 JSON；正确后自动“传输”到教师端数据源</li>
+<li>教师端网页：<br>总览统计（均值&#x2F;标准差&#x2F;极值）<br>单次实验明细（含操作流程）<br>支持导入 JSON、删除某条数据<br>工程化准备：提供 .gitignore 便于推送 GitHub 与 mentor 共享进度</li>
+</ul>
+<h3 id="如何运行与验证"><a href="#如何运行与验证" class="headerlink" title="如何运行与验证"></a>如何运行与验证</h3><ul>
+<li>学生端：打开 balance-experiment&#x2F;index.html</li>
+<li>教师端：打开 teacher-dashboard&#x2F;index.html</li>
+<li>建议用本地静态服务打开（避免 file:&#x2F;&#x2F; 环境差异）：<br>cd “d:\Intern\data collection project”npx serve .</li>
+<li>验证流程：</li>
+<li>学生端输入姓名 → 完成一轮并答对</li>
+<li>教师端点击“刷新数据” → 查看总览指标与该学生会话明细</li>
+<li>教师端可删除该会话，或导入学生端导出的 JSON</li>
+</ul>
+<h3 id="项目思考"><a href="#项目思考" class="headerlink" title="项目思考"></a>项目思考</h3><ul>
+<li>项目大量依赖于人类设计，可以把选择看到数据的权力交还给教师，引导教师输入想要看到的数据，后台调用ai修改代码展示数据，否则当项目量变大，人力维护成本极大。</li>
+</ul>
+<h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><ul>
+<li>项目已上传：<a target="_blank" rel="noopener" href="https://github.com/PeterTianbuhan/Intern">https://github.com/PeterTianbuhan/Intern</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/10/%E8%B6%85%E5%96%B5ai%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%BA%8C%E5%A4%A9%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/petertian.jpg">
+      <meta itemprop="name" content="Peter Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/02/10/%E8%B6%85%E5%96%B5ai%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%BA%8C%E5%A4%A9%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">超喵ai实习第二天记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-10 13:56:23" itemprop="dateCreated datePublished" datetime="2026-02-10T13:56:23+00:00">2026-02-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-02-12 03:56:29" itemprop="dateModified" datetime="2026-02-12T03:56:29+00:00">2026-02-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <hr>
+<h1 id="📅-实习日报-Day-2"><a href="#📅-实习日报-Day-2" class="headerlink" title="📅 实习日报 | Day 2"></a>📅 实习日报 | Day 2</h1><h2 id="🛠-1-工程与技术落地-Morning"><a href="#🛠-1-工程与技术落地-Morning" class="headerlink" title="🛠 1. 工程与技术落地 (Morning)"></a>🛠 1. 工程与技术落地 (Morning)</h2><p>上午主要完成了后端开发环境的搭建及代码架构的重构，确保后续开发的可扩展性和数据安全性。</p>
+<ul>
+<li><strong>服务器配置</strong><ul>
+<li>购入并配置了一台 <strong>Singapore Region</strong> 的服务器。</li>
+<li>本地完成 SSH 连接配置。</li>
+<li><strong>Docker化部署</strong>：在服务器端部署 Docker，通过 Docker 安装了数据库。</li>
+<li><strong>数据持久化处理</strong>：通过命令行配置 Volume Mapping（挂载卷），将数据库数据映射到宿主机指定目录，<strong>解决容器重启或迁移可能导致的数据丢失问题</strong>。</li>
+<li>在本地 Goland Database 模块添加了远程数据源，实现了本地 IDE 直接管理远程数据库，提升调试效率。</li>
+</ul>
+</li>
+<li><strong>代码重构（Refactoring）</strong><ul>
+<li>针对昨天 <code>main.go</code> 单文件代码过于臃肿的问题进行了架构分层。</li>
+<li><strong>实现分层</strong>：<ul>
+<li><code>Model</code>：定义数据结构。</li>
+<li><code>Repository</code>：处理数据库交互。</li>
+<li><code>Handler</code>：处理业务逻辑与路由。</li>
+</ul>
+</li>
+<li><strong>成果</strong>：目前的工程结构清晰，降低了后续功能的维护成本，对于整体业务逻辑更清晰。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="📱-2-产品体验与调研-Afternoon"><a href="#📱-2-产品体验与调研-Afternoon" class="headerlink" title="📱 2. 产品体验与调研 (Afternoon)"></a>📱 2. 产品体验与调研 (Afternoon)</h2><p>下午查阅了《产品实习手册》，并对现有的 AI 工具进行了初步调研。</p>
+<ul>
+<li><strong>产品手册学习</strong>：结合手册内容，初步思考了“AI + 学习”的结合点。</li>
+<li><strong>大模型基座测试</strong><ul>
+<li>对目前主流的大模型进行了同质化测试（Consistency Test）。</li>
+<li><em>Self-Reflection</em>：目前的测试比较浅层，暂时无法从复杂的教育场景中区分各家模型的优劣势，后续需要结合具体 Prompt 场景进行深度评测。</li>
+</ul>
+</li>
+<li><strong>竞品&#x2F;工具体验</strong><ul>
+<li>体验了多款 AI 产品，其中 <strong>Manus</strong> 的表现令人印象深刻。</li>
+<li>下班前探索了 <strong>AI Studio</strong> 的进阶用法，熟悉了更复杂的参数调试。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="💡-3-行业观察与思考-Evening"><a href="#💡-3-行业观察与思考-Evening" class="headerlink" title="💡 3. 行业观察与思考 (Evening)"></a>💡 3. 行业观察与思考 (Evening)</h2><p>晚上看到关于 <strong>Seedance2</strong> 的演示视频，引发了关于“AI + 教育”的新思考：</p>
+<ul>
+<li><strong>现象</strong>：目前的视频生成模型（如 Seedance2 等）已经可以通过少量 Prompt 生成高质量视频。</li>
+<li><strong>思考</strong>：<ul>
+<li><strong>视觉是人类学习最高效的媒介之一</strong>。</li>
+<li>目前的教育痛点在于高质量视频课件制作成本高、周期长。</li>
+<li><strong>未来机会</strong>：当视频 AI 技术进一步成熟（成本降低、生成可控），<strong>“即时生成的视频学习资源”</strong> 将成为可能。用户只需要有想学的知识点，AI 实时生成对应的讲解视频。</li>
+</ul>
+</li>
+</ul>
+<hr>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/10/ai%E5%AD%A6%E4%B9%A0%E4%BA%A7%E5%93%81%E8%B0%83%E7%A0%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/petertian.jpg">
+      <meta itemprop="name" content="Peter Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/02/10/ai%E5%AD%A6%E4%B9%A0%E4%BA%A7%E5%93%81%E8%B0%83%E7%A0%94/" class="post-title-link" itemprop="url">ai教学产品调研</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-10 07:43:33" itemprop="dateCreated datePublished" datetime="2026-02-10T07:43:33+00:00">2026-02-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-02-12 03:56:29" itemprop="dateModified" datetime="2026-02-12T03:56:29+00:00">2026-02-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Part-0-我对教学的理解"><a href="#Part-0-我对教学的理解" class="headerlink" title="Part 0 我对教学的理解"></a>Part 0 我对教学的理解</h2><h4 id="教学的本质，是用对象理解的概念解释对象不理解的概念，从而扩大对象的理解范围，达到“教”的目的。这里的媒介很丰富，文字，图片，动画，结构图表。根据我此前使用ai学习的经历来看，ai-学习有以下几个方面的特点。"><a href="#教学的本质，是用对象理解的概念解释对象不理解的概念，从而扩大对象的理解范围，达到“教”的目的。这里的媒介很丰富，文字，图片，动画，结构图表。根据我此前使用ai学习的经历来看，ai-学习有以下几个方面的特点。" class="headerlink" title="教学的本质，是用对象理解的概念解释对象不理解的概念，从而扩大对象的理解范围，达到“教”的目的。这里的媒介很丰富，文字，图片，动画，结构图表。根据我此前使用ai学习的经历来看，ai+学习有以下几个方面的特点。"></a>教学的本质，是用对象理解的概念解释对象不理解的概念，从而扩大对象的理解范围，达到“教”的目的。这里的媒介很丰富，文字，图片，动画，结构图表。根据我此前使用ai学习的经历来看，ai+学习有以下几个方面的特点。</h4><ul>
+<li>有能力回答学习者几乎所有的问题，在所有成熟的可教学的领域都有应用可能，在没有争议的静态内容（如数学推导）方面可以做到准确无误（部分大模型有待提升）</li>
+<li>回答问题的质量很大程度上依赖于学习者的ai素养，能否给出准确的提示词决定了效果，学习的主动性也起到重要作用。（可能的解决方案：就像人类教师面对面教学时可能取得更好的效果，训练ai采集学习者的表情或语调等信息，依据更多元的信息做出对学习者目前状态的判断；在不能准确判断学习者目前状态时主动提问，采集更多信息帮助定位当前状态）</li>
+<li>回复生成时间短，全时待命，学习者可以在任何自己需要的时候获得指导，省去了学习者主动搜索信息的时间，极大提高效率，可以适配任务驱动的学习</li>
+<li>在更软一点的领域，比如人际关系，心理健康，爱情观等方面，ai仍然无法替代人类教师或者同学的作用，但后续如果有拟人的智能体出现，情况可能改变</li>
+<li>有因材施教的潜力。在我个人的使用经历中，我会在初期摸索出我认为适合自己的学习方式，多数时候是一种“先看自然语言解释，再落实具体细节”的方式，建立起已知和未知的映射，我常在对话的开头把这些告知ai，让其记住我的学习策略。</li>
+</ul>
+<h2 id="Part-1-顶流大模型体验"><a href="#Part-1-顶流大模型体验" class="headerlink" title="Part 1 顶流大模型体验"></a>Part 1 顶流大模型体验</h2><ul>
+<li>个人认为提示词是很重要的一部分，在任务一：给十岁小孩科普的情景下，我相信如果有合适的提示词，任何一个目前的旗舰模型都能胜任这项工作。我们使用了最朴素的提示词，即文档中提到的两条要求的直接复制，模型们在第二条上表现不一，在各自认为合适的地方穿插了三个例子，但是由于我们也不清楚三个例子具体要求了什么，所以我觉得无法给出评判。</li>
+<li>关于更像什么类型的思考者，这可以在提示词中进行定义，模型都有转换的能力</li>
+<li>关于擅长与不擅长：Gemini擅长多模态任务，支持超长文本框（200万甚至上千万token）理解，但在超长文本下可能丧失注意力。gpt能力全面，有调研模式，代理模式等集成化的功能，并且没有明显短板。qwen优势是小参数量可达到合格的水平，适合本地部署。Claude在遵循具体指令，定向修改代码方面有不可替代优势。上述优势大多面向开发，在教育方面的优缺点我不能确定。</li>
+</ul>
+<h2 id="Part-2-顶流ai产品体验"><a href="#Part-2-顶流ai产品体验" class="headerlink" title="Part 2 顶流ai产品体验"></a>Part 2 顶流ai产品体验</h2><h3 id="具体产品"><a href="#具体产品" class="headerlink" title="具体产品"></a>具体产品</h3><h4 id="Manus"><a href="#Manus" class="headerlink" title="Manus"></a>Manus</h4><ul>
+<li>此前我从未尝试过使用Manus，我输入了请自行完成一个项目，向我展示Manus的能力，Manus在十分钟内完成了项目构建和完成，做出了一个展示目前ai发展趋势的网站，虽然略显简陋，但是框架完整，前端观感舒适，我被非常大的惊艳到了，后面在我需要进行完整项目开发时我计划体验它的付费版本（有七天免费使用）。我认为其强大之处在于把人从具体代码中完全解放出来，虽然据Gemini所说在面对超大项目时可能产生上下文遗忘导致代码冲突，但是也有一定解决手段，并且可以利用cursor配合claude等工具微观调整代码。</li>
+</ul>
+<h4 id="OpenClaw"><a href="#OpenClaw" class="headerlink" title="OpenClaw"></a>OpenClaw</h4><ul>
+<li>注意到OpenClaw的persistent memory机制是完全开源的，并且把它以markdown文件存储在硬盘中。其他的功能更像把电脑的部分控制权交予ai，但是记忆机制在学习中有很大的应用潜力。教育者应该在互动中记住学习者的学习偏好，理解习惯等特征，这套机制可以立即应用在产品中。</li>
+</ul>
+<h4 id="Cursor"><a href="#Cursor" class="headerlink" title="Cursor"></a>Cursor</h4><ul>
+<li>注意到Cursor在帮助开发者理解项目方面的优势，可以在30s的时间内依托整个项目源码生成可视化的项目结构或者运行数据，这事实上是一种帮助开发者 <strong>学习</strong> 这个项目的能力，有在学习产品上应用的可能。</li>
+</ul>
+<h4 id="Genspark"><a href="#Genspark" class="headerlink" title="Genspark"></a>Genspark</h4><ul>
+<li>由于免费额度有限，还没有体会到Gemini指出的优势就不可用了，氪金太。Gemini强调了其在检索信息之后合并为wiki式的网页的特色，我认为这是一种可以考虑的知识呈现模式，并且，在实际产品中，可以多进行形式的展示，让使用者自行选择喜欢哪一种形式，形成记忆增强体验感。</li>
+</ul>
+<h3 id="AI依赖性"><a href="#AI依赖性" class="headerlink" title="AI依赖性"></a>AI依赖性</h3><ul>
+<li>我认为上述产品都有极强的ai依赖性，其中据我了解manus的机制是由主脑发布要求，分配给不同的agent来处理，剩下三个均有明显的ai依赖</li>
+</ul>
+<h2 id="Part-3-教育行业垂直产品体验"><a href="#Part-3-教育行业垂直产品体验" class="headerlink" title="Part 3 教育行业垂直产品体验"></a>Part 3 教育行业垂直产品体验</h2><h4 id="Flint"><a href="#Flint" class="headerlink" title="Flint"></a>Flint</h4><ul>
+<li>登录时会询问你的身份和偏好，这很好，但是我选择以大学生身份进入后，仍推荐给我老师端的功能。UI简洁好看。注意到cite功能，为对话生成一个只读的快照，能让教师知道学生如何使用了ai，这点是特色。响应速度极快，0延迟，既是优点也是缺点。我使用了我的数学作业题目询问，它完全胡说八道。我认为人类教师在面对学生问题时也需要思考得出结论，即时回复不是必须，只要延迟不太长就行。在继续探索的过程中，我看到了可以描述学校教学环境的窗口，但是并不容易被发现。我认为给产品加上良好的新手引导十分重要，不应该过于复杂，但可以让用户大体明白可以如何使用，并且可以做成教程形式持久化存在，用户随时可以探索。在继续探索的过程中我在角落里找到了教师新手引导，推测以教师身份进入会直接弹出</li>
+<li>由于一个一个测试非常疲惫，所以先不看更多了，转而询问Gemini目前的教育ai是否都没有能力解决大学数学中比较困难的一类问题。</li>
+</ul>
+<h4 id="总体特征"><a href="#总体特征" class="headerlink" title="总体特征"></a>总体特征</h4><ul>
+<li>教育ai在能力上呈现出偏科特征，在涉及自然语言理解和运用的方面更为突出，但难以确保其数理逻辑准确无误。因此，目前的产品大都集中在K12阶段（取所有木板最短的一根），并且在我的具体使用中感觉这部分技术壁垒并不明显，难以在所有作品中选出最突出的一个，那些优点感觉都有复现的可能，并且考虑到生育率降低的现状，k12阶段用户可能正在减少。</li>
+</ul>
+<h4 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h4><ul>
+<li>但在最近两年的大模型发展中，LLM+Verifier的体系正在逐步攻克这一领域。具体的，由LLM生成可能的解法，由形式化语言验证器（如lean）来确保答案的正确，使得ai具备完成更前沿数理探究的可能，如果这一部分的能力成熟，那么把教育+ai推广到大学教育会成为可能。</li>
+<li>可能可以以大厂的模型成果作为内核，打造更适合中国学生的功能，比如学生上传教材和往年考试题，通过往年考题拟合今年考题，（通过往年题拟合新题的方案在学生中已经广为流传），或是把生成的解法用更具互动式的UI呈现出来，抑或是用自然语言解释每一步的目。目前仍存在很大一部分学生数学问题畏惧使用LLM，剩下的大都只能依靠文字输出，交互体验一般。</li>
+<li>可能面临的问题：大学生群体不一定拥有充足的资金支持大量调用前沿模型，可能需要为题目进行难度分级，调用不同的模型，或者用搜题系统来辅助，如果题目库中有原题则直接调用导出，节省资源。</li>
+<li>可能的卖点：上述的模式有帮助任何一个学生在短期内突击考试取得好分数的能力，也能帮助研究生或者博士或者研究者定向学习某一个研究中需要用到的知识点。同时，如果感觉特色过于单一，可以类似genspark做一个当前所处领域最新消息汇总的工具，用户既有被动接受消息的权力，也有主动查找某个感兴趣字段的权力，这个工具可以把信息集成汇总总结成用户喜欢的展示形式。</li>
+<li>除此之外，我注意到一些ide正在把复杂的配置（编辑json或者yaml文件）工作用一系列简单的按钮和填空代替，也许这一行为可以推广。</li>
+<li>在上述的工具中加入签到，求运势，今日天气，社区论坛等等带有日常和社交属性的功能会让用户更容易产生依赖，从而在一段时间的使用后习惯使用。</li>
+<li>可以先调查大学生使用意愿以及大模型使用现状</li>
+<li><strong>产品的愿景</strong> ：一个所有大学生都会使用的学习生活助手，专注于校园生活。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/09/%E8%B6%85%E5%96%B5ai%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/petertian.jpg">
+      <meta itemprop="name" content="Peter Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/02/09/%E8%B6%85%E5%96%B5ai%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">超喵ai实习第一天记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-09 09:31:15" itemprop="dateCreated datePublished" datetime="2026-02-09T09:31:15+00:00">2026-02-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-02-12 03:56:29" itemprop="dateModified" datetime="2026-02-12T03:56:29+00:00">2026-02-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <hr>
+<h1 id="实习日志：后端开发学习与环境搭建（Day-1）"><a href="#实习日志：后端开发学习与环境搭建（Day-1）" class="headerlink" title="实习日志：后端开发学习与环境搭建（Day 1）"></a>实习日志：后端开发学习与环境搭建（Day 1）</h1><h2 id="1-今日完成事项"><a href="#1-今日完成事项" class="headerlink" title="1. 今日完成事项"></a>1. 今日完成事项</h2><h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><ul>
+<li><strong>开发工具</strong>：安装并配置了 <strong>GoLand</strong> IDE，熟悉了相关的快捷键与插件配置。</li>
+<li><strong>数据库</strong>：安装并初始化了 <strong>PostgreSQL</strong>，完成了本地数据库服务的启动与连接测试。</li>
+<li><strong>基础环境</strong>：配置完成了 Go 语言开发环境（Goroot&#x2F;Gopath），确保 <code>go mod</code> 等基础命令运行正常。</li>
+</ul>
+<h3 id="理论储备"><a href="#理论储备" class="headerlink" title="理论储备"></a>理论储备</h3><ul>
+<li><strong>Go 基础自学</strong>：通过 <em>Go by Example</em> 阅读并练习了切片（Slice）、结构体（Struct）、错误处理（Error Handling）以及指针等与数据库操作相关的语法片段。</li>
+<li><strong>技术栈初探</strong>：初步了解了 <strong>Gin</strong> (Web 框架) 与 <strong>GORM</strong> (ORM 框架) 的基本用法。</li>
+</ul>
+<hr>
+<h2 id="2-核心逻辑理解"><a href="#2-核心逻辑理解" class="headerlink" title="2. 核心逻辑理解"></a>2. 核心逻辑理解</h2><p>经过第一天的学习，我初步构建了 Go 后端处理业务的核心模型，理解了数据在系统中的流转过程：</p>
+<ol>
+<li><strong>输入层 (Gin)</strong>：负责监听前端请求。通过 Gin 的上下文（Context）接收前端传来的 JSON 数据。</li>
+<li><strong>转化层 (Struct)</strong>：利用 Go 的结构体作为“协议中转站”。Gin 将 JSON 自动解析（Bind）到 Struct 中。</li>
+<li><strong>持久层 (GORM)</strong>：利用 GORM 框架将 Struct 对象翻译成对应的 SQL 语句，实现对 PostgreSQL 的 CRUD（增删改查）操作。</li>
+<li><strong>输出层</strong>：执行结果再次通过 Gin 包装成 JSON 返回给客户端。</li>
+<li>本质上，是在调用和修改数据库中的内容。</li>
+</ol>
+<hr>
+<h2 id="3-遇到的挑战与难点"><a href="#3-遇到的挑战与难点" class="headerlink" title="3. 遇到的挑战与难点"></a>3. 遇到的挑战与难点</h2><ul>
+<li><strong>语法习惯差异</strong>：由于是从其他语言（或初次接触）转向 Go，目前对 Go 的语法形式感到不太习惯，并且Gin和GORM框架的一些具体函数实现过于繁杂，阅读具体函数实现源码时存在一定的阻力。</li>
+<li><strong>函数实现细节</strong>：虽然从宏观上理解了 CRUD 的闭环流程，但在具体编写代码时，只能初步利用ai实现功能，但不能明确每个语句起到什么作用。</li>
+<li><strong>功能数量有限</strong>：很多还没实现但是想实现的基础内容，脑力不足，干不动。</li>
+<li><strong>ai额度限制</strong>：gemini3pro额度过少，后面一直在使用flash</li>
+</ul>
+<hr>
+<h2 id="4-明日计划"><a href="#4-明日计划" class="headerlink" title="4. 明日计划"></a>4. 明日计划</h2><ul>
+<li>进一步熟悉Gin和GORM框架，做到能知道每条语句是干什么的，从而能脱离ai进行小范围调整。</li>
+<li>了解前端会用到的语言，把前后端串联起来，知道整个开发大概是怎么回事</li>
+<li>希望获得更近的工位，可以和fze边讨论边干活</li>
+</ul>
+<hr>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/01/02/%E4%BA%91%E7%AB%AF%E8%BF%9B%E5%8C%96%EF%BC%9A%E4%BB%8E%E6%9C%AC%E5%9C%B0%E5%88%B0-Codespaces-%E7%9A%84%E6%9E%B6%E6%9E%84%E5%8D%87%E7%BA%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/petertian.jpg">
+      <meta itemprop="name" content="Peter Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/01/02/%E4%BA%91%E7%AB%AF%E8%BF%9B%E5%8C%96%EF%BC%9A%E4%BB%8E%E6%9C%AC%E5%9C%B0%E5%88%B0-Codespaces-%E7%9A%84%E6%9E%B6%E6%9E%84%E5%8D%87%E7%BA%A7/" class="post-title-link" itemprop="url">云端进化：从本地到 Codespaces 的架构升级</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-02 15:04:13" itemprop="dateCreated datePublished" datetime="2026-01-02T15:04:13+00:00">2026-01-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-02-12 03:56:29" itemprop="dateModified" datetime="2026-02-12T03:56:29+00:00">2026-02-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF%E6%8A%98%E8%85%BE/" itemprop="url" rel="index"><span itemprop="name">技术折腾</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF%E6%8A%98%E8%85%BE/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" itemprop="url" rel="index"><span itemprop="name">开发环境</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>摘要：在完成了博客的基础搭建后，我意识到“本地开发”的局限性。为了实现“随时随地写代码”并接触现代 DevOps 流程，我将开发环境迁移到了 GitHub Codespaces，并配置了 GitHub Actions 实现自动化部署。本文记录了将基础设施代码化 (IaC) 的全过程。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/01/02/%E4%BA%91%E7%AB%AF%E8%BF%9B%E5%8C%96%EF%BC%9A%E4%BB%8E%E6%9C%AC%E5%9C%B0%E5%88%B0-Codespaces-%E7%9A%84%E6%9E%B6%E6%9E%84%E5%8D%87%E7%BA%A7/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/01/02/%E4%BB%8E0%E5%BC%80%E5%A7%8B%EF%BC%9A%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B9%8B%E6%97%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/petertian.jpg">
+      <meta itemprop="name" content="Peter Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/01/02/%E4%BB%8E0%E5%BC%80%E5%A7%8B%EF%BC%9A%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B9%8B%E6%97%85/" class="post-title-link" itemprop="url">从0开始：我的博客搭建之旅</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-02 09:53:29" itemprop="dateCreated datePublished" datetime="2026-01-02T09:53:29+00:00">2026-01-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-02-12 03:56:29" itemprop="dateModified" datetime="2026-02-12T03:56:29+00:00">2026-02-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index"><span itemprop="name">博客搭建</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>摘要：新年到来之际，我利用Github Student Pack 和 Hexo 搭建了博客，本文是流程记录和技术作结。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/01/02/%E4%BB%8E0%E5%BC%80%E5%A7%8B%EF%BC%9A%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B9%8B%E6%97%85/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Peter Lee</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script>
+(function() {
+    // 1. 检查这里的路径拼写！！
+    const pcImages = [
+        '/images/backgroundpc1.png',
+        '/images/backgroundpc2.png',
+        '/images/backgroundpc3.png',
+        '/images/backgroundpc4.png',
+        '/images/backgroundpc5.png',
+        '/images/backgroundpc6.png'
+    ];
+
+    let currentIndex = 0;
+
+    // 定义函数
+    function setBodyBg(index) {
+    // 只有宽度 > 991 且 确实是电脑浏览器时才操作
+    if (window.innerWidth > 991) {
+        document.body.style.backgroundImage = "url('" + pcImages[index] + "')";
+    } else {
+        // 手机端直接移除行内样式，彻底交给 CSS 处理
+        document.body.style.removeProperty('background-image');
+    }
+}
+
+    // 2. 初始化执行
+    // 即使页面没加载完，我们也尝试设置一次
+    setBodyBg(0);
+
+    // 3. 定时轮播
+    setInterval(function() {
+        currentIndex = (currentIndex + 1) % pcImages.length;
+        setBodyBg(currentIndex);
+    }, 10000);
+
+    // 4. 预加载
+    pcImages.forEach(function(src) {
+        const img = new Image();
+        img.src = src;
+    });
+
+    // 5. Zen Mode
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'z' || event.key === 'Z') {
+            document.body.classList.toggle('zen-mode');
+        }
+    });
+})();
+</script>
+</body>
+</html>
