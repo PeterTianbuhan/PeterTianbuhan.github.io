@@ -1,0 +1,54 @@
+---
+title: "Turning a Homepage Draft into a System"
+excerpt: "How a student homepage draft became a bilingual site with reusable content and MDX-backed writing."
+publishedAt: "2026-04-20"
+updatedAt: "2026-04-22"
+tags:
+  - nextjs
+  - design-system
+  - mdx
+featured: true
+locale: "en"
+translationKey: "system-latency"
+---
+
+## The start point was not blank
+
+The real time-saver was not inventing a homepage from scratch. It was keeping the parts of the draft that already had some conviction: mood, hierarchy, and page balance.
+
+Three decisions stayed in place:
+
+- the left column carries identity, skills, and projects
+- the center remains the visual nucleus
+- the right column handles profile state, code, and writing
+
+## Why content had to move out of components
+
+If copy lives inside layout code, every content edit becomes a design edit. That is the wrong maintenance model for a personal site, because the content will change far more often than the composition.
+
+So the refactor splits the site into two layers:
+
+1. layout and visual components
+2. replaceable structured data and MDX content
+
+That gives the homepage room to evolve without forcing a page rewrite every time the owner updates their profile.
+
+## Why local MDX fits this site
+
+For a personal site, reliability and control usually matter more than a full CMS.
+
+Local MDX keeps the workflow simple:
+
+- content and code live in the same repository
+- bilingual routing is easy to reason about
+- article metadata, code blocks, and navigation can grow naturally over time
+
+## What matters next for me
+
+The next high-value step is not adding more effects. It is replacing placeholders with more believable material:
+
+- my real name, year, and short introduction
+- course projects, side experiments, or competition work
+- a few posts that reflect how I think at this stage
+
+That is when the site stops feeling like a polished shell and starts reading as a credible personal presence.
