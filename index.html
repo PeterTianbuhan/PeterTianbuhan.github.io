@@ -186,44 +186,6 @@
         color: var(--text-soft);
       }
 
-      .actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 30px;
-      }
-
-      .button {
-        border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        padding: 13px 18px;
-        font-size: 11px;
-        letter-spacing: 0.3em;
-        text-transform: uppercase;
-        transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
-      }
-
-      .button.primary {
-        background: rgba(255, 255, 255, 0.08);
-        color: #fff;
-      }
-
-      .button.secondary {
-        color: var(--text-soft);
-      }
-
-      .button:hover {
-        border-color: rgba(255, 255, 255, 0.28);
-      }
-
-      .button.primary:hover {
-        background: rgba(255, 255, 255, 0.12);
-      }
-
-      .button.secondary:hover {
-        color: #fff;
-      }
-
       .visual {
         position: relative;
         min-height: 620px;
@@ -389,6 +351,37 @@
         color: rgba(255, 255, 255, 0.82);
       }
 
+      .blog-links {
+        display: grid;
+        gap: 10px;
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .blog-links a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--text-soft);
+        transition: color 180ms ease, transform 180ms ease;
+      }
+
+      .blog-links a:hover {
+        color: #fff;
+        transform: translateX(4px);
+      }
+
+      .blog-links a span:last-child {
+        font-size: 10px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
       .footer {
         display: flex;
         flex-wrap: wrap;
@@ -524,17 +517,11 @@
         <section class="panel hero">
           <p class="eyebrow mono">hello_world.exe</p>
           <p class="intro">&#36825;&#37324;&#20808;&#25918;&#19968;&#29256;&#24456;&#36731;&#30340;&#20010;&#20154;&#31616;&#20171;&#12290;&#21518;&#38754;&#20250;&#20877;&#24930;&#24930;&#34917;&#20805;&#12290;</p>
-          <h1 class="title">&#19968;&#20123;&#39033;&#30446;&#65292;&#19968;&#20123;&#35760;&#24405;</h1>
+          <h1 class="title">&#19968;&#20123;&#35760;&#24405;</h1>
           <p class="tagline mono">student / builder / notes</p>
           <p class="bio">
             Peter Tian&#65292;&#21271;&#20140;&#22823;&#23398;&#20449;&#31185;&#23398;&#38498;&#22823;&#19968;&#23398;&#29983;&#12290;&#29616;&#22312;&#20027;&#35201;&#22312;&#19978;&#35838;&#12289;&#20570;&#39033;&#30446;&#65292;&#20063;&#20250;&#39034;&#25163;&#35760;&#19968;&#20123;&#27491;&#22312;&#23398;&#30340;&#19996;&#35199;&#21644;&#38646;&#25955;&#24819;&#27861;&#12290;
           </p>
-          <div class="actions">
-            <a class="button primary mono" href="/archives/">&#36827;&#20837;&#21338;&#23458;&#24402;&#26723;</a>
-            <a class="button secondary mono" href="https://github.com/PeterTianbuhan" rel="noreferrer" target="_blank">
-              GitHub
-            </a>
-          </div>
         </section>
 
         <section class="panel visual" aria-label="Blog entry">
@@ -564,21 +551,37 @@
           <span class="node" style="left: 79%; top: 80%"></span>
           <span class="node" style="left: 87%; top: 80%"></span>
 
-          <a class="blog-card" href="/archives/">
+          <div class="blog-card">
             <div class="blog-label mono">blog.entry</div>
-            <h2 class="blog-title">&#26087;&#25991;&#31456;&#24402;&#26723;</h2>
+            <a href="/archives/">
+              <h2 class="blog-title">&#25991;&#31456;</h2>
+            </a>
             <p class="blog-description">
-              &#20043;&#21069;&#30340;&#25991;&#31456;&#20808;&#20445;&#30041;&#22312;&#21407;&#26469;&#30340; GitHub Pages &#24402;&#26723;&#37324;&#12290;&#31561;&#21518;&#38754;&#20869;&#23481;&#31283;&#23450;&#19979;&#26469;&#65292;&#20877;&#24930;&#24930;&#36801;&#31227;&#21040;&#26032;&#31449;&#12290;
+              &#36825;&#37324;&#25918;&#24050;&#32463;&#20889;&#19979;&#26469;&#30340;&#35838;&#31243;&#12289;&#39033;&#30446;&#21644;&#38543;&#25163;&#35760;&#24405;&#12290;&#21518;&#38754;&#20250;&#32487;&#32493;&#24930;&#24930;&#25972;&#29702;&#12290;
             </p>
             <div class="blog-meta mono">
               <span>7 &#31687;&#24050;&#21457;&#24067;&#25991;&#31456;</span>
-              <span>&#25171;&#24320;&#24402;&#26723;</span>
+              <a href="/archives/"><span>&#26597;&#30475;&#20840;&#37096;</span></a>
             </div>
-          </a>
+            <div class="blog-links">
+              <a href="/2026/02/12/intern-first-project/">
+                <span>intern first project</span>
+                <span>open</span>
+              </a>
+              <a href="/2026/02/10/ai%E5%AD%A6%E4%B9%A0%E4%BA%A7%E5%93%81%E8%B0%83%E7%A0%94/">
+                <span>&#65;&#73;&#23398;&#20064;&#20135;&#21697;&#35843;&#30740;</span>
+                <span>open</span>
+              </a>
+              <a href="/2026/01/02/%E4%BA%91%E7%AB%AF%E8%BF%9B%E5%8C%96%EF%BC%9A%E4%BB%8E%E6%9C%AC%E5%9C%B0%E5%88%B0-Codespaces-%E7%9A%84%E6%9E%B6%E6%9E%84%E5%8D%87%E7%BA%A7/">
+                <span>&#20113;&#31471;&#36827;&#21270;&#65306;&#20174;&#26412;&#22320;&#21040; Codespaces</span>
+                <span>open</span>
+              </a>
+            </div>
+          </div>
 
           <div class="visual-bottom mono">
             <span>// static homepage bridge</span>
-            <span>archives intact</span>
+            <span>notes online</span>
           </div>
         </section>
       </main>
