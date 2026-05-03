@@ -18,7 +18,7 @@ type HomeViewProps = {
   site: SiteContent;
 };
 
-type IconName = "arrow" | "book" | "code" | "globe" | "pulse" | "terminal";
+type IconName = "arrow" | "book" | "code" | "globe" | "note" | "pulse";
 
 const statusDot = {
   blue: "bg-[#2f80bd]",
@@ -59,8 +59,10 @@ function Icon({ name, className = "" }: { name: IconName; className?: string }) 
       {name === "globe" ? (
         <path className={common} d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm-8-9h16M12 3c2.2 2.4 3.3 5.4 3.3 9S14.2 18.6 12 21M12 3c-2.2 2.4-3.3 5.4-3.3 9s1.1 6.6 3.3 9" />
       ) : null}
+      {name === "note" ? (
+        <path className={common} d="M7 4.5h7l3 3v12H7zM14 4.5v3h3M9.5 11h5M9.5 14h5M9.5 17h3" />
+      ) : null}
       {name === "pulse" ? <path className={common} d="M4 13h4l2-6 4 12 2-6h4" /> : null}
-      {name === "terminal" ? <path className={common} d="m7 8 4 4-4 4m6 0h5" /> : null}
     </svg>
   );
 }
@@ -74,7 +76,7 @@ function resolveLocalPath(locale: Locale, href: string) {
 }
 
 function ProjectIcon({ index }: { index: number }) {
-  const icons: IconName[] = ["terminal", "globe", "pulse"];
+  const icons: IconName[] = ["note", "globe", "pulse"];
 
   return (
     <div className="grid size-20 place-items-center bg-[#f1f0ed] text-[color:var(--ink-soft)]">
@@ -323,7 +325,7 @@ function LatestNotes({
   locale: Locale;
   posts: PostListItem[];
 }) {
-  const icons: IconName[] = ["book", "code", "pulse", "book", "terminal"];
+  const icons: IconName[] = ["book", "code", "pulse", "book", "note"];
 
   return (
     <section className="section-rule px-6 py-14 sm:px-8">
