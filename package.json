@@ -7,12 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "post:intake": "node .\\scripts\\post-intake.mjs",
-    "legacy:refresh": "node .\\scripts\\refresh-legacy-homepage.mjs",
-    "publish:bundle": "node .\\scripts\\prepare-github-pages.mjs",
+    "post:intake": "node ./scripts/post-intake.mjs",
+    "legacy:refresh": "node ./scripts/refresh-legacy-homepage.mjs",
+    "publish:bundle": "node ./scripts/prepare-github-pages.mjs",
     "workflow:check": "node ./scripts/verify-source-workflow.mjs",
-    "preview:open": "powershell -ExecutionPolicy Bypass -File .\\scripts\\preview.ps1",
-    "deploy:claim": "powershell -ExecutionPolicy Bypass -File .\\scripts\\deploy-claim.ps1"
+    "preview:open": "powershell -ExecutionPolicy Bypass -File ./scripts/preview.ps1",
+    "deploy:claim": "powershell -ExecutionPolicy Bypass -File ./scripts/deploy-claim.ps1"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",

@@ -1,6 +1,6 @@
 # Auto Publish
 
-Use this when you want to turn local MDX content into a deploy-ready GitHub Pages bundle.
+Use this when you want to turn the reviewed source branch into a deploy-ready GitHub Pages bundle without replacing `main` with raw source files.
 
 ## Commands
 
@@ -10,7 +10,7 @@ If you are adding a new article, write it first:
 npm run post:intake -- .\templates\post-intake.template.json
 ```
 
-Then refresh the root homepage bridge:
+Then refresh the old homepage bridge only when `legacy-homepage/index.html` exists in your workspace:
 
 ```powershell
 npm run legacy:refresh
@@ -32,14 +32,14 @@ If the target post already exists, add `--force` to the `post:intake` step.
 
 ## What it does
 
-1. Refreshes `legacy-homepage/index.html` so the root homepage shows the latest local posts.
-2. Runs `next build` and exports static files into `out`.
-3. Prepares a fresh `.publish/github-pages-<timestamp>` directory with:
+1. Runs `next build` and exports static files into `out`.
+2. Prepares a fresh `.publish/github-pages-<timestamp>` directory with:
    - exported `zh` / `en` routes
-   - `legacy-homepage/index.html` as the root homepage
+   - the generated root `index.html` from `out`
    - `CNAME` for `petertianwork.me`
    - `.nojekyll` so GitHub Pages serves `_next`
    - `.publish/latest-github-pages.txt` pointing to the newest bundle
+3. Verifies the bundle has `index.html`, `CNAME`, and `.nojekyll`, and that common raw source entries such as `app/`, `components/`, `content/`, `package.json`, and `next.config.ts` are absent.
 
 ## Output
 
@@ -48,3 +48,38 @@ The deploy-ready directory is a timestamped folder like:
 ```text
 .publish\github-pages-2026-04-23T14-30-00-000Z
 ```
+
+## Safe Handoff To Main
+
+Do this only after the source branch redesign has been reviewed.
+
+From the source workspace:
+
+```bash
+npm run build
+npm run publish:bundle
+PUBLISH_DIR="$(cat .publish/latest-github-pages.txt)"
+test -f "$PUBLISH_DIR/index.html"
+test "$(cat "$PUBLISH_DIR/CNAME")" = "petertianwork.me"
+test -f "$PUBLISH_DIR/.nojekyll"
+test ! -e "$PUBLISH_DIR/package.json"
+test ! -d "$PUBLISH_DIR/app"
+```
+
+Then use a separate checkout or worktree for the live `main` branch. Copy only the generated bundle contents into that publish root; do not copy the source workspace itself.
+
+```bash
+git worktree add ../HomePage-main-publish main
+rsync -a --delete \
+  --exclude .git \
+  "$PUBLISH_DIR"/ \
+  ../HomePage-main-publish/
+cd ../HomePage-main-publish
+test -f index.html
+test "$(cat CNAME)" = "petertianwork.me"
+test ! -e package.json
+test ! -d app
+git status --short
+```
+
+Review the `main` worktree diff before committing. The expected diff is generated/static Pages output plus `CNAME` and `.nojekyll`, not raw Next.js source.
