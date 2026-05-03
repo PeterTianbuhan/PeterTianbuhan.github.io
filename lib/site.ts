@@ -305,15 +305,15 @@ const rawSiteContent: RawSiteContent = {
   ],
   projects: [
     {
-      slug: "terminal-ui-lab",
+      slug: "notebook-ui-lab",
       statusTone: "blue",
       logHref: "/blog",
       stack: ["Web", "TypeScript", "UI/UX"],
       status: { zh: "进行中", en: "In Progress" },
-      name: { zh: "Terminal UI Lab", en: "Terminal UI Lab" },
+      name: { zh: "Notebook UI Lab", en: "Notebook UI Lab" },
       summary: {
-        zh: "探索终端启发的网页界面，但保持轻、清楚、可读。",
-        en: "Exploring terminal-inspired interfaces for the web.",
+        zh: "探索轻量、清楚、适合长期阅读和记录的网页界面。",
+        en: "Exploring light, readable interfaces for long-term notes and study logs.",
       },
       meta: { zh: "活跃 - 2026 年 4 月起", en: "Active - since Apr 2026" },
     },
