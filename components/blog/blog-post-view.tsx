@@ -27,11 +27,11 @@ export async function BlogPostView({
       <div className="mx-auto flex max-w-[1100px] flex-col gap-6">
         <SiteHeader alternatePath={alternatePath} dictionary={dictionary} locale={locale} />
 
-        <Panel className="boot-in rounded-[36px] px-6 py-8 sm:px-8 sm:py-10">
+        <Panel className="boot-in px-6 py-8 sm:px-8 sm:py-10">
           <div className="mono text-[11px] uppercase tracking-[0.35em] text-[color:var(--text-muted)]">
             {dictionary.blog.articleEyebrow}
           </div>
-          <h1 className="mt-4 max-w-[18ch] text-4xl font-medium leading-[0.95] tracking-[-0.06em] text-white sm:text-6xl">
+          <h1 className="academic-serif mt-4 max-w-[18ch] text-4xl font-normal leading-[1] tracking-normal text-[color:var(--ink)] sm:text-6xl">
             {post.meta.title}
           </h1>
           <p className="mt-5 max-w-[48rem] text-base leading-8 text-[color:var(--text-soft)]">
@@ -43,7 +43,7 @@ export async function BlogPostView({
           </div>
         </Panel>
 
-        <Panel className="boot-in delay-1 rounded-[36px] px-6 py-8 sm:px-8 sm:py-10">
+        <Panel className="boot-in delay-1 px-6 py-8 sm:px-8 sm:py-10">
           <article className="prose-shell">
             <MdxContent source={post.content} />
           </article>
@@ -53,7 +53,7 @@ export async function BlogPostView({
           <section className="grid gap-4 md:grid-cols-2">
             {relatedPosts.map((relatedPost) => (
               <Link
-                className="panel-frame boot-in delay-2 rounded-[28px] px-6 py-6 transition hover:border-white/18 hover:bg-white/[0.05]"
+                className="panel-frame boot-in delay-2 px-6 py-6 transition hover:border-[color:var(--accent)] hover:bg-[color:var(--surface-muted)]"
                 href={`/${locale}/blog/${relatedPost.slug}`}
                 key={relatedPost.slug}
               >
@@ -61,7 +61,7 @@ export async function BlogPostView({
                   <div className="mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--text-muted)]">
                     {dictionary.blog.nextRead}
                   </div>
-                  <div className="mt-4 text-xl font-medium tracking-[-0.04em] text-white">
+                  <div className="academic-serif mt-4 text-xl font-normal tracking-normal text-[color:var(--ink)]">
                     {relatedPost.title}
                   </div>
                   <p className="mt-3 text-sm leading-7 text-[color:var(--text-soft)]">{relatedPost.excerpt}</p>
@@ -73,7 +73,7 @@ export async function BlogPostView({
 
         <div className="boot-in delay-2">
           <Link
-            className="mono inline-flex rounded-full border border-white/12 px-4 py-3 text-[10px] uppercase tracking-[0.32em] text-[color:var(--text-soft)] transition hover:border-white/25 hover:text-white"
+            className="mono inline-flex border border-[color:var(--rule)] px-4 py-3 text-[10px] uppercase tracking-[0.32em] text-[color:var(--ink-soft)] transition hover:border-[color:var(--accent)] hover:text-[color:var(--ink)]"
             href={`/${locale}/blog`}
           >
             {dictionary.blog.backToIndex}

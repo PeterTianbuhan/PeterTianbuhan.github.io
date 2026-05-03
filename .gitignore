@@ -10,3 +10,10 @@ coverage/
 tsconfig.tsbuildinfo
 Thumbs.db
 .DS_Store
+
+.vercel
+.publish/
+.tmp-legacy-repo/
+legacy-homepage/
+legacy-site/
+output/

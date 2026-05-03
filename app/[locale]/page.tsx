@@ -19,7 +19,7 @@ export default async function LocaleHomePage({
   const [dictionary, site, latestPosts] = await Promise.all([
     getDictionary(typedLocale),
     getSiteContent(typedLocale),
-    getLatestPosts(typedLocale, 3),
+    getLatestPosts(typedLocale, 5),
   ]);
 
   return (

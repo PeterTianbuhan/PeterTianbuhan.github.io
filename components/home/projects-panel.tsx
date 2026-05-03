@@ -17,7 +17,7 @@ export function ProjectsPanel({
         {projects.map((project) => (
           <Link
             className="group block rounded-[24px] border border-white/8 bg-white/[0.03] px-5 py-5 transition duration-300 hover:border-white/18 hover:bg-white/[0.05]"
-            href={project.link}
+            href={project.link ?? "#"}
             key={project.slug}
             target="_blank"
           >

@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { Panel } from "@/components/ui/panel";
+import type { Locale } from "@/lib/i18n";
 import type { Dictionary, SiteContent } from "@/lib/site";
 
 export function HeroPanel({
   dictionary,
+  locale,
   site,
 }: {
   dictionary: Dictionary;
+  locale: Locale;
   site: SiteContent;
 }) {
   return (
@@ -29,7 +32,7 @@ export function HeroPanel({
       <div className="mt-9 flex flex-wrap gap-3">
         <Link
           className="mono rounded-full border border-white/15 bg-white/[0.08] px-5 py-3 text-[11px] uppercase tracking-[0.3em] text-white transition hover:border-white/30 hover:bg-white/[0.12]"
-          href={dictionary.home.primaryHref}
+          href={`/${locale}/blog`}
         >
           {dictionary.home.primaryCta}
         </Link>

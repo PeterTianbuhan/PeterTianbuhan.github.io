@@ -14,8 +14,8 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "System Portfolio",
-  description: "Bilingual portfolio and writing system built with Next.js.",
+  title: "Peter Tian",
+  description: "Bilingual notes and learning log built with Next.js and MDX.",
 };
 
 export default function RootLayout({

@@ -5,12 +5,12 @@ import type { Dictionary } from "@/lib/site";
 
 export function CenterVisual({
   dictionary,
+  latestPosts,
   locale,
-  post,
 }: {
   dictionary: Dictionary;
+  latestPosts: PostListItem[];
   locale: Locale;
-  post?: PostListItem;
 }) {
   return (
     <section className="panel-frame surface-grid boot-in delay-2 relative min-h-[420px] overflow-hidden rounded-[36px] lg:min-h-[680px]">
@@ -35,24 +35,21 @@ export function CenterVisual({
       <div className="absolute inset-x-6 top-6 flex items-center justify-end text-[10px] uppercase tracking-[0.32em] text-[color:var(--text-muted)] sm:inset-x-8 sm:top-8">
         <span className="mono">writing entry</span>
       </div>
-      {post ? (
+      {latestPosts.length ? (
         <div className="absolute bottom-20 left-5 right-5 z-10 rounded-[28px] border border-white/12 bg-black/45 p-5 backdrop-blur-md sm:bottom-24 sm:left-8 sm:right-8 sm:p-6">
           <div className="mono text-[10px] uppercase tracking-[0.32em] text-[color:var(--text-muted)]">
-            latest.note
+            blog.entry
           </div>
-          <Link
-            className="group mt-4 block"
-            href={`/${locale}/blog/${post.slug}`}
-          >
+          <Link className="group mt-4 block" href={`/${locale}/blog`}>
             <div className="max-w-[18ch] text-2xl font-medium tracking-[-0.04em] text-white transition group-hover:text-white/92 sm:text-[2rem]">
-              {post.title}
+              {dictionary.blog.title}
             </div>
             <p className="mt-3 max-w-[40rem] text-sm leading-7 text-[color:var(--text-soft)] sm:text-base">
-              {post.excerpt}
+              {dictionary.blog.description}
             </p>
             <div className="mt-5 flex items-center justify-between gap-4">
               <span className="mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--text-muted)]">
-                {post.publishedAtLabel}
+                {latestPosts.length} {latestPosts.length === 1 ? "post" : "posts"}
               </span>
               <span className="mono text-[10px] uppercase tracking-[0.3em] text-white/80 transition group-hover:translate-x-1">
                 {dictionary.home.readArticle}
@@ -60,12 +57,26 @@ export function CenterVisual({
             </div>
           </Link>
           <div className="mt-4 border-t border-white/8 pt-4">
-            <Link
-              className="mono text-[10px] uppercase tracking-[0.3em] text-[color:var(--text-soft)] transition hover:text-white"
-              href={`/${locale}/blog`}
-            >
-              {dictionary.home.blogCta}
-            </Link>
+            <div className="grid gap-3">
+              {latestPosts.map((post) => (
+                <Link
+                  className="flex items-center justify-between gap-4 text-sm text-[color:var(--text-soft)] transition hover:text-white"
+                  href={`/${locale}/blog/${post.slug}`}
+                  key={post.slug}
+                >
+                  <span className="max-w-[26ch] truncate">{post.title}</span>
+                  <span className="mono shrink-0 text-[10px] uppercase tracking-[0.24em] text-[color:var(--text-muted)]">
+                    {post.publishedAtLabel}
+                  </span>
+                </Link>
+              ))}
+              <Link
+                className="mono mt-1 text-[10px] uppercase tracking-[0.3em] text-[color:var(--text-soft)] transition hover:text-white"
+                href={`/${locale}/blog`}
+              >
+                {dictionary.home.blogCta}
+              </Link>
+            </div>
           </div>
         </div>
       ) : null}

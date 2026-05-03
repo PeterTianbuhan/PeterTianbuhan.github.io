@@ -1,0 +1,22 @@
+{
+  "translationKey": "new-post-key",
+  "publishedAt": "2026-04-23",
+  "updatedAt": "2026-04-23",
+  "featured": false,
+  "locales": {
+    "zh": {
+      "slug": "new-post-zh",
+      "title": "中文标题",
+      "excerpt": "一两句话概括这篇文章。",
+      "tags": ["notes", "pku"],
+      "body": "## 摘要\n\n在这里继续写正文。"
+    },
+    "en": {
+      "slug": "new-post-en",
+      "title": "English Title",
+      "excerpt": "A short summary for the post.",
+      "tags": ["notes", "pku"],
+      "body": "## Summary\n\nContinue writing here."
+    }
+  }
+}

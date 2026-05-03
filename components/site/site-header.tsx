@@ -14,37 +14,35 @@ export function SiteHeader({
   const nextLocale = locale === "zh" ? "en" : "zh";
 
   return (
-    <header className="boot-in panel-frame rounded-full px-4 py-3 sm:px-5">
-      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
-        <Link
-          className="mono text-[11px] uppercase tracking-[0.35em] text-[color:var(--text-soft)] transition hover:text-white"
-          href={`/${locale}`}
-        >
-          {dictionary.nav.brand}
+    <header className="sticky top-0 z-40 border-b border-[color:var(--rule)] bg-[color:var(--background)]/92 backdrop-blur">
+      <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-6 px-6 py-6 sm:px-8">
+        <Link className="flex items-baseline gap-6" href={`/${locale}`}>
+          <span className="academic-serif text-2xl font-normal leading-none text-[color:var(--ink)]">
+            {dictionary.nav.brand}
+          </span>
+          <span className="hidden text-xs text-[color:var(--muted)] sm:inline">{locale === "zh" ? "PKU EECS '28" : "PKU EECS '28"}</span>
         </Link>
-        <nav className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.26em] text-[color:var(--text-muted)] sm:gap-3">
-          <Link className="rounded-full px-3 py-2 transition hover:bg-white/6 hover:text-white" href={`/${locale}`}>
-            {dictionary.nav.home}
-          </Link>
-          <Link
-            className="rounded-full px-3 py-2 transition hover:bg-white/6 hover:text-white"
-            href={`/${locale}/blog`}
-          >
+
+        <nav className="flex items-center gap-5 text-sm text-[color:var(--ink-soft)] sm:gap-8">
+          <Link className="nav-link hidden sm:inline-flex" href={`/${locale}/blog`}>
             {dictionary.nav.blog}
           </Link>
-          <Link
-            className="rounded-full px-3 py-2 transition hover:bg-white/6 hover:text-white"
-            href="#contact"
-          >
+          <Link className="nav-link hidden md:inline-flex" href={`/${locale}#learning`}>
+            {dictionary.nav.learning}
+          </Link>
+          <Link className="nav-link hidden md:inline-flex" href={`/${locale}#projects`}>
+            {dictionary.nav.projects}
+          </Link>
+          <Link className="nav-link hidden sm:inline-flex" href={`/${locale}#contact`}>
             {dictionary.nav.contact}
           </Link>
           <Link
-            className="mono rounded-full border border-white/10 px-3 py-2 text-[10px] tracking-[0.32em] text-white transition hover:border-white/25 hover:bg-white/6"
+            className="text-xs uppercase tracking-[0.12em] text-[color:var(--ink-soft)] transition hover:text-[color:var(--ink)]"
             href={alternatePath}
             hrefLang={nextLocale}
             lang={nextLocale}
           >
-            {nextLocale}
+            {locale === "zh" ? "中 / EN" : "中 / EN"}
           </Link>
         </nav>
       </div>

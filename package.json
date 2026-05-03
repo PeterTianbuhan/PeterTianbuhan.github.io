@@ -7,12 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "preview:open": "powershell -ExecutionPolicy Bypass -File .\\scripts\\preview.ps1"
+    "post:intake": "node .\\scripts\\post-intake.mjs",
+    "legacy:refresh": "node .\\scripts\\refresh-legacy-homepage.mjs",
+    "publish:bundle": "node .\\scripts\\prepare-github-pages.mjs",
+    "preview:open": "powershell -ExecutionPolicy Bypass -File .\\scripts\\preview.ps1",
+    "deploy:claim": "powershell -ExecutionPolicy Bypass -File .\\scripts\\deploy-claim.ps1"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
     "next": "^16.0.0",
-    "next-mdx-remote": "^5.0.0",
+    "next-mdx-remote": "^6.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "remark-gfm": "^4.0.1"
