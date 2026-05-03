@@ -75,6 +75,29 @@ function resolveLocalPath(locale: Locale, href: string) {
   return `/${locale}${href.startsWith("/") ? href : `/${href}`}`;
 }
 
+function getEmptyMessage(locale: Locale) {
+  return locale === "zh" ? "耐心等待" : "Waiting patiently";
+}
+
+function getPostTypeLabel(post: PostListItem, locale: Locale) {
+  const tag = post.tags[0];
+
+  if (!tag) {
+    return locale === "zh" ? "笔记" : "Note";
+  }
+
+  const labels: Record<string, Record<Locale, string>> = {
+    agents: { zh: "智能体", en: "Agents" },
+    build: { zh: "构建", en: "Build" },
+    linear: { zh: "Linear", en: "Linear" },
+    study: { zh: "学习", en: "Study" },
+    thought: { zh: "随想", en: "Thought" },
+    workflow: { zh: "工作流", en: "Workflow" },
+  };
+
+  return labels[tag]?.[locale] ?? tag;
+}
+
 function ProjectIcon({ index }: { index: number }) {
   const icons: IconName[] = ["note", "globe", "pulse"];
 
@@ -101,13 +124,17 @@ function NotebookPanel({
 
 function Hero({
   dictionary,
+  latestPosts,
   locale,
   site,
 }: {
   dictionary: Dictionary;
+  latestPosts: PostListItem[];
   locale: Locale;
   site: SiteContent;
 }) {
+  const emptyMessage = getEmptyMessage(locale);
+
   return (
     <section className="relative mx-auto grid min-h-[640px] max-w-[1200px] items-center gap-10 px-6 py-16 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:py-20">
       <p className="hand-note hidden xl:block">{site.heroTagline}</p>
@@ -119,8 +146,6 @@ function Hero({
         <div className="mt-3 h-[5px] w-36 -rotate-2 bg-[#4fa37d]" />
         <p className="mt-8 max-w-[29rem] text-base leading-8 text-[color:var(--ink-soft)]">
           {site.intro}
-          <br />
-          {site.bio}
         </p>
         <div className="mt-10 flex flex-wrap items-center gap-6">
           <Link className="paper-button paper-button-primary" href={`/${locale}/blog`}>
@@ -146,14 +171,22 @@ function Hero({
             </Link>
           </div>
           <div className="space-y-4">
-            {site.activity.map((item) => (
-              <div className="grid grid-cols-[0.55rem_6rem_1fr_auto] items-baseline gap-4 text-sm" key={`${item.type}-${item.time}`}>
-                <span className="size-1.5 bg-[color:var(--muted)]" />
-                <span className="text-[color:var(--ink-soft)]">{item.type}:</span>
-                <span className="text-[color:var(--ink)]">{item.text}</span>
-                <span className="text-xs text-[color:var(--muted)]">{item.time}</span>
-              </div>
-            ))}
+            {latestPosts.length > 0 ? (
+              latestPosts.map((post) => (
+                <Link
+                  className="grid grid-cols-[0.55rem_6rem_1fr_auto] items-baseline gap-4 text-sm transition hover:text-[#2f8b6d]"
+                  href={`/${locale}/blog/${post.slug}`}
+                  key={post.slug}
+                >
+                  <span className="size-1.5 bg-[color:var(--muted)]" />
+                  <span className="text-[color:var(--ink-soft)]">{getPostTypeLabel(post, locale)}:</span>
+                  <span className="text-[color:var(--ink)]">{post.title}</span>
+                  <span className="text-xs text-[color:var(--muted)]">{post.publishedAtLabel}</span>
+                </Link>
+              ))
+            ) : (
+              <p className="text-sm leading-7 text-[color:var(--ink-soft)]">{emptyMessage}</p>
+            )}
           </div>
         </NotebookPanel>
 
@@ -169,18 +202,22 @@ function Hero({
             </a>
           </div>
           <div className="space-y-5">
-            {site.projects.map((project) => (
-              <div className="grid grid-cols-[1fr_auto_auto] items-center gap-4 text-sm" key={project.slug}>
-                <span className="text-[color:var(--ink)]">{project.name}</span>
-                <span className={`rounded-full px-3 py-1 text-xs ${statusPill[project.statusTone]}`}>
-                  {project.status}
-                </span>
-                <Link className="paper-link text-xs" href={resolveLocalPath(locale, project.logHref)}>
-                  {dictionary.home.projectCta}
-                  <Icon className="size-3" name="arrow" />
-                </Link>
-              </div>
-            ))}
+            {site.projects.length > 0 ? (
+              site.projects.map((project) => (
+                <div className="grid grid-cols-[1fr_auto_auto] items-center gap-4 text-sm" key={project.slug}>
+                  <span className="text-[color:var(--ink)]">{project.name}</span>
+                  <span className={`rounded-full px-3 py-1 text-xs ${statusPill[project.statusTone]}`}>
+                    {project.status}
+                  </span>
+                  <Link className="paper-link text-xs" href={resolveLocalPath(locale, project.logHref)}>
+                    {dictionary.home.projectCta}
+                    <Icon className="size-3" name="arrow" />
+                  </Link>
+                </div>
+              ))
+            ) : (
+              <p className="text-sm leading-7 text-[color:var(--ink-soft)]">{emptyMessage}</p>
+            )}
           </div>
         </NotebookPanel>
       </div>
@@ -259,6 +296,8 @@ function Projects({
   locale: Locale;
   projects: LocalizedProject[];
 }) {
+  const emptyMessage = getEmptyMessage(locale);
+
   return (
     <section className="section-rule px-6 py-14 sm:px-8" id="projects">
       <div className="mx-auto max-w-[1200px]">
@@ -270,47 +309,53 @@ function Projects({
           <span className="text-sm text-[color:var(--ink-soft)]">{dictionary.home.allProjects}</span>
         </div>
 
-        <div className="divide-y divide-[color:var(--rule)]">
-          {projects.map((project, index) => (
-            <article className="grid gap-6 py-8 lg:grid-cols-[7rem_1fr_15rem_8rem]" key={project.slug}>
-              <ProjectIcon index={index} />
-              <div>
-                <h3 className="academic-serif text-2xl font-normal">{project.name}</h3>
-                <p className="mt-2 max-w-[32rem] text-sm leading-7 text-[color:var(--ink-soft)]">
-                  {project.summary}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.stack.map((item) => (
-                    <span className="rounded-full bg-[#eef1ee] px-3 py-1 text-xs text-[color:var(--ink-soft)]" key={item}>
-                      {item}
-                    </span>
-                  ))}
+        {projects.length > 0 ? (
+          <div className="divide-y divide-[color:var(--rule)]">
+            {projects.map((project, index) => (
+              <article className="grid gap-6 py-8 lg:grid-cols-[7rem_1fr_15rem_8rem]" key={project.slug}>
+                <ProjectIcon index={index} />
+                <div>
+                  <h3 className="academic-serif text-2xl font-normal">{project.name}</h3>
+                  <p className="mt-2 max-w-[32rem] text-sm leading-7 text-[color:var(--ink-soft)]">
+                    {project.summary}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {project.stack.map((item) => (
+                      <span className="rounded-full bg-[#eef1ee] px-3 py-1 text-xs text-[color:var(--ink-soft)]" key={item}>
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <div className="text-sm text-[color:var(--ink-soft)]">
-                <div className="flex items-center gap-3">
-                  <span className={`size-1.5 ${statusDot[project.statusTone]}`} />
-                  {project.status}
+                <div className="text-sm text-[color:var(--ink-soft)]">
+                  <div className="flex items-center gap-3">
+                    <span className={`size-1.5 ${statusDot[project.statusTone]}`} />
+                    {project.status}
+                  </div>
+                  <p className="mt-4">{project.meta}</p>
                 </div>
-                <p className="mt-4">{project.meta}</p>
-              </div>
-              <div className="flex flex-col items-start gap-4 text-sm">
-                <Link className="paper-link" href={resolveLocalPath(locale, project.logHref)}>
-                  {dictionary.home.projectCta}
-                  <Icon className="size-4" name="arrow" />
-                </Link>
-                {project.link ? (
-                  <Link className="paper-link" href={project.link} target="_blank">
-                    GitHub
+                <div className="flex flex-col items-start gap-4 text-sm">
+                  <Link className="paper-link" href={resolveLocalPath(locale, project.logHref)}>
+                    {dictionary.home.projectCta}
                     <Icon className="size-4" name="arrow" />
                   </Link>
-                ) : (
-                  <span className="text-[color:var(--muted)]">{dictionary.home.githubSoon}</span>
-                )}
-              </div>
-            </article>
-          ))}
-        </div>
+                  {project.link ? (
+                    <Link className="paper-link" href={project.link} target="_blank">
+                      GitHub
+                      <Icon className="size-4" name="arrow" />
+                    </Link>
+                  ) : (
+                    <span className="text-[color:var(--muted)]">{dictionary.home.githubSoon}</span>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p className="border-y border-[color:var(--rule)] py-8 text-sm leading-7 text-[color:var(--ink-soft)]">
+            {emptyMessage}
+          </p>
+        )}
       </div>
     </section>
   );
@@ -326,6 +371,7 @@ function LatestNotes({
   posts: PostListItem[];
 }) {
   const icons: IconName[] = ["book", "code", "pulse", "book", "note"];
+  const emptyMessage = getEmptyMessage(locale);
 
   return (
     <section className="section-rule px-6 py-14 sm:px-8">
@@ -341,32 +387,38 @@ function LatestNotes({
           </Link>
         </div>
 
-        <div className="divide-y divide-[color:var(--rule)]">
-          {posts.map((post, index) => (
-            <Link
-              className="grid gap-5 py-6 transition hover:bg-[rgba(242,242,239,0.42)] sm:grid-cols-[4rem_1fr_auto_auto]"
-              href={`/${locale}/blog/${post.slug}`}
-              key={post.slug}
-            >
-              <Icon className="size-6 self-start text-[color:var(--ink-soft)]" name={icons[index % icons.length]} />
-              <div>
-                <div className="flex flex-wrap items-center gap-3">
-                  <h3 className="academic-serif text-2xl font-normal">{post.title}</h3>
-                  {post.tags[0] ? (
-                    <span className="rounded-full bg-[#e5f0f6] px-3 py-1 text-xs text-[#2d6f9f]">
-                      {post.tags[0]}
-                    </span>
-                  ) : null}
+        {posts.length > 0 ? (
+          <div className="divide-y divide-[color:var(--rule)]">
+            {posts.map((post, index) => (
+              <Link
+                className="grid gap-5 py-6 transition hover:bg-[rgba(242,242,239,0.42)] sm:grid-cols-[4rem_1fr_auto_auto]"
+                href={`/${locale}/blog/${post.slug}`}
+                key={post.slug}
+              >
+                <Icon className="size-6 self-start text-[color:var(--ink-soft)]" name={icons[index % icons.length]} />
+                <div>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <h3 className="academic-serif text-2xl font-normal">{post.title}</h3>
+                    {post.tags[0] ? (
+                      <span className="rounded-full bg-[#e5f0f6] px-3 py-1 text-xs text-[#2d6f9f]">
+                        {post.tags[0]}
+                      </span>
+                    ) : null}
+                  </div>
+                  <p className="mt-2 max-w-[42rem] text-sm leading-7 text-[color:var(--ink-soft)]">
+                    {post.excerpt}
+                  </p>
                 </div>
-                <p className="mt-2 max-w-[42rem] text-sm leading-7 text-[color:var(--ink-soft)]">
-                  {post.excerpt}
-                </p>
-              </div>
-              <span className="text-sm text-[color:var(--muted)]">{post.publishedAtLabel}</span>
-              <span className="mono text-xs text-[color:var(--muted)]">{dictionary.home.readArticle}</span>
-            </Link>
-          ))}
-        </div>
+                <span className="text-sm text-[color:var(--muted)]">{post.publishedAtLabel}</span>
+                <span className="mono text-xs text-[color:var(--muted)]">{dictionary.home.readArticle}</span>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <p className="border-y border-[color:var(--rule)] py-8 text-sm leading-7 text-[color:var(--ink-soft)]">
+            {emptyMessage}
+          </p>
+        )}
 
         <div className="mt-10 text-center">
           <Link className="paper-link justify-center text-sm" href={`/${locale}/blog`}>
@@ -385,7 +437,7 @@ export function HomeView({ dictionary, latestPosts, locale, site }: HomeViewProp
   return (
     <main className="notebook-page min-h-screen bg-[color:var(--background)] text-[color:var(--ink)]">
       <SiteHeader alternatePath={alternatePath} dictionary={dictionary} locale={locale} />
-      <Hero dictionary={dictionary} locale={locale} site={site} />
+      <Hero dictionary={dictionary} latestPosts={latestPosts} locale={locale} site={site} />
       <LearningPath dictionary={dictionary} locale={locale} stages={site.learningPath} />
       <Projects dictionary={dictionary} locale={locale} projects={site.projects} />
       <LatestNotes dictionary={dictionary} locale={locale} posts={latestPosts} />
