@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Part 0 我对教学的理解教学的本质，是用对象理解的概念解释对象不理解的概念，从而扩大对象的理解范围，达到“教”的目的。这里的媒介很丰富，文字，图片，动画，结构图表。根据我此前使用ai学习的经历来看，ai+学习有以下几个方面的特点。 有能力回答学习者几乎所有的问题，在所有成熟的可教学的领域都有应用可能，在没有争议的静态内容（如数学推导）方面可以做到准确无误（部分大模型有待提升） 回答问题的质量很">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ai教学产品调研">
+<meta property="og:url" content="http://example.com/2026/02/10/ai%E5%AD%A6%E4%B9%A0%E4%BA%A7%E5%93%81%E8%B0%83%E7%A0%94/index.html">
+<meta property="og:site_name" content="Peter&#39;s Blog">
+<meta property="og:description" content="Part 0 我对教学的理解教学的本质，是用对象理解的概念解释对象不理解的概念，从而扩大对象的理解范围，达到“教”的目的。这里的媒介很丰富，文字，图片，动画，结构图表。根据我此前使用ai学习的经历来看，ai+学习有以下几个方面的特点。 有能力回答学习者几乎所有的问题，在所有成熟的可教学的领域都有应用可能，在没有争议的静态内容（如数学推导）方面可以做到准确无误（部分大模型有待提升） 回答问题的质量很">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-02-10T07:43:33.000Z">
+<meta property="article:modified_time" content="2026-02-12T03:56:29.830Z">
+<meta property="article:author" content="Peter Lee">
+<meta property="article:tag" content="学习研究">
+<meta property="article:tag" content="实习">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2026/02/10/ai%E5%AD%A6%E4%B9%A0%E4%BA%A7%E5%93%81%E8%B0%83%E7%A0%94/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/02/10/ai%E5%AD%A6%E4%B9%A0%E4%BA%A7%E5%93%81%E8%B0%83%E7%A0%94/","path":"2026/02/10/ai学习产品调研/","title":"ai教学产品调研"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ai教学产品调研 | Peter's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Peter's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-0-%E6%88%91%E5%AF%B9%E6%95%99%E5%AD%A6%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">Part 0 我对教学的理解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%99%E5%AD%A6%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%8C%E6%98%AF%E7%94%A8%E5%AF%B9%E8%B1%A1%E7%90%86%E8%A7%A3%E7%9A%84%E6%A6%82%E5%BF%B5%E8%A7%A3%E9%87%8A%E5%AF%B9%E8%B1%A1%E4%B8%8D%E7%90%86%E8%A7%A3%E7%9A%84%E6%A6%82%E5%BF%B5%EF%BC%8C%E4%BB%8E%E8%80%8C%E6%89%A9%E5%A4%A7%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%90%86%E8%A7%A3%E8%8C%83%E5%9B%B4%EF%BC%8C%E8%BE%BE%E5%88%B0%E2%80%9C%E6%95%99%E2%80%9D%E7%9A%84%E7%9B%AE%E7%9A%84%E3%80%82%E8%BF%99%E9%87%8C%E7%9A%84%E5%AA%92%E4%BB%8B%E5%BE%88%E4%B8%B0%E5%AF%8C%EF%BC%8C%E6%96%87%E5%AD%97%EF%BC%8C%E5%9B%BE%E7%89%87%EF%BC%8C%E5%8A%A8%E7%94%BB%EF%BC%8C%E7%BB%93%E6%9E%84%E5%9B%BE%E8%A1%A8%E3%80%82%E6%A0%B9%E6%8D%AE%E6%88%91%E6%AD%A4%E5%89%8D%E4%BD%BF%E7%94%A8ai%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%BB%8F%E5%8E%86%E6%9D%A5%E7%9C%8B%EF%BC%8Cai-%E5%AD%A6%E4%B9%A0%E6%9C%89%E4%BB%A5%E4%B8%8B%E5%87%A0%E4%B8%AA%E6%96%B9%E9%9D%A2%E7%9A%84%E7%89%B9%E7%82%B9%E3%80%82"><span class="nav-number">1.1.</span> <span class="nav-text">教学的本质，是用对象理解的概念解释对象不理解的概念，从而扩大对象的理解范围，达到“教”的目的。这里的媒介很丰富，文字，图片，动画，结构图表。根据我此前使用ai学习的经历来看，ai+学习有以下几个方面的特点。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-1-%E9%A1%B6%E6%B5%81%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%BD%93%E9%AA%8C"><span class="nav-number">2.</span> <span class="nav-text">Part 1 顶流大模型体验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-2-%E9%A1%B6%E6%B5%81ai%E4%BA%A7%E5%93%81%E4%BD%93%E9%AA%8C"><span class="nav-number">3.</span> <span class="nav-text">Part 2 顶流ai产品体验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E4%BA%A7%E5%93%81"><span class="nav-number">3.1.</span> <span class="nav-text">具体产品</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Manus"><span class="nav-number">3.1.1.</span> <span class="nav-text">Manus</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OpenClaw"><span class="nav-number">3.1.2.</span> <span class="nav-text">OpenClaw</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cursor"><span class="nav-number">3.1.3.</span> <span class="nav-text">Cursor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Genspark"><span class="nav-number">3.1.4.</span> <span class="nav-text">Genspark</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AI%E4%BE%9D%E8%B5%96%E6%80%A7"><span class="nav-number">3.2.</span> <span class="nav-text">AI依赖性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-3-%E6%95%99%E8%82%B2%E8%A1%8C%E4%B8%9A%E5%9E%82%E7%9B%B4%E4%BA%A7%E5%93%81%E4%BD%93%E9%AA%8C"><span class="nav-number">4.</span> <span class="nav-text">Part 3 教育行业垂直产品体验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Flint"><span class="nav-number">4.1.</span> <span class="nav-text">Flint</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E4%BD%93%E7%89%B9%E5%BE%81"><span class="nav-number">4.2.</span> <span class="nav-text">总体特征</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83"><span class="nav-number">4.3.</span> <span class="nav-text">一些思考</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Peter Lee"
+      src="/images/petertian.jpg">
+  <p class="site-author-name" itemprop="name">Peter Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/PeterTianbuhan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;PeterTianbuhan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/10/ai%E5%AD%A6%E4%B9%A0%E4%BA%A7%E5%93%81%E8%B0%83%E7%A0%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/petertian.jpg">
+      <meta itemprop="name" content="Peter Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ai教学产品调研 | Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ai教学产品调研
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-10 07:43:33" itemprop="dateCreated datePublished" datetime="2026-02-10T07:43:33+00:00">2026-02-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-02-12 03:56:29" itemprop="dateModified" datetime="2026-02-12T03:56:29+00:00">2026-02-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Part-0-我对教学的理解"><a href="#Part-0-我对教学的理解" class="headerlink" title="Part 0 我对教学的理解"></a>Part 0 我对教学的理解</h2><h4 id="教学的本质，是用对象理解的概念解释对象不理解的概念，从而扩大对象的理解范围，达到“教”的目的。这里的媒介很丰富，文字，图片，动画，结构图表。根据我此前使用ai学习的经历来看，ai-学习有以下几个方面的特点。"><a href="#教学的本质，是用对象理解的概念解释对象不理解的概念，从而扩大对象的理解范围，达到“教”的目的。这里的媒介很丰富，文字，图片，动画，结构图表。根据我此前使用ai学习的经历来看，ai-学习有以下几个方面的特点。" class="headerlink" title="教学的本质，是用对象理解的概念解释对象不理解的概念，从而扩大对象的理解范围，达到“教”的目的。这里的媒介很丰富，文字，图片，动画，结构图表。根据我此前使用ai学习的经历来看，ai+学习有以下几个方面的特点。"></a>教学的本质，是用对象理解的概念解释对象不理解的概念，从而扩大对象的理解范围，达到“教”的目的。这里的媒介很丰富，文字，图片，动画，结构图表。根据我此前使用ai学习的经历来看，ai+学习有以下几个方面的特点。</h4><ul>
+<li>有能力回答学习者几乎所有的问题，在所有成熟的可教学的领域都有应用可能，在没有争议的静态内容（如数学推导）方面可以做到准确无误（部分大模型有待提升）</li>
+<li>回答问题的质量很大程度上依赖于学习者的ai素养，能否给出准确的提示词决定了效果，学习的主动性也起到重要作用。（可能的解决方案：就像人类教师面对面教学时可能取得更好的效果，训练ai采集学习者的表情或语调等信息，依据更多元的信息做出对学习者目前状态的判断；在不能准确判断学习者目前状态时主动提问，采集更多信息帮助定位当前状态）</li>
+<li>回复生成时间短，全时待命，学习者可以在任何自己需要的时候获得指导，省去了学习者主动搜索信息的时间，极大提高效率，可以适配任务驱动的学习</li>
+<li>在更软一点的领域，比如人际关系，心理健康，爱情观等方面，ai仍然无法替代人类教师或者同学的作用，但后续如果有拟人的智能体出现，情况可能改变</li>
+<li>有因材施教的潜力。在我个人的使用经历中，我会在初期摸索出我认为适合自己的学习方式，多数时候是一种“先看自然语言解释，再落实具体细节”的方式，建立起已知和未知的映射，我常在对话的开头把这些告知ai，让其记住我的学习策略。</li>
+</ul>
+<h2 id="Part-1-顶流大模型体验"><a href="#Part-1-顶流大模型体验" class="headerlink" title="Part 1 顶流大模型体验"></a>Part 1 顶流大模型体验</h2><ul>
+<li>个人认为提示词是很重要的一部分，在任务一：给十岁小孩科普的情景下，我相信如果有合适的提示词，任何一个目前的旗舰模型都能胜任这项工作。我们使用了最朴素的提示词，即文档中提到的两条要求的直接复制，模型们在第二条上表现不一，在各自认为合适的地方穿插了三个例子，但是由于我们也不清楚三个例子具体要求了什么，所以我觉得无法给出评判。</li>
+<li>关于更像什么类型的思考者，这可以在提示词中进行定义，模型都有转换的能力</li>
+<li>关于擅长与不擅长：Gemini擅长多模态任务，支持超长文本框（200万甚至上千万token）理解，但在超长文本下可能丧失注意力。gpt能力全面，有调研模式，代理模式等集成化的功能，并且没有明显短板。qwen优势是小参数量可达到合格的水平，适合本地部署。Claude在遵循具体指令，定向修改代码方面有不可替代优势。上述优势大多面向开发，在教育方面的优缺点我不能确定。</li>
+</ul>
+<h2 id="Part-2-顶流ai产品体验"><a href="#Part-2-顶流ai产品体验" class="headerlink" title="Part 2 顶流ai产品体验"></a>Part 2 顶流ai产品体验</h2><h3 id="具体产品"><a href="#具体产品" class="headerlink" title="具体产品"></a>具体产品</h3><h4 id="Manus"><a href="#Manus" class="headerlink" title="Manus"></a>Manus</h4><ul>
+<li>此前我从未尝试过使用Manus，我输入了请自行完成一个项目，向我展示Manus的能力，Manus在十分钟内完成了项目构建和完成，做出了一个展示目前ai发展趋势的网站，虽然略显简陋，但是框架完整，前端观感舒适，我被非常大的惊艳到了，后面在我需要进行完整项目开发时我计划体验它的付费版本（有七天免费使用）。我认为其强大之处在于把人从具体代码中完全解放出来，虽然据Gemini所说在面对超大项目时可能产生上下文遗忘导致代码冲突，但是也有一定解决手段，并且可以利用cursor配合claude等工具微观调整代码。</li>
+</ul>
+<h4 id="OpenClaw"><a href="#OpenClaw" class="headerlink" title="OpenClaw"></a>OpenClaw</h4><ul>
+<li>注意到OpenClaw的persistent memory机制是完全开源的，并且把它以markdown文件存储在硬盘中。其他的功能更像把电脑的部分控制权交予ai，但是记忆机制在学习中有很大的应用潜力。教育者应该在互动中记住学习者的学习偏好，理解习惯等特征，这套机制可以立即应用在产品中。</li>
+</ul>
+<h4 id="Cursor"><a href="#Cursor" class="headerlink" title="Cursor"></a>Cursor</h4><ul>
+<li>注意到Cursor在帮助开发者理解项目方面的优势，可以在30s的时间内依托整个项目源码生成可视化的项目结构或者运行数据，这事实上是一种帮助开发者 <strong>学习</strong> 这个项目的能力，有在学习产品上应用的可能。</li>
+</ul>
+<h4 id="Genspark"><a href="#Genspark" class="headerlink" title="Genspark"></a>Genspark</h4><ul>
+<li>由于免费额度有限，还没有体会到Gemini指出的优势就不可用了，氪金太。Gemini强调了其在检索信息之后合并为wiki式的网页的特色，我认为这是一种可以考虑的知识呈现模式，并且，在实际产品中，可以多进行形式的展示，让使用者自行选择喜欢哪一种形式，形成记忆增强体验感。</li>
+</ul>
+<h3 id="AI依赖性"><a href="#AI依赖性" class="headerlink" title="AI依赖性"></a>AI依赖性</h3><ul>
+<li>我认为上述产品都有极强的ai依赖性，其中据我了解manus的机制是由主脑发布要求，分配给不同的agent来处理，剩下三个均有明显的ai依赖</li>
+</ul>
+<h2 id="Part-3-教育行业垂直产品体验"><a href="#Part-3-教育行业垂直产品体验" class="headerlink" title="Part 3 教育行业垂直产品体验"></a>Part 3 教育行业垂直产品体验</h2><h4 id="Flint"><a href="#Flint" class="headerlink" title="Flint"></a>Flint</h4><ul>
+<li>登录时会询问你的身份和偏好，这很好，但是我选择以大学生身份进入后，仍推荐给我老师端的功能。UI简洁好看。注意到cite功能，为对话生成一个只读的快照，能让教师知道学生如何使用了ai，这点是特色。响应速度极快，0延迟，既是优点也是缺点。我使用了我的数学作业题目询问，它完全胡说八道。我认为人类教师在面对学生问题时也需要思考得出结论，即时回复不是必须，只要延迟不太长就行。在继续探索的过程中，我看到了可以描述学校教学环境的窗口，但是并不容易被发现。我认为给产品加上良好的新手引导十分重要，不应该过于复杂，但可以让用户大体明白可以如何使用，并且可以做成教程形式持久化存在，用户随时可以探索。在继续探索的过程中我在角落里找到了教师新手引导，推测以教师身份进入会直接弹出</li>
+<li>由于一个一个测试非常疲惫，所以先不看更多了，转而询问Gemini目前的教育ai是否都没有能力解决大学数学中比较困难的一类问题。</li>
+</ul>
+<h4 id="总体特征"><a href="#总体特征" class="headerlink" title="总体特征"></a>总体特征</h4><ul>
+<li>教育ai在能力上呈现出偏科特征，在涉及自然语言理解和运用的方面更为突出，但难以确保其数理逻辑准确无误。因此，目前的产品大都集中在K12阶段（取所有木板最短的一根），并且在我的具体使用中感觉这部分技术壁垒并不明显，难以在所有作品中选出最突出的一个，那些优点感觉都有复现的可能，并且考虑到生育率降低的现状，k12阶段用户可能正在减少。</li>
+</ul>
+<h4 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h4><ul>
+<li>但在最近两年的大模型发展中，LLM+Verifier的体系正在逐步攻克这一领域。具体的，由LLM生成可能的解法，由形式化语言验证器（如lean）来确保答案的正确，使得ai具备完成更前沿数理探究的可能，如果这一部分的能力成熟，那么把教育+ai推广到大学教育会成为可能。</li>
+<li>可能可以以大厂的模型成果作为内核，打造更适合中国学生的功能，比如学生上传教材和往年考试题，通过往年考题拟合今年考题，（通过往年题拟合新题的方案在学生中已经广为流传），或是把生成的解法用更具互动式的UI呈现出来，抑或是用自然语言解释每一步的目。目前仍存在很大一部分学生数学问题畏惧使用LLM，剩下的大都只能依靠文字输出，交互体验一般。</li>
+<li>可能面临的问题：大学生群体不一定拥有充足的资金支持大量调用前沿模型，可能需要为题目进行难度分级，调用不同的模型，或者用搜题系统来辅助，如果题目库中有原题则直接调用导出，节省资源。</li>
+<li>可能的卖点：上述的模式有帮助任何一个学生在短期内突击考试取得好分数的能力，也能帮助研究生或者博士或者研究者定向学习某一个研究中需要用到的知识点。同时，如果感觉特色过于单一，可以类似genspark做一个当前所处领域最新消息汇总的工具，用户既有被动接受消息的权力，也有主动查找某个感兴趣字段的权力，这个工具可以把信息集成汇总总结成用户喜欢的展示形式。</li>
+<li>除此之外，我注意到一些ide正在把复杂的配置（编辑json或者yaml文件）工作用一系列简单的按钮和填空代替，也许这一行为可以推广。</li>
+<li>在上述的工具中加入签到，求运势，今日天气，社区论坛等等带有日常和社交属性的功能会让用户更容易产生依赖，从而在一段时间的使用后习惯使用。</li>
+<li>可以先调查大学生使用意愿以及大模型使用现状</li>
+<li><strong>产品的愿景</strong> ：一个所有大学生都会使用的学习生活助手，专注于校园生活。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%9E%E4%B9%A0/" rel="tag"># 实习</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%A0%94%E7%A9%B6/" rel="tag"># 学习研究</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/02/09/%E8%B6%85%E5%96%B5ai%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%B8%80%E5%A4%A9%E8%AE%B0%E5%BD%95/" rel="prev" title="超喵ai实习第一天记录">
+                  <i class="fa fa-angle-left"></i> 超喵ai实习第一天记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/02/10/%E8%B6%85%E5%96%B5ai%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%BA%8C%E5%A4%A9%E8%AE%B0%E5%BD%95/" rel="next" title="超喵ai实习第二天记录">
+                  超喵ai实习第二天记录 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Peter Lee</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script>
+(function() {
+    // 1. 检查这里的路径拼写！！
+    const pcImages = [
+        '/images/backgroundpc1.png',
+        '/images/backgroundpc2.png',
+        '/images/backgroundpc3.png',
+        '/images/backgroundpc4.png',
+        '/images/backgroundpc5.png',
+        '/images/backgroundpc6.png'
+    ];
+
+    let currentIndex = 0;
+
+    // 定义函数
+    function setBodyBg(index) {
+    // 只有宽度 > 991 且 确实是电脑浏览器时才操作
+    if (window.innerWidth > 991) {
+        document.body.style.backgroundImage = "url('" + pcImages[index] + "')";
+    } else {
+        // 手机端直接移除行内样式，彻底交给 CSS 处理
+        document.body.style.removeProperty('background-image');
+    }
+}
+
+    // 2. 初始化执行
+    // 即使页面没加载完，我们也尝试设置一次
+    setBodyBg(0);
+
+    // 3. 定时轮播
+    setInterval(function() {
+        currentIndex = (currentIndex + 1) % pcImages.length;
+        setBodyBg(currentIndex);
+    }, 10000);
+
+    // 4. 预加载
+    pcImages.forEach(function(src) {
+        const img = new Image();
+        img.src = src;
+    });
+
+    // 5. Zen Mode
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'z' || event.key === 'Z') {
+            document.body.classList.toggle('zen-mode');
+        }
+    });
+})();
+</script>
+</body>
+</html>

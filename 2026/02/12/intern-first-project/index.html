@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="实习项目报告：AI 交互式网页数据反馈系统原型（天平测量未知质量） 项目背景与问题定义 本项目旨在把课堂中的“知识点交互网页”从演示工具升级为学习数据工具，解决： 学生在网页中的关键交互行为未被记录，教师无法判断真实理解程度仅记录“点击次数”缺乏教学意义，需要更关注误区路径、纠错次数、步骤耗时等（手册强调：学习行为 → 理解判断 → 教学决策） 本原型选择的具体场景为：利用天平测量未知物体质量实验">
+<meta property="og:type" content="article">
+<meta property="og:title" content="intern first project">
+<meta property="og:url" content="http://example.com/2026/02/12/intern-first-project/index.html">
+<meta property="og:site_name" content="Peter&#39;s Blog">
+<meta property="og:description" content="实习项目报告：AI 交互式网页数据反馈系统原型（天平测量未知质量） 项目背景与问题定义 本项目旨在把课堂中的“知识点交互网页”从演示工具升级为学习数据工具，解决： 学生在网页中的关键交互行为未被记录，教师无法判断真实理解程度仅记录“点击次数”缺乏教学意义，需要更关注误区路径、纠错次数、步骤耗时等（手册强调：学习行为 → 理解判断 → 教学决策） 本原型选择的具体场景为：利用天平测量未知物体质量实验">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-02-12T03:37:17.000Z">
+<meta property="article:modified_time" content="2026-02-12T03:56:29.830Z">
+<meta property="article:author" content="Peter Lee">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2026/02/12/intern-first-project/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/02/12/intern-first-project/","path":"2026/02/12/intern-first-project/","title":"intern first project"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>intern first project | Peter's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Peter's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E8%83%8C%E6%99%AF%E4%B8%8E%E9%97%AE%E9%A2%98%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">项目背景与问题定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%9B%AE%E6%A0%87%EF%BC%88%E5%AF%B9%E7%85%A7%E4%BB%BB%E5%8A%A1%E6%89%8B%E5%86%8C%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">项目目标（对照任务手册）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E6%80%BB%E4%BD%93%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.</span> <span class="nav-text">原型总体设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E9%87%87%E9%9B%86%E5%86%85%E5%AE%B9%EF%BC%88%E7%BB%93%E6%9E%84%E5%8C%96-JSON%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">数据结构与采集内容（结构化 JSON）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%99%E5%B8%88%E7%AB%AF%E6%8C%87%E6%A0%87%E5%AE%9A%E4%B9%89%EF%BC%88%E6%9C%AC%E6%9C%9F%E9%AA%8C%E6%94%B6%E9%87%8D%E7%82%B9%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">教师端指标定义（本期验收重点）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%93%E5%89%8D%E5%AE%9E%E7%8E%B0%E7%BB%93%E6%9E%9C%EF%BC%88%E5%8F%AF%E4%BA%A4%E4%BB%98%E7%89%A9%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">当前实现结果（可交付物）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="nav-number">7.</span> <span class="nav-text">如何运行与验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%80%9D%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">项目思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B"><span class="nav-number">9.</span> <span class="nav-text">查看</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Peter Lee"
+      src="/images/petertian.jpg">
+  <p class="site-author-name" itemprop="name">Peter Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/PeterTianbuhan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;PeterTianbuhan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/12/intern-first-project/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/petertian.jpg">
+      <meta itemprop="name" content="Peter Lee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="intern first project | Peter's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          intern first project
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-02-12 03:37:17 / 修改时间：03:56:29" itemprop="dateCreated datePublished" datetime="2026-02-12T03:37:17+00:00">2026-02-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>实习项目报告：AI 交互式网页数据反馈系统原型（天平测量未知质量）</p>
+<h3 id="项目背景与问题定义"><a href="#项目背景与问题定义" class="headerlink" title="项目背景与问题定义"></a>项目背景与问题定义</h3><ul>
+<li>本项目旨在把课堂中的“知识点交互网页”从演示工具升级为学习数据工具，解决：</li>
+<li>学生在网页中的关键交互行为未被记录，教师无法判断真实理解程度<br>仅记录“点击次数”缺乏教学意义，需要更关注误区路径、纠错次数、步骤耗时等（手册强调：学习行为 → 理解判断 → 教学决策）</li>
+<li>本原型选择的具体场景为：利用天平测量未知物体质量实验，通过“砝码 + 游码”的操作过程，采集具有教学意义的过程数据，并在教师端形成可读反馈。</li>
+</ul>
+<h3 id="项目目标（对照任务手册）"><a href="#项目目标（对照任务手册）" class="headerlink" title="项目目标（对照任务手册）"></a>项目目标（对照任务手册）</h3><ul>
+<li>记录学生交互行为：拖拽砝码、使用提示、提交答案、工具误用等<br>生成结构化学习数据：以会话（session）与轮次（round）组织 JSON 数据</li>
+<li>教师端可视化反馈：提供总览（均值&#x2F;极值&#x2F;标准差）与单次实验明细<br>形成闭环：学生端完成并正确后自动提交数据 → 教师端刷新查看统计与流程</li>
+</ul>
+<h3 id="原型总体设计"><a href="#原型总体设计" class="headerlink" title="原型总体设计"></a>原型总体设计</h3><ul>
+<li>学生端（交互实验页）</li>
+<li>核心交互：拖拽砝码到右托盘，使天平平衡；支持游码（0–5g，0.1g 精度）微调</li>
+<li>实验机制：未知质量随机生成（范围 5–98g，部分轮次带 0.1g 小数）</li>
+<li>工具规则：砝码需用“镊子”，游码需用“手拿”，并记录工具误用<br>防遗忘上报：学生提交正确时自动把数据写入教师端数据源（localStorage），同时保留手动“提交给教师”按钮</li>
+<li>教师端（数据反馈页）</li>
+<li>总览视图：面向“全体学生&#x2F;全体轮次”的关键指标统计（均值、标准差、最小、最大）</li>
+<li>明细视图：按会话（学生）查看每轮指标 + 学生操作流程（砝码加&#x2F;减序列）</li>
+<li>数据治理能力：支持删除某条会话数据；支持导入学生导出的 JSON 文件</li>
+</ul>
+<h3 id="数据结构与采集内容（结构化-JSON）"><a href="#数据结构与采集内容（结构化-JSON）" class="headerlink" title="数据结构与采集内容（结构化 JSON）"></a>数据结构与采集内容（结构化 JSON）</h3><ul>
+<li>学生端数据按两层组织：</li>
+<li>会话级（session）：session_id、student_name、started_at、rounds[]、tool_errors[]</li>
+<li>轮次级（round）：unknown_mass、behavior（过程）、understanding（理解判断）</li>
+<li>采集重点（与手册“行为层 + 理解判断层”一致）：</li>
+<li>行为层：拖拽记录、砝码盘状态变化、纠错、提示使用、步骤耗时</li>
+<li>理解判断层：首次提交是否正确、总提交次数、典型错误提交路径、完成方式（直接命中&#x2F;试错&#x2F;使用提示）</li>
+</ul>
+<h3 id="教师端指标定义（本期验收重点）"><a href="#教师端指标定义（本期验收重点）" class="headerlink" title="教师端指标定义（本期验收重点）"></a>教师端指标定义（本期验收重点）</h3><ul>
+<li>教师端展示 5 类指标（每项提供均值、标准差、最小、最大）：</li>
+<li>学生初次提交成功率：understanding.first_try_correct 的比例</li>
+<li>学生平均提交次数：understanding.total_attempts 的均值</li>
+<li>学生错误操作次数：behavior.tool_errors.length 的均值（如手拿砝码、镊子夹未知物体等）</li>
+<li>学生冗余操作次数：<br>规则：第一次放置砝码不计冗余；之后每次“拿出再放入同一重量”计 1 次冗余</li>
+<li>实现思路：检测“移除某重量后下一次再次添加该重量”<br>学生利用提示次数：behavior.hint_used_count 的均值<br>同时在单轮明细里展示学生操作流程（例如：添加 20g → 添加 10g → 移除 10g → 添加 5g …），用于快速复盘学生策略与可能的误区。</li>
+</ul>
+<h3 id="当前实现结果（可交付物）"><a href="#当前实现结果（可交付物）" class="headerlink" title="当前实现结果（可交付物）"></a>当前实现结果（可交付物）</h3><ul>
+<li>学生端可运行交互网页：完成砝码拖拽、游码微调、随机未知质量、多轮尝试</li>
+<li>结构化数据采集：支持导出 JSON；正确后自动“传输”到教师端数据源</li>
+<li>教师端网页：<br>总览统计（均值&#x2F;标准差&#x2F;极值）<br>单次实验明细（含操作流程）<br>支持导入 JSON、删除某条数据<br>工程化准备：提供 .gitignore 便于推送 GitHub 与 mentor 共享进度</li>
+</ul>
+<h3 id="如何运行与验证"><a href="#如何运行与验证" class="headerlink" title="如何运行与验证"></a>如何运行与验证</h3><ul>
+<li>学生端：打开 balance-experiment&#x2F;index.html</li>
+<li>教师端：打开 teacher-dashboard&#x2F;index.html</li>
+<li>建议用本地静态服务打开（避免 file:&#x2F;&#x2F; 环境差异）：<br>cd “d:\Intern\data collection project”npx serve .</li>
+<li>验证流程：</li>
+<li>学生端输入姓名 → 完成一轮并答对</li>
+<li>教师端点击“刷新数据” → 查看总览指标与该学生会话明细</li>
+<li>教师端可删除该会话，或导入学生端导出的 JSON</li>
+</ul>
+<h3 id="项目思考"><a href="#项目思考" class="headerlink" title="项目思考"></a>项目思考</h3><ul>
+<li>项目大量依赖于人类设计，可以把选择看到数据的权力交还给教师，引导教师输入想要看到的数据，后台调用ai修改代码展示数据，否则当项目量变大，人力维护成本极大。</li>
+</ul>
+<h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><ul>
+<li>项目已上传：<a target="_blank" rel="noopener" href="https://github.com/PeterTianbuhan/Intern">https://github.com/PeterTianbuhan/Intern</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/02/10/%E8%B6%85%E5%96%B5ai%E5%AE%9E%E4%B9%A0%E7%AC%AC%E4%BA%8C%E5%A4%A9%E8%AE%B0%E5%BD%95/" rel="prev" title="超喵ai实习第二天记录">
+                  <i class="fa fa-angle-left"></i> 超喵ai实习第二天记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/02/12/hello-world/" rel="next" title="Hello World">
+                  Hello World <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Peter Lee</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script>
+(function() {
+    // 1. 检查这里的路径拼写！！
+    const pcImages = [
+        '/images/backgroundpc1.png',
+        '/images/backgroundpc2.png',
+        '/images/backgroundpc3.png',
+        '/images/backgroundpc4.png',
+        '/images/backgroundpc5.png',
+        '/images/backgroundpc6.png'
+    ];
+
+    let currentIndex = 0;
+
+    // 定义函数
+    function setBodyBg(index) {
+    // 只有宽度 > 991 且 确实是电脑浏览器时才操作
+    if (window.innerWidth > 991) {
+        document.body.style.backgroundImage = "url('" + pcImages[index] + "')";
+    } else {
+        // 手机端直接移除行内样式，彻底交给 CSS 处理
+        document.body.style.removeProperty('background-image');
+    }
+}
+
+    // 2. 初始化执行
+    // 即使页面没加载完，我们也尝试设置一次
+    setBodyBg(0);
+
+    // 3. 定时轮播
+    setInterval(function() {
+        currentIndex = (currentIndex + 1) % pcImages.length;
+        setBodyBg(currentIndex);
+    }, 10000);
+
+    // 4. 预加载
+    pcImages.forEach(function(src) {
+        const img = new Image();
+        img.src = src;
+    });
+
+    // 5. Zen Mode
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'z' || event.key === 'Z') {
+            document.body.classList.toggle('zen-mode');
+        }
+    });
+})();
+</script>
+</body>
+</html>
