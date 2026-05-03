@@ -6,7 +6,6 @@ import type { PostListItem } from "@/lib/content";
 import type { Locale } from "@/lib/i18n";
 import type {
   Dictionary,
-  LocalizedLearningStage,
   LocalizedProject,
   SiteContent,
 } from "@/lib/site";
@@ -30,20 +29,6 @@ const statusPill = {
   blue: "bg-[#e5f0f6] text-[#2d6f9f]",
   amber: "bg-[#f7ead1] text-[#9b6a18]",
   green: "bg-[#dcefe8] text-[#27765d]",
-};
-
-const stageRing = {
-  current: "border-[#6ba992] text-[#27765d]",
-  next: "border-[#b9bdc2] text-[#202225]",
-  later: "border-[#c9cdd1] text-[#202225]",
-  future: "border-[#c9cdd1] text-[#202225]",
-};
-
-const stageText = {
-  current: "text-[#27765d]",
-  next: "text-[#2f80bd]",
-  later: "text-[#b07124]",
-  future: "text-[#7a828a]",
 };
 
 function Icon({ name, className = "" }: { name: IconName; className?: string }) {
@@ -230,63 +215,6 @@ function Hero({
   );
 }
 
-function LearningPath({
-  dictionary,
-  locale,
-  stages,
-}: {
-  dictionary: Dictionary;
-  locale: Locale;
-  stages: LocalizedLearningStage[];
-}) {
-  return (
-    <section className="section-rule px-6 py-14 sm:px-8" id="learning">
-      <div className="mx-auto max-w-[1200px]">
-        <div className="mb-12 flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
-          <div>
-            <h2 className="academic-serif text-3xl font-normal">{dictionary.home.learningPath}</h2>
-            <p className="mt-3 text-sm text-[color:var(--ink-soft)]">{dictionary.home.learningSubtitle}</p>
-          </div>
-          <Link className="paper-link text-sm" href={`/${locale}/blog`}>
-            {dictionary.home.detailedView}
-            <Icon className="size-4" name="arrow" />
-          </Link>
-        </div>
-
-        <div className="relative grid gap-8 md:grid-cols-4">
-          <div className="absolute left-12 right-12 top-5 hidden border-t border-dashed border-[#bab7af] md:block" />
-          {stages.map((stage) => (
-            <article className="relative" key={stage.number}>
-              <div className={`relative z-10 grid size-11 place-items-center rounded-full border-2 bg-[color:var(--background)] text-lg ${stageRing[stage.statusTone]}`}>
-                {stage.number}
-              </div>
-              <div className="mt-7 border-l border-[color:var(--rule)] pl-6 md:min-h-[18rem]">
-                <h3 className="academic-serif text-2xl font-normal">{stage.title}</h3>
-                <p className={`mt-1 text-sm ${stageText[stage.statusTone]}`}>{stage.status}</p>
-                <p className="mt-6 max-w-[17rem] text-sm leading-7 text-[color:var(--ink-soft)]">
-                  {stage.summary}
-                </p>
-                <ul className="mt-7 space-y-3 text-sm text-[color:var(--ink-soft)]">
-                  {stage.items.map((item) => (
-                    <li className="flex items-center gap-3" key={item}>
-                      <Icon className="size-4 text-[color:var(--muted)]" name="book" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <Link className="paper-link mt-5 text-sm" href={`/${locale}/blog`}>
-                  {dictionary.home.blogCta}
-                  <Icon className="size-4" name="arrow" />
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Projects({
   dictionary,
   locale,
@@ -438,7 +366,6 @@ export function HomeView({ dictionary, latestPosts, locale, site }: HomeViewProp
     <main className="notebook-page min-h-screen bg-[color:var(--background)] text-[color:var(--ink)]">
       <SiteHeader alternatePath={alternatePath} dictionary={dictionary} locale={locale} />
       <Hero dictionary={dictionary} latestPosts={latestPosts} locale={locale} site={site} />
-      <LearningPath dictionary={dictionary} locale={locale} stages={site.learningPath} />
       <Projects dictionary={dictionary} locale={locale} projects={site.projects} />
       <LatestNotes dictionary={dictionary} locale={locale} posts={latestPosts} />
       <SiteFooter dictionary={dictionary} locale={locale} site={site} />

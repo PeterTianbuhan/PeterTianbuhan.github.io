@@ -63,7 +63,6 @@ const dictionary = {
       brand: "Peter Tian",
       home: "首页",
       blog: "笔记",
-      learning: "学习",
       projects: "项目",
       contact: "关于",
     },
@@ -76,8 +75,6 @@ const dictionary = {
       readArticle: "阅读",
       recentPath: "近期轨迹",
       incubatingProjects: "孵化中的项目",
-      learningPath: "学习路径",
-      learningSubtitle: "一张还在变化的学习与探索地图。",
       projectsTitle: "孵化中的项目",
       projectsSubtitle: "还不是成熟作品集，先记录正在打磨的方向。",
       latestNotes: "最新笔记",
@@ -88,7 +85,6 @@ const dictionary = {
       aboutTitle: "关于",
       connectTitle: "联系",
       scroll: "向下看",
-      detailedView: "详细视图",
       allNotes: "全部笔记",
       moreNotes: "更多笔记",
       footerNote: "慢慢来，比较快。",
@@ -112,7 +108,6 @@ const dictionary = {
       brand: "Peter Tian",
       home: "Home",
       blog: "Notes",
-      learning: "Learning",
       projects: "Projects",
       contact: "About",
     },
@@ -125,8 +120,6 @@ const dictionary = {
       readArticle: "Read",
       recentPath: "Recent Path",
       incubatingProjects: "Incubating Projects",
-      learningPath: "Learning Path",
-      learningSubtitle: "A map of what I am learning and exploring.",
       projectsTitle: "Incubating Projects",
       projectsSubtitle: "Projects I am working on outside class.",
       latestNotes: "Latest Notes",
@@ -137,7 +130,6 @@ const dictionary = {
       aboutTitle: "About",
       connectTitle: "Let's connect",
       scroll: "Scroll to explore",
-      detailedView: "Detailed view",
       allNotes: "All notes",
       moreNotes: "More notes",
       footerNote: "Make things slowly and learn along the way.",
@@ -313,8 +305,8 @@ const rawSiteContent: RawSiteContent = {
       status: { zh: "更新中", en: "Evolving" },
       name: { zh: "个人主页", en: "Personal Homepage" },
       summary: {
-        zh: "当前正在使用的个人网站，用来展示笔记、学习路径、项目进展和阶段性复盘。",
-        en: "The personal site I am using for notes, learning paths, project updates, and retrospectives.",
+        zh: "当前正在使用的个人网站，用来展示笔记、学习记录、项目进展和阶段性复盘。",
+        en: "The personal site I am using for notes, learning records, project updates, and retrospectives.",
       },
       meta: { zh: "已上线 - petertianwork.me", en: "Live - petertianwork.me" },
     },
@@ -384,7 +376,6 @@ export type SiteContent = {
     time: string;
     text: string;
   }[];
-  learningPath: LocalizedLearningStage[];
 };
 
 export const getDictionary = cache(async (locale: Locale) => dictionary[locale]);
@@ -421,13 +412,5 @@ export const getSiteContent = cache(async (locale: Locale): Promise<SiteContent>
     type: localize(item.type, locale),
     time: localize(item.time, locale),
     text: localize(item.text, locale),
-  })),
-  learningPath: rawSiteContent.learningPath.map((stage) => ({
-    number: stage.number,
-    statusTone: stage.statusTone,
-    title: localize(stage.title, locale),
-    status: localize(stage.status, locale),
-    summary: localize(stage.summary, locale),
-    items: stage.items.map((item) => localize(item, locale)),
   })),
 }));

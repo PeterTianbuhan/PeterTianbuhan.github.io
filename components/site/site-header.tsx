@@ -27,9 +27,6 @@ export function SiteHeader({
           <Link className="nav-link hidden sm:inline-flex" href={`/${locale}/blog`}>
             {dictionary.nav.blog}
           </Link>
-          <Link className="nav-link hidden md:inline-flex" href={`/${locale}#learning`}>
-            {dictionary.nav.learning}
-          </Link>
           <Link className="nav-link hidden md:inline-flex" href={`/${locale}#projects`}>
             {dictionary.nav.projects}
           </Link>
