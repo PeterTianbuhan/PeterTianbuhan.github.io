@@ -23,6 +23,7 @@ concepts:
   - VPS worker
   - 审计记录
   - 受控修复
+  - Goal lab
   - Obsidian vault
 related:
   - Native Symphony
@@ -259,9 +260,25 @@ implementation Codex
 
 最近我还看到 Codex CLI 的 `/goal` 功能。它的方向很符合我的直觉：让 agent 记住一个目标，并持续运行直到目标完成或达到预算限制。
 
-不过我现在不会把它直接放进正式 worker。原因很简单：它仍然需要在 sandbox 中观察 pause、resume、complete 等行为是否稳定。
+现在它已经不只是一个概念。我在 `SelfImprovingAgent` 里给它加了一层受控运行壳，真实入口是：
 
-所以当前做法是把 `/goal` 放进 goal lab。正式工作流仍然依赖 Linear、worker、reviewer 和 PR；`/goal` 先作为实验对象，用低风险 sandbox 任务验证。如果它足够稳定，未来可能成为 worker 内部长任务执行的一部分。
+```powershell
+python -m harness goal-lab --goal-root <path> run <sandbox-name>
+```
+
+每个 sandbox 必须先有 `GOAL.md`。`goal-lab run` 会在 sandbox 里创建 `.goal-runtime/status.json`、`run.log`、`PROGRESS.md` 和最后消息文件，然后启动 goal-worker。当前默认命令不是生产 worker，而是：
+
+```text
+codex exec --enable goals --sandbox workspace-write --skip-git-repo-check --json --output-last-message ... -C <sandbox> -
+```
+
+也就是说，`GOAL.md` 会作为输入喂给 Codex，写权限只给当前 sandbox workspace。`--wait` 适合短 smoke test；长任务可以后台运行，再用 `runtime-status` 看 `running / completed / failed / stalled / stopped`、PID、最后日志行和停滞状态。
+
+我也把复杂任务里的 subagent 使用纳入观察范围。`goal-lab trace` 会从 Codex JSONL 日志里提取 `spawn_agent` / `wait` 事件，让我看到 goal-worker 是否派生了 subagent、派生了几个、每个子任务的大致 prompt。这里的原则是不自研 subworker 调度器，而是让 Codex `/goal` 自己决定是否需要内置 subagent；外层系统只负责 sandbox 生命周期、运行证据、停滞识别和人工审核入口。
+
+本机配置也有一个明确边界：如果没有设置 `GOAL_LAB_ROOT`，默认 goal-root 是 `SelfImprovingAgent` 仓库下的 `.harness/goal-lab`；在 VPS 上才建议显式使用 `/home/symphony/goal-lab`。`symphony-control` 里还有一个独立的 `.goal-lab/config.toml`，里面只启用 `[features] goals = true`，用于隔离测试，不保存生产 worker 状态。
+
+所以当前做法是把 `/goal` 放进 goal lab，而不是直接并入正式 worker。正式工作流仍然依赖 Linear、worker、reviewer 和 PR；`/goal` 的产物默认禁止导出，必须先进入 `Goal Idea Incubator` 审核 issue。人工通过以后，才允许复制到 GitHub、vault、HomePage、正式 workspace 或普通 Linear 任务。
 
 这也符合我对这套系统的原则：新能力可以引入，但不能让正在工作的主流程失去可控性。
 
