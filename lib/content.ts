@@ -12,6 +12,10 @@ type RawFrontmatter = {
   publishedAt: string;
   updatedAt?: string;
   tags: string[];
+  type?: string;
+  topics?: string[];
+  concepts?: string[];
+  related?: string[];
   featured: boolean;
   locale: Locale;
   translationKey: string;
@@ -22,6 +26,10 @@ export type PostListItem = {
   title: string;
   excerpt: string;
   tags: string[];
+  type?: string;
+  topics: string[];
+  concepts: string[];
+  related: string[];
   locale: Locale;
   translationKey: string;
   featured: boolean;
@@ -40,7 +48,17 @@ export type Post = {
 
 async function readLocaleDirectory(locale: Locale) {
   const directory = path.join(contentRoot, locale);
-  const entries = await fs.readdir(directory, { withFileTypes: true });
+  let entries;
+
+  try {
+    entries = await fs.readdir(directory, { withFileTypes: true });
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      return [];
+    }
+
+    throw error;
+  }
 
   return entries.filter((entry) => entry.isFile() && entry.name.endsWith(".mdx"));
 }
@@ -66,6 +84,10 @@ function normalizePost(slug: string, locale: Locale, source: string): Post {
       title: frontmatter.title,
       excerpt: frontmatter.excerpt,
       tags: frontmatter.tags ?? [],
+      type: frontmatter.type,
+      topics: frontmatter.topics ?? [],
+      concepts: frontmatter.concepts ?? [],
+      related: frontmatter.related ?? [],
       locale: frontmatter.locale,
       translationKey: frontmatter.translationKey,
       featured: Boolean(frontmatter.featured),
