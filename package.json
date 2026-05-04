@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "articles:sync": "node ./scripts/sync-vault-articles.mjs",
     "post:intake": "node ./scripts/post-intake.mjs",
     "articles:check": "node ./scripts/verify-article-sources.mjs",
     "legacy:refresh": "node ./scripts/refresh-legacy-homepage.mjs",
