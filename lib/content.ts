@@ -40,7 +40,21 @@ export type Post = {
 
 async function readLocaleDirectory(locale: Locale) {
   const directory = path.join(contentRoot, locale);
-  const entries = await fs.readdir(directory, { withFileTypes: true });
+  let entries;
+
+  try {
+    entries = await fs.readdir(directory, { withFileTypes: true });
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      "code" in error &&
+      (error as NodeJS.ErrnoException).code === "ENOENT"
+    ) {
+      return [];
+    }
+
+    throw error;
+  }
 
   return entries.filter((entry) => entry.isFile() && entry.name.endsWith(".mdx"));
 }
