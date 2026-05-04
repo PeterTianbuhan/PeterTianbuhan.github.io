@@ -2,12 +2,20 @@
 
 Use this when you want to turn the reviewed source branch into a deploy-ready GitHub Pages bundle without replacing `main` with raw source files.
 
+For normal article edits, prefer the automatic workflow in `.github/workflows/publish-site.yml`: push the reviewed MDX change to `source`, and the workflow will build and publish the generated output to `main`. The local commands below are still useful for manual verification or emergency publishing.
+
 ## Commands
 
 If you are adding a new article, write it first:
 
 ```powershell
 npm run post:intake -- .\templates\post-intake.template.json
+```
+
+Check that every live route has a single source MDX file:
+
+```powershell
+npm run articles:check
 ```
 
 Then refresh the old homepage bridge only when `legacy-homepage/index.html` exists in your workspace:

@@ -35,6 +35,8 @@ Before opening a worker PR:
 
 Publishing commands such as `npm run publish:bundle` prepare generated output under `.publish/`. They are for an explicit publish task, not for routine source PRs.
 
+When a change is merged or pushed to `source` and it touches published site inputs such as `content/blog/**`, `.github/workflows/publish-site.yml` automatically builds the site and updates the live `main` branch with the generated bundle. Article source rules are documented in `docs/article-sync.md`.
+
 ## Review Evidence
 
 Pre-wrapper acceptance review can rely on local evidence: the current branch is not `main`, the source-branch docs and guardrails are present, and the local verification commands pass.

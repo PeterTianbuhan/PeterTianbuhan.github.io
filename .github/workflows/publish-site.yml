@@ -1,0 +1,84 @@
+name: Publish Site
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - source
+    paths:
+      - ".github/workflows/publish-site.yml"
+      - "app/**"
+      - "components/**"
+      - "content/blog/**"
+      - "lib/**"
+      - "package.json"
+      - "package-lock.json"
+      - "next.config.ts"
+      - "postcss.config.mjs"
+      - "scripts/prepare-github-pages.mjs"
+      - "scripts/verify-article-sources.mjs"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-site
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    name: Build and publish GitHub Pages output
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          ref: source
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify article source mapping
+        run: npm run articles:check
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Prepare GitHub Pages bundle
+        run: npm run publish:bundle
+
+      - name: Publish bundle to main
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          PUBLISH_DIR="$(cat .publish/latest-github-pages.txt)"
+          test -f "$PUBLISH_DIR/index.html"
+          test "$(cat "$PUBLISH_DIR/CNAME")" = "petertianwork.me"
+          test -f "$PUBLISH_DIR/.nojekyll"
+          test ! -e "$PUBLISH_DIR/package.json"
+          test ! -d "$PUBLISH_DIR/app"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git worktree add ../publish-main origin/main
+          rsync -a --delete --exclude ".git" "$PUBLISH_DIR"/ ../publish-main/
+
+          cd ../publish-main
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No publish changes."
+            exit 0
+          fi
+
+          git add -A
+          git commit -m "Publish site from source ${GITHUB_SHA::7}"
+          git push origin HEAD:main

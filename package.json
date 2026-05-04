@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "post:intake": "node ./scripts/post-intake.mjs",
+    "articles:check": "node ./scripts/verify-article-sources.mjs",
     "legacy:refresh": "node ./scripts/refresh-legacy-homepage.mjs",
     "publish:bundle": "node ./scripts/prepare-github-pages.mjs",
     "workflow:check": "node ./scripts/verify-source-workflow.mjs",
