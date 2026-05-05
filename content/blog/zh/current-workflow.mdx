@@ -25,6 +25,7 @@ concepts:
   - 受控修复
   - Goal lab
   - Obsidian vault
+  - 消息式监控
 related:
   - Native Symphony
   - HomePage
@@ -39,7 +40,7 @@ source: "my-cognitive-vault/90-Public-Candidates/current-workflow-2026-05-04.md"
 
 我现在希望形成的工作方式，可以概括成一句话：
 
-我只重点参与两个环节：一开始把模糊想法说清楚，最后验收产品和提出判断。中间的任务发布、代码修改、审查、PR、发布和复盘，尽量交给一套可观察的 agent 工作流。
+我只重点参与两个环节：一开始把模糊想法说清楚，最后验收产品和提出判断。中间的任务发布、代码修改、审查、PR、发布、监控和复盘，尽量交给一套可观察、可汇报的 agent 工作流。
 
 当前闭环大致是：
 
@@ -50,7 +51,8 @@ source: "my-cognitive-vault/90-Public-Candidates/current-workflow-2026-05-04.md"
 5. 实现结束后，reviewer agent 根据任务目的和证据判断是否达成目标。
 6. 只有 reviewer 通过，worker 才提交代码、推送分支、创建 draft PR，并把结果写回 Linear。
 7. 我最后查看 PR、预览或线上结果，决定是否合并、继续 repair，或者拆出后续任务。
-8. 每天或每个阶段，再根据 Linear、日志、PR 和 review 总结这套流程哪里稳定，哪里还需要改进。
+8. 如果任务很长，独立的监控 Codex 读取精简状态，把关键变化用短消息发回对话，而不是让我一直盯着终端。
+9. 每天或每个阶段，再根据 Linear、日志、PR 和 review 总结这套流程哪里稳定，哪里还需要改进。
 
 这不是为了把所有决定都交给 AI。相反，它的价值在于让 agent 的工作有边界、有记录、有验收，也能从失败中留下可以改进的痕迹。
 
@@ -282,6 +284,40 @@ codex exec --enable goals --sandbox workspace-write --skip-git-repo-check --json
 
 这也符合我对这套系统的原则：新能力可以引入，但不能让正在工作的主流程失去可控性。
 
+## 从终端面板到消息式监控
+
+在处理长时间 `/goal` 或 `goal-loop` 任务时，我最初尝试过 SSH 进 VPS，打开 `tmux` 面板观看进度。这个方式能看到很多细节，例如当前 cycle、worker 日志、reviewer 结论和最近产物，但它很快暴露出两个问题：
+
+- 面板为了刷新会不断闪动，不适合长时间阅读；
+- 信息量过大，容易变成另一种形式的日志堆砌。
+
+因此监控层又被拆出来：长任务本身继续在 VPS 的 sandbox 中运行，但观察方式从“人盯终端”改成“独立监控 Codex 读状态，再用短消息汇报”。
+
+为此 `SelfImprovingAgent` 增加了一个精简状态出口：
+
+```bash
+python3 -m harness goal-loop --goal-root /home/symphony/goal-lab brief <goal-id>
+```
+
+`brief` 不输出完整日志，而是只给监控 agent 需要的结构化信息：
+
+- 当前状态和 active cycle；
+- 推断阶段，例如 worker 正在运行、worker 已结束但 reviewer 还没写 verdict；
+- 当前 bounded task；
+- 最近更新的文件；
+- 最新 reviewer verdict、findings 和 blockers；
+- 最近几轮 cycle timeline；
+- 下一次建议检查的条件。
+
+这样，监控 agent 可以每隔一段时间读取 `brief`，再把结果压缩成一条中文消息，例如：
+
+```text
+当前 Cycle 3 worker 已写出日志，reviewer 还没给出第 3 轮 verdict。
+sandbox 文件数增加，说明这一轮有实际产出。下一次重点等 cycles/003-reviewer.json 出现。
+```
+
+这次变化改变的是人机界面，而不是执行权限。`tmux` 面板仍然可以作为调试 fallback；真正默认的观察方式变成消息式监控。长任务不用再要求我一直守在一个闪动的窗口前，而是由一个只读监控 agent 把“有无进展、当前卡点、下次看什么”主动发回来。
+
 ## 我希望最终怎样使用它
 
 理想状态下，我每天的使用方式会很简单：
@@ -290,14 +326,15 @@ codex exec --enable goals --sandbox workspace-write --skip-git-repo-check --json
 2. Codex 帮我把它澄清成 Goal Spec 和 Linear 任务；
 3. VPS worker 后台领取任务；
 4. Codex CLI 在对应 repo 中完成实现；
-5. reviewer agent 根据目的和证据验收；
-6. GitHub PR 出现，Linear 收到结果；
-7. 我验收产品，决定合并、修改或继续拆任务；
-8. 系统把这次过程写入审计记录和 daily review；
-9. 如果出现可修复小问题，受控 repair loop 尝试一次；
-10. 如果出现重复缺陷，进入可审核的长期规则候选；
-11. 如果过程产生值得保留的学习内容，先进入 `my-cognitive-vault`；
-12. 如果某篇笔记适合公开，再整理成 HomePage 文章。
+5. 如果任务很长，监控 Codex 定期读取 `brief`，用短消息告诉我关键进展；
+6. reviewer agent 根据目的和证据验收；
+7. GitHub PR 出现，Linear 收到结果；
+8. 我验收产品，决定合并、修改或继续拆任务；
+9. 系统把这次过程写入审计记录和 daily review；
+10. 如果出现可修复小问题，受控 repair loop 尝试一次；
+11. 如果出现重复缺陷，进入可审核的长期规则候选；
+12. 如果过程产生值得保留的学习内容，先进入 `my-cognitive-vault`；
+13. 如果某篇笔记适合公开，再整理成 HomePage 文章。
 
 这样一来，项目推进和学习记录就不再是两套互相割裂的东西。项目会产生笔记，笔记会沉淀理解，成熟内容再进入网站。
 
