@@ -1,0 +1,5 @@
+1:"$Sreact.fragment"
+2:I[97367,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"ViewportBoundary"]
+3:I[97367,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"MetadataBoundary"]
+4:"$Sreact.suspense"
+0:{"rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"从 goal-loop 到原生 /goal supervisor | System Portfolio"}],["$","meta","1",{"name":"description","content":"一份阶段性记录：从人工 goal-loop 转向原生 /goal supervisor，也反思我在 agent 编排中没有确认关键状态、上下文过重、自建 skill 失效和被谄媚式引导影响判断的问题。"}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iwEU4DU7wdp1UseRPCsgd"}
