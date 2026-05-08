@@ -1,0 +1,195 @@
+---
+title: "Attention is all you need：一次轻量化 Agent 记忆方案的开发记录"
+excerpt: "记录一次从 MCP memory 的疑问出发，逐步收敛出 prompt-only 项目记忆约定，并发布为 Attention Memory GitHub 仓库的过程。核心想法是：让记忆跟随注意力行动。"
+publishedAt: "2026-05-08"
+updatedAt: "2026-05-08"
+type: "build"
+status: "published"
+public: true
+featured: false
+locale: "zh"
+translationKey: "attention-memory-development-record"
+source: "my-cognitive-vault/90-Public-Candidates/attention-memory-development-record-2026-05-08.md"
+tags:
+  - agents
+  - codex
+  - memory
+  - workflow
+  - github
+topics:
+  - agent memory
+  - prompt-only workflow
+  - Codex
+  - project memory
+concepts:
+  - Attention Memory
+  - Attention is all you need
+  - goal.md
+  - memory.md
+  - memory.archive.md
+  - archive as cold memory
+  - goal-driven memory
+  - AGENTS.md
+  - MCP
+related:
+  - current-workflow-2026-05-04
+  - native-goal-architecture-evolution-2026-05-06
+github: "https://github.com/PeterTianbuhan/attention-memory"
+---
+
+## 起点：我为什么开始想 agent 记忆
+
+这次实验最初不是从“我要做一个项目”开始的，而是从一个更朴素的问题开始：MCP 到底是什么，它能不能解决 agent 记忆问题？
+
+MCP 更像一套协议和生态。它让 agent host、agent client 和 server 之间可以用相对统一的方式交换工具、资源和提示词。这个结构确实可以承载 memory server，但 memory 本身并不会因为接入 MCP 就自动变成熟。尤其是个人向长期记忆系统，目前仍然容易遇到两个问题：
+
+1. 记得太少，每次任务都像从零开始。
+2. 记得太多，过时信息反而污染后续判断。
+
+因此问题逐渐从“要不要配置 memory MCP server”转向了“能不能先用更轻的方式管理项目记忆”。
+
+## 核心想法：让记忆跟随注意力行动
+
+后来出现了一个更清晰的判断：记忆不是单纯的信息堆积，而是任务驱动的。
+
+一个事实是否值得记住，不取决于它看起来是否有趣，而取决于它是否服务于当前项目目标。目标变化时，旧记忆也应该被审查；过去失效的记忆也不一定要删除，而是可以进入 archive，等未来目标重新匹配时再被复用。
+
+这就是后来项目介绍里那句话的来源：
+
+> Attention is all you need.
+
+这里的 attention 不是 Transformer 里的机制复刻，而是一个工作流判断：agent 的记忆应该跟随当前注意力行动。目标定义了注意力，注意力筛选记忆。
+
+## 第一版：只用 AGENTS.md 加三个文件
+
+最初的方案非常小：
+
+```text
+goal.md
+memory.md
+memory.archive.md
+```
+
+`goal.md` 记录项目目标。
+
+`memory.md` 记录可复用的高价值事实。
+
+`memory.archive.md` 保存过时记忆，而不是直接删除。
+
+关键原则也很简单：所有记忆改动都必须先展示给用户确认，一切内容保持极简。如果两种说法都能覆盖同一个主旨，就选更直接的那个。
+
+这一步故意没有引入数据库、向量检索、MCP server 或额外守护进程。原因是：如果最小规则都不能约束 agent 行为，那么更复杂的系统也很可能只是更复杂地制造噪音。
+
+## 目标变复杂后：区分全局目标和当前目标
+
+继续讨论后，一个更现实的问题出现了：如果项目变大，单句 `goal.md` 可能会失焦。
+
+例如在一个大作业项目里，“审查 tokenizer”可能只是一次操作，不应该成为项目目标。真正的当前目标可能是“完成 Lv.3”；更长期的全局目标则是“完成 Mini-Lisp 大作业并保持测试稳定”。
+
+于是 `goal.md` 被改成两层：
+
+```md
+Global: ...
+Current: ...
+```
+
+`Global` 记录整个项目文件夹的长期方向。
+
+`Current` 记录当前阶段目标。探索可以成为当前目标，但临时动作不改变目标。
+
+这个区分很重要。它让 agent 不会把一次局部动作误认为项目方向，也避免长期目标因为短期操作频繁漂移。
+
+## Archive 不是垃圾桶，而是冷记忆
+
+另一个关键变化是对 `memory.archive.md` 的重新理解。
+
+一开始 archive 只是用来放过时记忆。后来发现，在目标变化时，不只应该从 `memory.md` 里找过时内容，也应该从 `memory.archive.md` 里找可能重新可用的内容。
+
+因此规则变成：
+
+- `goal.md` 更新时，审查 `memory.md` 和 `memory.archive.md`。
+- 过时记忆确认后移入 archive。
+- archive 中重新匹配当前目标的高价值记忆，确认后以极简版本加回 `memory.md`。
+- archive 保留原文，不做“撤销归档”。
+
+这样 archive 就不是垃圾桶，而是冷记忆。它保存历史上下文，但不会默认挤进当前注意力。
+
+## 测试：它是不是真的管用
+
+这套规则没有停留在纸面上，而是做了几轮小测试。
+
+第一轮是在沙盒里测试 Codex 是否会未经确认就改文件。结果是，它能遵守“先展示、再确认”的约束。
+
+第二轮测试了目标不明确时的表现。用户表达“接下来想探索几个可能方向”时，Codex 能把“探索”识别为当前目标，而不是因为目标还不确定就拒绝维护 `goal.md`。
+
+第三轮测试了目标变化和 archive。旧目标下的记忆被移动到 archive，新目标下的记忆被重新写入 `memory.md`。这里也明确了 archive 的第三列含义：不是原始用户任务，而是那条记忆所属的目标原文。
+
+第四轮测试更接近真实项目。我们选了一个 C++ Mini-Lisp 作业项目，写入模拟真实状态的 `goal.md` 和多条 `memory.md`。随后让 Codex 做只读代码审查。它没有被直接提示读取 memory，但最终把首要风险定位到 tokenizer 中 `#` 布尔 token 可能越界的问题，并且没有把尚未要求实现的 eval 功能当成优先事项。这和预先写入的 memory 高度一致。
+
+第五轮测试了复杂项目目标总结。由于真实 HomePage 项目内容不适合直接外发测试，我们先生成脱敏摘要，只保留目录结构、脚本名、依赖和内容数量，再让 Codex 根据摘要提出 `goal.md`。它给出的结果只有两行：
+
+```md
+Global: Maintain a private Next.js homepage with multilingual blog content and a reliable writing-to-publishing workflow.
+Current: Stabilize the Next.js app and content pipeline while migrating legacy homepage work.
+```
+
+这个结果说明，当前“保持极简”的规则已经足以让模型自然压缩复杂项目目标，暂时不需要额外加硬性的字数限制。
+
+## 最终形态：Attention Memory
+
+最后，这套规则被整理成一个独立的小仓库：
+
+[GitHub 仓库：PeterTianbuhan/attention-memory](https://github.com/PeterTianbuhan/attention-memory)
+
+仓库名叫 **Attention Memory**。
+
+它的定位很明确：
+
+- prompt-only；
+- 不依赖 MCP server；
+- 不依赖数据库；
+- 不依赖向量存储；
+- 只用 agent instruction 和三个 markdown 文件维护项目记忆。
+
+公开版 snippet 的核心内容是：
+
+```md
+- Lightweight project memory: in every project, maintain `goal.md`, `memory.md`, and `memory.archive.md`.
+  `goal.md` records two levels of goals: `Global: ...` and `Current: ...`.
+  `Global` records the long-term direction of the whole project.
+  `Current` records the current project phase goal; exploration may be a current goal, but temporary actions do not change it.
+  `memory.md` records reusable high-value facts, one sentence per item.
+  `memory.archive.md` records outdated memories in this format: `time | original memory | original owning goal`.
+  All changes must be shown to the user and confirmed before editing.
+  Keep everything minimal; if two phrasings preserve the same meaning, always choose the more direct one.
+  When `goal.md` changes, review both `memory.md` and `memory.archive.md`; move outdated memories to `memory.archive.md` after confirmation; if archived memories become relevant again, ask for confirmation and add a minimal version back to `memory.md` while keeping the archive unchanged.
+  Current user instructions, current code, and current test results override historical goals and memories.
+```
+
+这个版本不是要替代所有 memory system。它更像一条极小的工作约定：先让 agent 在项目目录里用可见、可审查、可回滚的方式维护记忆。
+
+## 这次实验得到的判断
+
+这次开发过程中，最有价值的判断不是“我们找到了最终 memory 方案”，而是“memory 的最小可用形态可能比想象中更简单”。
+
+复杂系统当然有价值。MCP server、向量检索、长期用户画像、跨项目知识库，都可能在更大规模下有意义。但在单个项目内，最先需要解决的问题往往不是“怎么记住更多”，而是：
+
+- 当前目标是什么？
+- 哪些事实真的服务于这个目标？
+- 目标变化后，哪些记忆应该降级？
+- 旧记忆什么时候可以重新进入当前注意力？
+- 用户是否始终看得见 agent 正在记什么？
+
+Attention Memory 的答案是：先把这些问题放进三个小文件里，用显式确认约束污染，用 archive 保留历史，用目标决定注意力。
+
+## 后续可能继续做什么
+
+后续可以继续测试几件事：
+
+1. 在真实长期项目中观察 `goal.md` 是否会膨胀。
+2. 测试 archive 重新复用是否会引入旧噪音。
+3. 为 `memory.md` 加一个极小的格式检查器，但不急着做成完整系统。
+4. 观察不同 agent 对同一段 snippet 的遵守程度。
+5. 等社区 memory MCP 更成熟后，再考虑是否把这套约定升级为 server。
+
+目前这个阶段，保持小反而是优势。它让人能看见 agent 的记忆，也能及时纠正它的注意力。
