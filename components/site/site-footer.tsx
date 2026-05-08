@@ -27,14 +27,16 @@ export function SiteFooter({
         <div>
           <h2 className="academic-serif text-xl font-normal">{dictionary.home.connectTitle}</h2>
           <div className="mt-5 grid gap-4 text-sm text-[color:var(--ink-soft)]">
-            <Link className="footer-row" href={site.social.github} target="_blank">
+            <Link className="footer-row" href={site.social.github} rel="noreferrer" target="_blank">
               <span>GitHub</span>
               <span>{site.social.githubLabel}</span>
             </Link>
-            <Link className="footer-row" href={`mailto:${site.contactEmail}`}>
-              <span>Email</span>
-              <span>{site.contactEmail}</span>
-            </Link>
+            {site.contactEmail ? (
+              <Link className="footer-row" href={`mailto:${site.contactEmail}`}>
+                <span>Email</span>
+                <span>{site.contactEmail}</span>
+              </Link>
+            ) : null}
             <div className="footer-row">
               <span>Location</span>
               <span>{site.location}</span>

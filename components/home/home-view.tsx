@@ -268,7 +268,7 @@ function Projects({
                     <Icon className="size-4" name="arrow" />
                   </Link>
                   {project.link ? (
-                    <Link className="paper-link" href={project.link} target="_blank">
+                    <Link className="paper-link" href={project.link} rel="noreferrer" target="_blank">
                       GitHub
                       <Icon className="size-4" name="arrow" />
                     </Link>
