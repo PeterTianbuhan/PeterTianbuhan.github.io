@@ -1,0 +1,368 @@
+export type VisualNoteImage = {
+  alt: string;
+  caption: string;
+  height: number;
+  id: string;
+  src: string;
+  title: string;
+  width: number;
+};
+
+export type VisualNote = {
+  articleSlug: string;
+  description: string;
+  images: VisualNoteImage[];
+  slug: string;
+  title: string;
+};
+
+export const visualNotes: VisualNote[] = [
+  {
+    articleSlug: "current-workflow",
+    description: "把个人工作流拆成从想法、任务、代码、验证到复盘的六个阶段，便于快速看清整套系统如何运转。",
+    slug: "current-workflow",
+    title: "我目前的工作流",
+    images: [
+      {
+        alt: "当前工作流总览图，串联想法、Linear、Codex、GitHub、HomePage 和复盘。",
+        caption: "总览：把从想法到产品、再到复盘的主链路压缩成一张图。",
+        height: 1049,
+        id: "overview",
+        src: "/visual-notes/current-workflow/01-overview.png",
+        title: "01 总览图",
+        width: 1499,
+      },
+      {
+        alt: "从 goal、规格、worker 到 PR 的任务推进流程图。",
+        caption: "任务推进：先把目标说清楚，再让 worker 按边界产出可审查结果。",
+        height: 1050,
+        id: "goal-spec-worker-pr",
+        src: "/visual-notes/current-workflow/02-goal-spec-worker-pr.png",
+        title: "02 目标、规格、worker 与 PR",
+        width: 1498,
+      },
+      {
+        alt: "HomePage 发布与验证流程图，包含本地检查、构建和发布前确认。",
+        caption: "站点链路：文章和页面进入 HomePage 后，需要经过检查、构建和可见性验证。",
+        height: 1049,
+        id: "homepage-validation",
+        src: "/visual-notes/current-workflow/03-homepage-validation.png",
+        title: "03 HomePage 验证链路",
+        width: 1499,
+      },
+      {
+        alt: "审计和修复循环图，展示发现问题、定位证据、提出修复和复查的过程。",
+        caption: "审计修复：把问题留在可追踪记录里，再用受控修复闭环。",
+        height: 1049,
+        id: "audit-repair-loop",
+        src: "/visual-notes/current-workflow/04-audit-repair-loop.png",
+        title: "04 审计与修复循环",
+        width: 1499,
+      },
+      {
+        alt: "状态安全和知识沉淀图，展示文档、仓库、任务和学习记录的关系。",
+        caption: "状态安全：用轻量记录降低上下文丢失和伪完成风险。",
+        height: 1049,
+        id: "state-safety-knowledge",
+        src: "/visual-notes/current-workflow/05-state-safety-knowledge.png",
+        title: "05 状态安全与知识沉淀",
+        width: 1499,
+      },
+      {
+        alt: "目标监控和纠偏图，展示长期目标、观察信号和人工判断入口。",
+        caption: "监控纠偏：长期目标需要持续观察，也需要保留人工判断点。",
+        height: 1050,
+        id: "goal-monitoring-correction",
+        src: "/visual-notes/current-workflow/06-goal-monitoring-correction.png",
+        title: "06 目标监控与纠偏",
+        width: 1498,
+      },
+    ],
+  },
+  {
+    articleSlug: "native-goal-architecture-evolution",
+    description: "用五张图像化笔记重组展示从人工 goal-loop 到原生 /goal supervisor 的架构演化。",
+    slug: "native-goal",
+    title: "从 goal-loop 到原生 /goal supervisor",
+    images: [
+      {
+        alt: "从 goal-loop 到原生 /goal supervisor 总览图，展示旧结构循环、新结构层级和核心判断。",
+        caption: "总览：从人工 goal-loop 转向原生 /goal supervisor 的整体架构演化。",
+        height: 1050,
+        id: "overview",
+        src: "/visual-notes/native-goal/01-overview.png",
+        title: "01 总览图",
+        width: 1498,
+      },
+      {
+        alt: "解释为什么需要 goal-loop，又为什么要离开它，包括长任务问题、goal-loop 价值和暴露出来的问题。",
+        caption: "背景与问题：goal-loop 让长任务可观察，但脚本不该成为默认调度脑。",
+        height: 1049,
+        id: "why-goal-loop-failed",
+        src: "/visual-notes/native-goal/02-why-goal-loop-failed.png",
+        title: "02 旧结构的价值与边界",
+        width: 1499,
+      },
+      {
+        alt: "原生 /goal 后的新职责分配图，包含 Root Supervisor、Task Supervisor、Worker、Audit-only 和 Human export decision。",
+        caption: "新结构：原生 /goal 保持目标，root supervisor 按语义组织 worker、audit 和人工判断。",
+        height: 1049,
+        id: "native-goal-architecture",
+        src: "/visual-notes/native-goal/03-native-goal-architecture.png",
+        title: "03 原生 /goal 后的新架构",
+        width: 1499,
+      },
+      {
+        alt: "两个关键取舍图，解释 dispatcher 降级为可选实验工具，以及 root supervisor 需要 validation 权。",
+        caption: "设计取舍：取消默认 dispatcher，方向不清晰时先 validation，再 dispatch。",
+        height: 1049,
+        id: "dispatcher-validation-tradeoff",
+        src: "/visual-notes/native-goal/04-dispatcher-validation-tradeoff.png",
+        title: "04 dispatcher 与 validation",
+        width: 1499,
+      },
+      {
+        alt: "反思与后续约束图，展示失败提醒、弃用方向、开发约束、未决问题和后续连接。",
+        caption: "反思与约束：少而清晰，先证据后行动，关键判断留给人。",
+        height: 1049,
+        id: "reflection-constraints",
+        src: "/visual-notes/native-goal/05-reflection-constraints.png",
+        title: "05 反思与后续约束",
+        width: 1499,
+      },
+    ],
+  },
+  {
+    articleSlug: "ai-foundations-cifar10-cnn-learning-record",
+    description: "把 CIFAR-10 CNN 作业拆成任务、数据、模型、训练循环和结果概念，适合先看全局再回到代码细节。",
+    slug: "cifar10-cnn",
+    title: "CIFAR-10 CNN 训练记录",
+    images: [
+      {
+        alt: "CIFAR-10 CNN 作业总览图，展示任务目标、训练流程、核心代码和学习收获。",
+        caption: "总览：先把图像分类作业的目标、流程和关键概念放在同一张图里。",
+        height: 1049,
+        id: "overview",
+        src: "/visual-notes/cifar10-cnn/01-overview.png",
+        title: "01 总览图",
+        width: 1499,
+      },
+      {
+        alt: "数据来源和数据处理结构图，展示 CIFAR-10、DataLoader、标准化和增强流程。",
+        caption: "数据入口：理解数据集、预处理和批次加载怎样进入训练过程。",
+        height: 1050,
+        id: "data-source-structure",
+        src: "/visual-notes/cifar10-cnn/02-data-source-structure.png",
+        title: "02 数据来源与结构",
+        width: 1498,
+      },
+      {
+        alt: "模型结构和特征图图解，展示卷积块、池化、BatchNorm 和分类层。",
+        caption: "模型结构：CNN 先提取中间特征，再把特征送入分类层。",
+        height: 1050,
+        id: "model-feature-maps",
+        src: "/visual-notes/cifar10-cnn/03-model-feature-maps.png",
+        title: "03 模型与特征图",
+        width: 1498,
+      },
+      {
+        alt: "训练循环图，展示 forward、loss、backward、optimizer step 和评估。",
+        caption: "训练循环：从前向计算到反向传播，再到参数更新和测试评估。",
+        height: 1050,
+        id: "training-loop",
+        src: "/visual-notes/cifar10-cnn/04-training-loop.png",
+        title: "04 训练循环",
+        width: 1498,
+      },
+      {
+        alt: "概念和结果整理图，包含准确率、CUDA、AdamW、随机种子和后续理解。",
+        caption: "结果与概念：把训练结果和容易混淆的基础概念放在一起复盘。",
+        height: 1049,
+        id: "concepts-results",
+        src: "/visual-notes/cifar10-cnn/05-concepts-results.png",
+        title: "05 概念与结果",
+        width: 1499,
+      },
+    ],
+  },
+  {
+    articleSlug: "aigc-music-exploration-record",
+    description: "把 AIGC 音乐探索拆成基本流程、提示词工具、Suno 操作、工作流固化和表达边界。",
+    slug: "aigc-music",
+    title: "AIGC 音乐探索记录",
+    images: [
+      {
+        alt: "AIGC 音乐探索总览图，展示从兴趣出发到工具试用、工作流和边界反思。",
+        caption: "总览：从想生成一段旋律开始，看清 AIGC 音乐探索的主线。",
+        height: 1049,
+        id: "overview",
+        src: "/visual-notes/aigc-music/01-overview.png",
+        title: "01 总览图",
+        width: 1499,
+      },
+      {
+        alt: "AIGC 音乐 prompt 和工具图，展示情绪、场景、风格和声音元素如何进入提示词。",
+        caption: "提示词与工具：先描述想听到什么，再用工具生成多个版本。",
+        height: 1050,
+        id: "prompt-tools",
+        src: "/visual-notes/aigc-music/02-prompt-tools.png",
+        title: "02 Prompt 与工具",
+        width: 1498,
+      },
+      {
+        alt: "Suno 浏览器工作流图，展示进入工具、填写提示、生成和筛选的过程。",
+        caption: "Suno 操作：把浏览器里的生成流程拆成可重复的步骤。",
+        height: 1050,
+        id: "suno-browser-workflow",
+        src: "/visual-notes/aigc-music/03-suno-browser-workflow.png",
+        title: "03 Suno 浏览器流程",
+        width: 1498,
+      },
+      {
+        alt: "music-creator 工作流图，展示如何把个人经历转成音乐生成任务。",
+        caption: "工作流固化：把一次探索沉淀成可复用的 music-creator 方法。",
+        height: 1049,
+        id: "music-creator-workflow",
+        src: "/visual-notes/aigc-music/04-music-creator-workflow.png",
+        title: "04 music-creator 工作流",
+        width: 1499,
+      },
+      {
+        alt: "表达边界图，展示复杂私人情绪、随机生成和可控表达之间的关系。",
+        caption: "表达边界：复杂情绪可以提供方向，但不能期待随机生成完全替代表达。",
+        height: 1049,
+        id: "expression-boundary",
+        src: "/visual-notes/aigc-music/05-expression-boundary.png",
+        title: "05 表达边界",
+        width: 1499,
+      },
+    ],
+  },
+  {
+    articleSlug: "attention-memory-development-record",
+    description: "把 Attention Memory 的起点、项目记忆约定、目标归档生命周期、测试和后续判断整理成五张图。",
+    slug: "attention-memory",
+    title: "Attention Memory 开发记录",
+    images: [
+      {
+        alt: "Attention Memory 开发记录总览图，展示问题起点、方案收敛、发布和反思。",
+        caption: "总览：从 MCP memory 疑问走向 prompt-only 项目记忆约定。",
+        height: 1050,
+        id: "overview",
+        src: "/visual-notes/attention-memory/01-overview.png",
+        title: "01 总览图",
+        width: 1498,
+      },
+      {
+        alt: "从 MCP 到最小文件记忆方案的图，展示 goal.md、memory.md 和 memory.archive.md 的职责。",
+        caption: "最小文件：让记忆跟随注意力行动，而不是依赖一个笨重 memory server。",
+        height: 1049,
+        id: "mcp-to-minimal-files",
+        src: "/visual-notes/attention-memory/02-mcp-to-minimal-files.png",
+        title: "02 从 MCP 到最小文件",
+        width: 1499,
+      },
+      {
+        alt: "目标和归档生命周期图，展示 goal 变化、memory 审查和 archive 冷存储。",
+        caption: "生命周期：goal 改变时才审查归档，普通任务不翻冷存储。",
+        height: 1049,
+        id: "goal-archive-lifecycle",
+        src: "/visual-notes/attention-memory/03-goal-archive-lifecycle.png",
+        title: "03 目标与归档生命周期",
+        width: 1499,
+      },
+      {
+        alt: "测试和最终形态图，展示仓库发布、规则检查和轻量工作流边界。",
+        caption: "测试与形态：把规则写小、跑通、发布，再继续观察实际使用。",
+        height: 1049,
+        id: "tests-final-shape",
+        src: "/visual-notes/attention-memory/04-tests-final-shape.png",
+        title: "04 测试与最终形态",
+        width: 1499,
+      },
+      {
+        alt: "判断和未来方向图，展示记忆规则、认知偏差提醒和后续可扩展方向。",
+        caption: "判断未来：先保留最小约束，再根据真实任务决定是否扩展。",
+        height: 1049,
+        id: "judgement-future",
+        src: "/visual-notes/attention-memory/05-judgement-future.png",
+        title: "05 判断与未来方向",
+        width: 1499,
+      },
+    ],
+  },
+  {
+    articleSlug: "http-api-git-push",
+    description: "把 HTTP、API、客户端服务器分工和 Git Smart HTTP 推送过程整理成六张图，帮助先建立网络请求全局图。",
+    slug: "http-api-git-push",
+    title: "从 HTTP、API 到 git push",
+    images: [
+      {
+        alt: "HTTP、API 和 git push 总览图，展示从 Web API 到 Git Smart HTTP 的理解路径。",
+        caption: "总览：从一个 Web API 作业出发，逐步理解 HTTP、API 和 git push。",
+        height: 992,
+        id: "overview",
+        src: "/visual-notes/http-api-git-push/01-overview.png",
+        title: "01 总览图",
+        width: 1586,
+      },
+      {
+        alt: "HTTP 报文和方法图，展示请求行、请求头、请求体、响应和常见方法。",
+        caption: "HTTP 基础：方法和报文格式是通用协议层，具体路径由服务器定义。",
+        height: 992,
+        id: "http-message-methods",
+        src: "/visual-notes/http-api-git-push/02-http-message-methods.png",
+        title: "02 HTTP 报文与方法",
+        width: 1586,
+      },
+      {
+        alt: "客户端、服务器和 API 的关系图，展示请求、路径、参数、处理逻辑和响应。",
+        caption: "客户端与服务器：API 不是远程函数本身，而是服务器公开的请求入口。",
+        height: 992,
+        id: "client-server-api",
+        src: "/visual-notes/http-api-git-push/03-client-server-api.png",
+        title: "03 客户端、服务器与 API",
+        width: 1586,
+      },
+      {
+        alt: "git push Smart HTTP 流程图，展示发现远端、认证、打包和 receive-pack。",
+        caption: "Git Smart HTTP：git push 会通过 HTTP 协议协商、认证并上传 packfile。",
+        height: 992,
+        id: "git-push-smart-http",
+        src: "/visual-notes/http-api-git-push/04-git-push-smart-http.png",
+        title: "04 git push Smart HTTP",
+        width: 1586,
+      },
+      {
+        alt: "HTTPS 推送细节图，展示 TLS、凭据、Authorization 和 GitHub 远端处理。",
+        caption: "HTTPS 细节：传输层保护连接，凭据和权限决定远端是否接受更新。",
+        height: 992,
+        id: "https-push-details",
+        src: "/visual-notes/http-api-git-push/05-https-push-details.png",
+        title: "05 HTTPS 推送细节",
+        width: 1586,
+      },
+      {
+        alt: "Smart HTTP 和 REST API 对比图，展示二者都跑在 HTTP 上但语义不同。",
+        caption: "概念对比：Smart HTTP 是 Git 协议的 HTTP 传输，REST API 是业务接口风格。",
+        height: 992,
+        id: "smart-http-vs-rest-api",
+        src: "/visual-notes/http-api-git-push/06-smart-http-vs-rest-api.png",
+        title: "06 Smart HTTP 与 REST API",
+        width: 1586,
+      },
+    ],
+  },
+];
+
+export function getAllVisualNotes() {
+  return visualNotes;
+}
+
+export function getVisualNoteBySlug(slug: string) {
+  return visualNotes.find((note) => note.slug === slug) ?? null;
+}
+
+export function getVisualNoteByArticleSlug(articleSlug: string) {
+  return visualNotes.find((note) => note.articleSlug === articleSlug) ?? null;
+}
