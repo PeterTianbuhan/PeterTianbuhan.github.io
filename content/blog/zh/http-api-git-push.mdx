@@ -1,0 +1,305 @@
+---
+title: "从 HTTP、API 到 git push：一次请求到底发生了什么"
+excerpt: "从作业里的 Web API 出发，整理 HTTP 报文、常见方法、客户端和服务器的分工，并用 Git Smart HTTP 解释一次 git push 的大致过程。"
+publishedAt: "2026-05-10"
+updatedAt: "2026-05-10"
+type: "study"
+tags:
+  - study
+  - http
+  - api
+  - git
+  - github
+topics:
+  - HTTP
+  - Web API
+  - Git
+  - GitHub
+  - 网络协议
+concepts:
+  - HTTP request
+  - HTTP response
+  - request header
+  - request body
+  - status code
+  - REST API
+  - Git Smart HTTP
+  - git-receive-pack
+  - packfile
+  - ref
+related:
+  - docman-middle-homework
+  - HomePage
+status: "published"
+public: true
+featured: false
+locale: "zh"
+translationKey: "http-api-git-push"
+source: "my-cognitive-vault/90-Public-Candidates/http-api-git-push-2026-05-10.md"
+---
+
+## 从 Web API 开始
+
+这篇记录起点是一次课程作业里的 Web API：程序需要根据 ISBN 查询书籍信息，或者根据 URL 查询网页标题。刚开始容易把它理解成“调用服务器上的某个函数”，但更准确的说法是：客户端按照 HTTP 协议发送请求，服务器识别请求里的方法、路径和参数，再执行自己实现好的处理逻辑。
+
+可以先分成三层：
+
+```text
+HTTP 协议：规定客户端和服务器怎么通信
+HTTP 方法：GET、POST 等通用动作
+具体 API：某个服务器自己定义的路径、参数和返回格式
+```
+
+例如：
+
+```text
+GET /isbn/9780134092669
+```
+
+这里的 `GET` 是 HTTP 规定的通用方法，`/isbn/9780134092669` 是作业服务器自己实现的接口路径。换一个服务器，它不一定认识这个路径。
+
+## HTTP 是什么
+
+HTTP 是一种应用层通信协议。它规定了客户端和服务器之间如何组织请求和响应，比如请求行、请求头、请求体、状态码、响应头、响应体等。
+
+一次 HTTP 通信可以理解为：客户端按照固定格式发出请求，服务器按照固定格式返回响应。格式是通用的，但请求里的具体内容由业务决定。服务器会根据请求方法、路径、查询参数、请求体等信息判断自己是否认识这个请求；如果认识，就执行对应动作；如果不认识，就返回错误状态码。
+
+## HTTP 报文结构
+
+HTTP 通信里有两类报文：请求报文和响应报文。
+
+请求报文大致由四部分组成：
+
+```text
+请求行
+请求头
+空行
+请求体
+```
+
+请求行说明这次请求使用什么方法、访问哪个路径、使用哪个 HTTP 版本。请求头是对请求的补充说明，比如 `Host`、`Accept`、`Content-Type`、`Authorization` 等。请求体是客户端提交的数据；`GET` 请求通常没有请求体，`POST`、`PUT`、`PATCH` 更常见请求体。
+
+响应报文也大致由四部分组成：
+
+```text
+状态行
+响应头
+空行
+响应体
+```
+
+状态行里包含状态码。`200` 表示成功，`404` 表示路径不存在，`405` 表示方法不允许，`500` 表示服务器内部错误。响应头说明返回内容的格式、长度等。响应体是服务器真正返回的数据。
+
+在这次作业里，C++ 代码里的 `result->body` 对应的就是 HTTP 响应体；它里面放的是服务器返回的 JSON 字符串。
+
+## 常见 HTTP 方法
+
+HTTP 里的方法是通用动作，不属于某个服务器私有。常见方法可以这样理解：
+
+```text
+GET：获取资源，通常用于查询，不应该修改服务器状态
+POST：提交数据，通常用于创建资源或触发动作
+PUT：整体替换某个资源
+PATCH：局部修改某个资源
+DELETE：删除资源
+HEAD：类似 GET，但只要响应头，不要响应体
+OPTIONS：询问服务器某个地址支持哪些方法
+CONNECT：建立网络隧道，主要用于代理 HTTPS
+TRACE：调试用，实际中很少开放
+```
+
+最常用的一组可以粗略对应为：`GET` 查，`POST` 提交或创建，`PUT` 整体更新，`PATCH` 局部更新，`DELETE` 删除。
+
+不过 HTTP 只规定这些方法的大致语义和通信格式。具体路径是否存在、参数怎么传、返回什么内容，仍然由服务器自己的 API 决定。
+
+## 客户端和服务器分别做什么
+
+客户端不直接调用服务器里的函数，而是构造一个 HTTP 请求并发送出去。以作业里的 C++ 代码为例：
+
+```cpp
+client.Get("/isbn/" + encodeUriComponent(isbn));
+```
+
+这行代码让 HTTP 客户端库发送一个 GET 请求。HTTP 库负责处理连接、请求格式、响应接收等底层细节。程序员主要关心的是：请求方法是什么、路径是什么、参数放在哪里、响应状态码是什么、响应体是什么。
+
+服务器端会实现一组路由或接口处理逻辑。比如作业服务器可能实现了：
+
+```text
+GET /isbn/{isbn}
+GET /title/{url}
+```
+
+服务器收到请求后，会检查方法和路径是否匹配。如果匹配，就执行对应逻辑，比如根据 ISBN 查询书籍信息，再把结果组织成 JSON 返回。如果不匹配，可能返回 `404 Not Found` 或 `405 Method Not Allowed`。
+
+所以关键区分是：HTTP 是通用协议；API 是某个服务器基于 HTTP 暴露出来的具体服务约定。
+
+## API 是什么
+
+API 可以理解为“某个系统对外提供能力的约定”。Web API 就是通过网络暴露出来的 API。它通常会规定：
+
+```text
+可以访问哪些 URL
+每个 URL 支持哪些 HTTP 方法
+参数放在哪里
+请求体是什么格式
+成功时返回什么
+失败时返回什么
+状态码如何解释
+```
+
+作业里的 Web API 可以概括成：程序通过 HTTP GET 请求，把 ISBN 或网页 URL 发给助教服务器；服务器返回查询好的 JSON；程序解析 JSON 并格式化输出引用信息。
+
+也就是：
+
+```text
+HTTP：负责通信规则
+GET：HTTP 里通用的查询方法
+/isbn/{isbn}：作业服务器定义的具体 API 路径
+JSON：服务器返回的数据格式
+C++ HTTP 库：帮客户端发请求和收响应
+```
+
+## 用 HTTP/API 理解 git push
+
+`git push` 不是把整个文件夹上传到 GitHub，而是把 GitHub 缺少的 Git 对象发过去，并请求更新远程分支指针。
+
+Git 里常见对象包括：
+
+```text
+commit：一次提交，指向目录树和父提交
+tree：目录结构
+blob：文件内容
+tag：标签
+```
+
+如果本地 `main` 指向提交 `C`，GitHub 上的 `main` 还停在提交 `B`，并且 `C` 是基于 `B` 的新提交，那么 push 的核心请求就是：把 GitHub 缺少的对象发过去，并请求把远程的 `refs/heads/main` 从 `B` 更新到 `C`。
+
+如果远程地址是：
+
+```text
+https://github.com/user/repo.git
+```
+
+那么 push 会用 HTTPS 承载 Git 协议。这里 HTTPS 是外层通信通道，Git 协议才是真正表达 push 业务内容的协议。
+
+一次 HTTPS push 的大致顺序是：
+
+```text
+本地 Git 确定要推哪个分支
+连接 GitHub
+GET /repo.git/info/refs?service=git-receive-pack，询问远程仓库当前状态
+GitHub 验证身份和权限
+本地计算 GitHub 缺哪些 commit/tree/blob
+本地把缺少的 Git 对象打成 packfile
+POST /repo.git/git-receive-pack，把 ref 更新请求和 packfile 发给 GitHub
+GitHub 检查 packfile、权限、分支保护规则、hook/policy 等
+检查通过后，GitHub 更新 refs/heads/main 这类远程分支指针
+GitHub 返回 push 成功或失败的结果
+GitHub 之后再触发 Actions、webhook、PR 状态更新等后续事件
+```
+
+这里的 `GET` 和 `POST` 还是 HTTP 方法，但请求体和响应体不是普通 JSON，而是 Git 协议自己的数据格式。
+
+## HTTPS push 里的 HTTP 信息
+
+Git over HTTP 有 dumb 和 smart 两种方式。现代 Git 托管平台上的 push 通常可以按 Smart HTTP 理解：HTTP/HTTPS 负责传输，Git 自己的服务名、pkt-line、packfile 负责表达 Git 业务内容。
+
+这里的 `$GIT_URL` 可以理解为远程仓库地址，例如：
+
+```text
+https://github.com/user/repo.git
+```
+
+第一步通常是引用发现，用来问远程仓库现在有哪些分支、tag 和能力。
+
+```http
+GET $GIT_URL/info/refs?service=git-receive-pack HTTP/1.1
+Host: github.com
+Authorization: <credential>
+```
+
+这一步的 HTTP 信息可以拆成：
+
+```text
+方法：GET
+路径：/user/repo.git/info/refs
+查询参数：service=git-receive-pack，表示我要做 push 相关的接收服务
+请求头：Host 表示访问哪个主机；Authorization 表示身份凭证；Git-Protocol 这类头可能携带 Git 协议版本等额外参数
+请求体：通常没有
+响应状态码：200 表示 HTTP 层成功；401/403 常见于认证或权限失败；404/410 表示仓库或资源不存在
+响应头：Content-Type 可能是 application/x-git-receive-pack-advertisement
+响应体：不是 JSON，而是 Git 的 pkt-line 数据，里面包含远程 refs 当前指向的 commit id，以及服务器支持的能力
+```
+
+第二步是真正发送 push 数据，请求 GitHub 接收本地对象并更新远程引用。
+
+```http
+POST $GIT_URL/git-receive-pack HTTP/1.1
+Host: github.com
+Authorization: <credential>
+Content-Type: application/x-git-receive-pack-request
+
+<ref 更新命令 + PACK 二进制数据>
+```
+
+这一步的 HTTP 信息可以拆成：
+
+```text
+方法：POST
+路径：/user/repo.git/git-receive-pack
+请求头：Content-Type 说明请求体是 Git receive-pack 请求；Authorization 继续说明身份；Content-Length 或 Transfer-Encoding 说明请求体长度或分块传输方式
+请求体：Git 协议数据，不是 JSON。前面是 ref 更新命令，后面是 PACK 二进制数据
+响应状态码：200 只表示 HTTP 请求被服务器正常处理，不一定表示每个分支更新都成功
+响应头：Content-Type 可能是 application/x-git-receive-pack-result
+响应体：Git receive-pack 的结果，包含哪些 ref 更新成功、哪些失败，以及失败原因
+```
+
+POST 请求体里最关键的是两类信息：
+
+```text
+ref 更新命令：old_id new_id refname
+PACK 数据：GitHub 缺少的 commit/tree/blob 等对象
+```
+
+`old_id new_id refname` 可以理解为：请把某个远程引用从旧 commit 移到新 commit。例如：
+
+```text
+<旧 main commit> <新 main commit> refs/heads/main
+```
+
+特殊情况可以这样记：
+
+```text
+old_id 是全 0，表示创建新分支或 tag
+new_id 是全 0，表示删除分支或 tag
+old_id 和 new_id 都不是全 0，表示更新已有引用
+```
+
+所以一次 HTTPS push 中，HTTP 负责的是请求方法、路径、请求头、请求体、状态码、响应头、响应体；Git 负责的是 refs、commit id、capabilities、packfile、每个分支是否更新成功。
+
+如果远程地址是：
+
+```text
+git@github.com:user/repo.git
+```
+
+那么 push 走 SSH，不走 HTTP。此时 SSH 负责连接、加密和认证，里面仍然传输 Git 协议数据。
+
+## 和 GitHub REST API 的区别
+
+容易混淆的一点是：GitHub REST API 通常是 `api.github.com` 上返回 JSON 的接口，例如创建 issue、读取 PR、查询仓库信息等。`git push` 用的是 Git Smart HTTP 接口。它虽然也可能走 HTTP/HTTPS，但请求体和响应体是 Git 协议格式，不是 JSON。
+
+因此可以这样收束：
+
+```text
+HTTP/HTTPS 或 SSH：外层传输方式
+Git protocol：git push 真正使用的业务协议
+GitHub git-receive-pack：GitHub 接收 push 的服务接口
+GitHub REST API：另一套面向平台功能的 JSON API
+```
+
+理解这一点之后，`git push` 就不再像是一个黑箱命令：它本质上是在一个安全连接里，用 Git 协议告诉远程仓库“我有哪些新对象，以及我希望哪些引用移动到哪里”。
+
+## 参考
+
+- [Git 官方文档：HTTP protocol](https://git-scm.com/docs/http-protocol)
