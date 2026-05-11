@@ -4,7 +4,7 @@ import type { Locale } from "@/lib/i18n";
 import type { VisualNote } from "@/lib/visual-notes";
 
 export function VisualNoteView({ locale, note }: { locale: Locale; note: VisualNote }) {
-  const articleHref = `/${locale}/blog/${note.articleSlug}`;
+  const articleHref = note.articleSlug ? `/${locale}/blog/${note.articleSlug}` : null;
 
   return (
     <main className="min-h-screen bg-[#fbfaf7] text-[color:var(--ink)]">
@@ -20,12 +20,14 @@ export function VisualNoteView({ locale, note }: { locale: Locale; note: VisualN
             <p className="mt-4 max-w-3xl text-base leading-8 text-[color:var(--text-soft)]">{note.description}</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Link
-              className="mono inline-flex border border-[color:var(--accent)] bg-[color:var(--accent)] px-5 py-3 text-[10px] uppercase tracking-[0.24em] text-white transition hover:bg-[color:var(--accent-strong)]"
-              href={articleHref}
-            >
-              读原文
-            </Link>
+            {articleHref ? (
+              <Link
+                className="mono inline-flex border border-[color:var(--accent)] bg-[color:var(--accent)] px-5 py-3 text-[10px] uppercase tracking-[0.24em] text-white transition hover:bg-[color:var(--accent-strong)]"
+                href={articleHref}
+              >
+                读原文
+              </Link>
+            ) : null}
             <Link
               className="mono inline-flex border border-[color:var(--rule)] bg-white px-5 py-3 text-[10px] uppercase tracking-[0.24em] text-[color:var(--ink-soft)] transition hover:border-[color:var(--accent)] hover:text-[color:var(--ink)]"
               href={`/${locale}/blog`}

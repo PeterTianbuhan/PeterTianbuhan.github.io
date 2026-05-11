@@ -9,7 +9,7 @@ export type VisualNoteImage = {
 };
 
 export type VisualNote = {
-  articleSlug: string;
+  articleSlug?: string;
   description: string;
   images: VisualNoteImage[];
   slug: string;
@@ -350,6 +350,94 @@ export const visualNotes: VisualNote[] = [
         src: "/visual-notes/http-api-git-push/06-smart-http-vs-rest-api.png",
         title: "06 Smart HTTP 与 REST API",
         width: 1586,
+      },
+    ],
+  },
+  {
+    description: "把 MIT Missing Semester 第 1 讲 Shell 入门整理成九张复习图，覆盖 Shell 定位、命令解析、PATH、数据流、工具流水线、Bash 脚本和进程并行。",
+    slug: "missing-semester-shell",
+    title: "Missing Semester 01：Shell 入门",
+    images: [
+      {
+        alt: "Shell 的定位图，展示 Shell 作为命令解释器、组合语言、执行环境和开放工具箱。",
+        caption: "定位：Shell 不是封闭命令大全，而是调用工具、组合数据流的开放执行环境。",
+        height: 1050,
+        id: "shell-positioning",
+        src: "/visual-notes/missing-semester-shell/01-shell-positioning.png",
+        title: "01 Shell 的定位",
+        width: 1498,
+      },
+      {
+        alt: "命令解析与位置感图，展示 Shell 如何拆分命令参数，并用绝对路径、相对路径和特殊目录符号定位文件。",
+        caption: "命令解析：Shell 先拆词和定位，再把参数列表交给程序。",
+        height: 1049,
+        id: "command-parsing-paths",
+        src: "/visual-notes/missing-semester-shell/02-command-parsing-paths.png",
+        title: "02 命令解析与位置感",
+        width: 1499,
+      },
+      {
+        alt: "PATH、环境变量与内建命令图，展示 $PATH 读取、外部命令查找和 cd 作为内建命令改变当前 Shell 状态。",
+        caption: "PATH 与内建：PATH 告诉 Shell 去哪里找外部命令，内建命令改变 Shell 自己的状态。",
+        height: 1050,
+        id: "path-env-builtins",
+        src: "/visual-notes/missing-semester-shell/03-path-env-builtins.png",
+        title: "03 PATH、环境变量与内建命令",
+        width: 1498,
+      },
+      {
+        alt: "数据流与组合图，展示 stdin、stdout、stderr、重定向、管道、tee 和命令替换的关系。",
+        caption: "数据流：重定向改变去向，管道连接程序，tee 复制数据流。",
+        height: 1049,
+        id: "dataflow-composition",
+        src: "/visual-notes/missing-semester-shell/04-dataflow-composition.png",
+        title: "04 数据流与组合",
+        width: 1499,
+      },
+      {
+        alt: "文本与文件工具流水线图，展示 find、cat、head、tail、grep、sed、awk、sort、uniq 在流水线中的分工。",
+        caption: "工具流水线：重点不是背参数，而是知道每个工具站在数据处理的哪一环。",
+        height: 1049,
+        id: "text-file-pipeline",
+        src: "/visual-notes/missing-semester-shell/05-text-file-pipeline.png",
+        title: "05 文本与文件工具流水线",
+        width: 1499,
+      },
+      {
+        alt: "Bash 作为自动化语言图，展示 Bash 调用外部程序，并通过退出状态、if、&&、|| 控制流程。",
+        caption: "Bash 语言观：Bash 更像自动化胶水，常用命令是否成功来决定流程。",
+        height: 1049,
+        id: "bash-automation-language",
+        src: "/visual-notes/missing-semester-shell/06-bash-automation-language.png",
+        title: "06 Bash 作为自动化语言",
+        width: 1499,
+      },
+      {
+        alt: "脚本成为工具图，展示 shebang、chmod +x、执行权限、脚本参数和严格模式。",
+        caption: "脚本工具化：带参数、带权限、带失败策略的脚本，就是自己的小工具。",
+        height: 1049,
+        id: "script-as-tool",
+        src: "/visual-notes/missing-semester-shell/07-script-as-tool.png",
+        title: "07 脚本成为工具",
+        width: 1499,
+      },
+      {
+        alt: "进程与并行图，展示后台任务、wait、kill、xargs -P、进程替换和管道并发。",
+        caption: "并行：不只是 &，批量限并发、进程替换和管道也会让多个程序同时工作。",
+        height: 1049,
+        id: "process-parallelism",
+        src: "/visual-notes/missing-semester-shell/08-process-parallelism.png",
+        title: "08 进程与并行",
+        width: 1499,
+      },
+      {
+        alt: "能力索引与练习选择图，展示从学习目标到 Shell 能力，再到优先练习的映射。",
+        caption: "复习抓手：先问目标，再找能力，再选最小练习。",
+        height: 1049,
+        id: "capability-index-practice",
+        src: "/visual-notes/missing-semester-shell/09-capability-index-practice.png",
+        title: "09 能力索引与练习选择",
+        width: 1499,
       },
     ],
   },
