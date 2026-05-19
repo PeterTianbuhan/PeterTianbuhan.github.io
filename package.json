@@ -10,6 +10,8 @@
     "articles:sync": "node ./scripts/sync-vault-articles.mjs",
     "post:intake": "node ./scripts/post-intake.mjs",
     "articles:check": "node ./scripts/verify-article-sources.mjs",
+    "thoughts:intake": "node ./scripts/thought-intake.mjs",
+    "thoughts:check": "node ./scripts/verify-thought-notes.mjs",
     "legacy:refresh": "node ./scripts/refresh-legacy-homepage.mjs",
     "publish:bundle": "node ./scripts/prepare-github-pages.mjs",
     "workflow:check": "node ./scripts/verify-source-workflow.mjs",

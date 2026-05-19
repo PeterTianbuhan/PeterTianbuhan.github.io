@@ -507,6 +507,17 @@ function ReadingGateway({
               )}
             </div>
           </NotebookPanel>
+
+          <NotebookPanel className="p-6">
+            <h3 className="academic-serif text-2xl font-semibold text-[color:var(--ink)]">随想</h3>
+            <p className="mt-4 text-sm leading-7 text-[color:var(--ink-soft)]">
+              还没长成文章的 idea 先放这里；能并入文章的，后续再回收到阅读地图和正式文章里。
+            </p>
+            <Link className="paper-link mt-5 text-sm" href={`/${locale}/thoughts`}>
+              进入随想
+              <Icon className="size-4" name="arrow" />
+            </Link>
+          </NotebookPanel>
         </aside>
       </div>
     </section>

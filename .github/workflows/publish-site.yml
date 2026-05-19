@@ -12,6 +12,7 @@ on:
       - "app/**"
       - "components/**"
       - "content/blog/**"
+      - "content/thoughts/**"
       - "lib/**"
       - "package.json"
       - "package-lock.json"
@@ -20,6 +21,7 @@ on:
       - "scripts/sync-vault-articles.mjs"
       - "scripts/prepare-github-pages.mjs"
       - "scripts/verify-article-sources.mjs"
+      - "scripts/verify-thought-notes.mjs"
 
 permissions:
   contents: write
@@ -77,6 +79,9 @@ jobs:
 
       - name: Verify article source mapping
         run: npm run articles:check
+
+      - name: Verify thought notes
+        run: npm run thoughts:check
 
       - name: Build static site
         run: npm run build
