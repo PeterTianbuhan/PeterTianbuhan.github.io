@@ -50,9 +50,15 @@ jobs:
         run: npm ci
 
       - name: Sync articles from vault
+        id: sync_articles
+        continue-on-error: true
         env:
           VAULT_REPO_TOKEN: ${{ secrets.VAULT_REPO_TOKEN }}
         run: npm run articles:sync
+
+      - name: Warn when article sync is unavailable
+        if: steps.sync_articles.outcome == 'failure'
+        run: echo "::warning::Article sync from vault failed; continuing with committed article sources after source mapping verification."
 
       - name: Commit synced article sources
         shell: bash
