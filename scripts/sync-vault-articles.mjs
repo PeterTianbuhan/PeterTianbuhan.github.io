@@ -156,19 +156,28 @@ async function readLocalVaultFile(localVaultRoot, relativePath) {
 }
 
 async function fetchVaultSource(options, relativePath) {
+  const failures = [];
+
   if (options.vaultToken) {
-    return fetchFromGitHubApi(options, relativePath);
+    try {
+      return await fetchFromGitHubApi(options, relativePath);
+    } catch (error) {
+      failures.push(`GitHub API: ${error.message}`);
+    }
   }
 
   const url = sourceUrl(options.vaultRawBase, relativePath);
   try {
     return await fetchText(url);
   } catch (error) {
+    failures.push(`${url}: ${error.message}`);
+
     const local = await readLocalVaultFile(options.localVaultRoot, relativePath);
     if (local !== undefined) {
       return local;
     }
-    throw new Error(`${url}: ${error.message}`);
+
+    throw new Error(failures.join("; "));
   }
 }
 
