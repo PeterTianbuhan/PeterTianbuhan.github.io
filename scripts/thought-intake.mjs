@@ -1,10 +1,14 @@
 import fs from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 import matter from "gray-matter";
 
 const root = process.cwd();
 const blogRoot = path.join(root, "content", "blog", "zh");
-const thoughtRoot = path.join(root, "content", "thoughts", "zh");
+const publicThoughtRoot = path.join(root, "content", "thoughts", "zh");
+const defaultLocalVaultRoot =
+  os.platform() === "win32" ? "D:\\projects\\my-cognitive-vault" : "";
+const vaultThoughtRoot = "00-Inbox/thoughts";
 
 function fail(message) {
   console.error(`thought intake failed: ${message}`);
@@ -18,6 +22,7 @@ function parseArgs(argv) {
     bodyFile: "",
     force: false,
     isNewDirection: false,
+    localVaultRoot: process.env.VAULT_LOCAL_ROOT || defaultLocalVaultRoot,
     slug: "",
     tags: [],
     title: "",
@@ -42,6 +47,8 @@ function parseArgs(argv) {
       options.articleSlug = args.shift() ?? "";
     } else if (current === "--slug") {
       options.slug = args.shift() ?? "";
+    } else if (current === "--local-vault-root") {
+      options.localVaultRoot = args.shift() ?? "";
     } else if (current === "--new") {
       options.isNewDirection = true;
     } else if (current === "--write") {
@@ -145,7 +152,7 @@ function yamlString(value) {
   return JSON.stringify(value);
 }
 
-function renderFrontmatter({ articleSlug, date, isNewDirection, tags, title }) {
+function renderFrontmatter({ articleSlug, date, isNewDirection, source, tags, title }) {
   const lines = [
     "---",
     `title: ${yamlString(title)}`,
@@ -154,6 +161,7 @@ function renderFrontmatter({ articleSlug, date, isNewDirection, tags, title }) {
     ...(tags.length ? tags.map((tag) => `  - ${tag}`) : ["  - 随想"]),
     `status: ${yamlString(articleSlug ? "linked" : "seed")}`,
     `routeDecision: ${yamlString(articleSlug ? "merge-candidate" : isNewDirection ? "new-direction" : "undecided")}`,
+    `source: ${yamlString(source)}`,
   ];
 
   if (articleSlug) {
@@ -162,6 +170,24 @@ function renderFrontmatter({ articleSlug, date, isNewDirection, tags, title }) {
 
   lines.push("---", "");
   return lines.join("\n");
+}
+
+function vaultSource(baseSlug) {
+  return `my-cognitive-vault/${vaultThoughtRoot}/${baseSlug}.md`;
+}
+
+function resolveVaultThoughtPath(localVaultRoot, baseSlug) {
+  if (!localVaultRoot) {
+    fail("Local vault root is required to write a thought note. Use --local-vault-root or VAULT_LOCAL_ROOT.");
+  }
+
+  const resolvedRoot = path.resolve(localVaultRoot);
+  const target = path.resolve(resolvedRoot, ...vaultThoughtRoot.split("/"), `${baseSlug}.md`);
+  if (target !== resolvedRoot && !target.startsWith(`${resolvedRoot}${path.sep}`)) {
+    fail(`Refusing to write outside local vault: ${target}`);
+  }
+
+  return target;
 }
 
 async function run() {
@@ -208,23 +234,32 @@ async function run() {
 
   const date = new Date().toISOString().slice(0, 10);
   const baseSlug = options.slug || `${slugify(options.title)}-${date}`;
-  const targetPath = path.join(thoughtRoot, `${baseSlug}.mdx`);
+  const publicTargetPath = path.join(publicThoughtRoot, `${baseSlug}.mdx`);
+  const vaultTargetPath = resolveVaultThoughtPath(options.localVaultRoot, baseSlug);
+  const sourcePath = vaultSource(baseSlug);
 
-  if ((await exists(targetPath)) && !options.force) {
-    fail(`Refusing to overwrite existing note: ${path.relative(root, targetPath)}. Use --force if intentional.`);
+  if ((await exists(publicTargetPath)) && !options.force) {
+    fail(`Refusing to overwrite existing note: ${path.relative(root, publicTargetPath)}. Use --force if intentional.`);
+  }
+  if ((await exists(vaultTargetPath)) && !options.force) {
+    fail(`Refusing to overwrite existing vault note: ${vaultTargetPath}. Use --force if intentional.`);
   }
 
-  await fs.mkdir(thoughtRoot, { recursive: true });
+  await fs.mkdir(publicThoughtRoot, { recursive: true });
+  await fs.mkdir(path.dirname(vaultTargetPath), { recursive: true });
   const source = `${renderFrontmatter({
     articleSlug: options.articleSlug,
     date,
     isNewDirection: options.isNewDirection,
+    source: sourcePath,
     tags: options.tags,
     title: options.title,
   })}${body}\n`;
 
-  await fs.writeFile(targetPath, source, "utf8");
-  console.log(`\nWrote ${path.relative(root, targetPath)}`);
+  await fs.writeFile(vaultTargetPath, source, "utf8");
+  await fs.writeFile(publicTargetPath, source, "utf8");
+  console.log(`\nWrote ${vaultTargetPath}`);
+  console.log(`Mirrored ${path.relative(root, publicTargetPath)}`);
 }
 
 run().catch((error) => {

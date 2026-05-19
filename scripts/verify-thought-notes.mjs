@@ -5,8 +5,13 @@ import matter from "gray-matter";
 const root = process.cwd();
 const thoughtsRoot = path.join(root, "content", "thoughts");
 const blogRoot = path.join(root, "content", "blog");
+const supportedLocales = new Set(["zh", "en"]);
 const allowedStatuses = new Set(["seed", "linked", "growing"]);
 const allowedDecisions = new Set(["merge-candidate", "new-direction", "undecided"]);
+const allowedSourcePrefixes = [
+  "my-cognitive-vault/00-Inbox/thoughts/",
+  "my-cognitive-vault/40-Notes/thoughts/",
+];
 
 function fail(message) {
   console.error(`thought note check failed: ${message}`);
@@ -56,14 +61,26 @@ async function run() {
 
   for (const filePath of files) {
     const relative = path.relative(thoughtsRoot, filePath);
-    const [locale] = relative.split(path.sep);
-    const source = await fs.readFile(filePath, "utf8");
-    const { content, data } = matter(source);
+    const [locale, fileName, ...extra] = relative.split(path.sep);
+    if (!supportedLocales.has(locale) || extra.length > 0 || !fileName?.endsWith(".mdx")) {
+      fail(`${path.relative(root, filePath)} must live at content/thoughts/<zh|en>/<slug>.mdx`);
+    }
+
+    const rawSource = await fs.readFile(filePath, "utf8");
+    const { content, data } = matter(rawSource);
 
     requiredString(data.title, "frontmatter title", filePath);
     const createdAt = requiredString(data.createdAt, "frontmatter createdAt", filePath);
     if (createdAt && Number.isNaN(Date.parse(createdAt))) {
       fail(`${path.relative(root, filePath)} has invalid createdAt`);
+    }
+
+    const thoughtSource = requiredString(data.source, "frontmatter source", filePath);
+    if (!allowedSourcePrefixes.some((prefix) => thoughtSource.startsWith(prefix))) {
+      fail(
+        `${path.relative(root, filePath)} source must point at ` +
+          "my-cognitive-vault/00-Inbox/thoughts/ or my-cognitive-vault/40-Notes/thoughts/",
+      );
     }
 
     if (typeof data.status === "string" && !allowedStatuses.has(data.status)) {

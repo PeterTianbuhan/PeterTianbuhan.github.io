@@ -11,6 +11,7 @@
     "post:intake": "node ./scripts/post-intake.mjs",
     "articles:check": "node ./scripts/verify-article-sources.mjs",
     "thoughts:intake": "node ./scripts/thought-intake.mjs",
+    "thoughts:sync": "node ./scripts/sync-vault-thoughts.mjs",
     "thoughts:check": "node ./scripts/verify-thought-notes.mjs",
     "legacy:refresh": "node ./scripts/refresh-legacy-homepage.mjs",
     "publish:bundle": "node ./scripts/prepare-github-pages.mjs",

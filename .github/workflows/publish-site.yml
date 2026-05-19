@@ -19,6 +19,8 @@ on:
       - "next.config.ts"
       - "postcss.config.mjs"
       - "scripts/sync-vault-articles.mjs"
+      - "scripts/sync-vault-thoughts.mjs"
+      - "scripts/thought-intake.mjs"
       - "scripts/prepare-github-pages.mjs"
       - "scripts/verify-article-sources.mjs"
       - "scripts/verify-thought-notes.mjs"
@@ -75,6 +77,32 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add content/blog
           git commit -m "Sync articles from vault"
+          git push origin HEAD:source
+
+      - name: Sync thought notes from vault
+        id: sync_thoughts
+        continue-on-error: true
+        env:
+          VAULT_REPO_TOKEN: ${{ secrets.VAULT_REPO_TOKEN }}
+        run: npm run thoughts:sync
+
+      - name: Warn when thought sync is unavailable
+        if: steps.sync_thoughts.outcome == 'failure'
+        run: echo "::warning::Thought note sync from vault failed; continuing with committed thought sources after source mapping verification."
+
+      - name: Commit synced thought sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain content/thoughts)" ]; then
+            echo "No synced thought source changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/thoughts
+          git commit -m "Sync thought notes from vault"
           git push origin HEAD:source
 
       - name: Verify article source mapping
