@@ -7,6 +7,7 @@ const eslintConfig = [
       ".next/**",
       ".publish/**",
       ".tmp-legacy-repo/**",
+      "legacy/**",
       "legacy-homepage/**",
       "legacy-site/**",
       "out/**",

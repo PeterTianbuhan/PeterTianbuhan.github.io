@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { VisualNoteView } from "@/components/visual-notes/visual-note-view";
+import { getPostBySlug } from "@/lib/content";
 import { isSupportedLocale, type Locale } from "@/lib/i18n";
 import { getAllVisualNotes, getVisualNoteBySlug } from "@/lib/visual-notes";
 
@@ -51,5 +52,8 @@ export default async function VisualNotePage({
     notFound();
   }
 
-  return <VisualNoteView locale={locale as Locale} note={note} />;
+  const typedLocale = locale as Locale;
+  const post = note.articleSlug ? await getPostBySlug(typedLocale, note.articleSlug) : null;
+
+  return <VisualNoteView locale={typedLocale} note={note} post={post} />;
 }

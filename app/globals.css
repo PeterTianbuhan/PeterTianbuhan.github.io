@@ -1,21 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fbfaf7;
-  --surface: #fffefb;
-  --surface-muted: #f2f2ef;
-  --ink: #202225;
-  --ink-soft: #5f656c;
-  --muted: #8f969d;
+  --background: #f8f5ee;
+  --surface: #fffdf8;
+  --surface-muted: #ebe7df;
+  --ink: #16191f;
+  --ink-soft: #3d4650;
+  --muted: #5c6873;
   --text: var(--ink);
   --text-soft: var(--ink-soft);
   --text-muted: var(--muted);
-  --rule: #e5e1da;
-  --rule-soft: #efebe4;
-  --accent: #2f8b6d;
-  --accent-strong: #27765d;
-  --accent-soft: #dcefe8;
-  --shadow-panel: 0 22px 60px rgba(44, 42, 36, 0.06);
+  --rule: #d7d0c4;
+  --rule-soft: #e6ded2;
+  --accent: #217a5f;
+  --accent-strong: #155c47;
+  --accent-soft: #d4eadf;
+  --shadow-panel: 0 24px 70px rgba(31, 28, 21, 0.13);
   --radius-panel: 3px;
   --content-width: 1200px;
   --font-serif: Georgia, "Times New Roman", "Songti SC", "SimSun", serif;
@@ -73,8 +73,8 @@ a {
   z-index: 0;
   pointer-events: none;
   background:
-    linear-gradient(90deg, transparent 0, transparent 72px, rgba(207, 97, 70, 0.2) 72px, rgba(207, 97, 70, 0.2) 73px, transparent 73px),
-    repeating-linear-gradient(180deg, rgba(47, 139, 109, 0.04) 0, rgba(47, 139, 109, 0.04) 1px, transparent 1px, transparent 92px);
+    linear-gradient(90deg, transparent 0, transparent 72px, rgba(164, 73, 55, 0.11) 72px, rgba(164, 73, 55, 0.11) 73px, transparent 73px),
+    repeating-linear-gradient(180deg, rgba(33, 122, 95, 0.018) 0, rgba(33, 122, 95, 0.018) 1px, transparent 1px, transparent 92px);
 }
 
 .notebook-page > * {
@@ -84,15 +84,15 @@ a {
 
 .surface-grid {
   background:
-    linear-gradient(90deg, transparent 0, transparent 72px, rgba(207, 97, 70, 0.18) 72px, rgba(207, 97, 70, 0.18) 73px, transparent 73px),
-    repeating-linear-gradient(180deg, rgba(47, 139, 109, 0.035) 0, rgba(47, 139, 109, 0.035) 1px, transparent 1px, transparent 92px),
+    linear-gradient(90deg, transparent 0, transparent 72px, rgba(164, 73, 55, 0.1) 72px, rgba(164, 73, 55, 0.1) 73px, transparent 73px),
+    repeating-linear-gradient(180deg, rgba(33, 122, 95, 0.016) 0, rgba(33, 122, 95, 0.016) 1px, transparent 1px, transparent 92px),
     var(--background);
 }
 
 .panel-frame,
 .paper-panel {
   border: 1px solid var(--rule);
-  background: rgba(255, 254, 251, 0.86);
+  background: rgba(255, 253, 248, 0.96);
   box-shadow: var(--shadow-panel);
 }
 
@@ -140,6 +140,7 @@ a {
   align-items: center;
   gap: 0.45rem;
   color: var(--ink-soft);
+  font-weight: 600;
   text-decoration: underline;
   text-decoration-color: transparent;
   text-underline-offset: 5px;

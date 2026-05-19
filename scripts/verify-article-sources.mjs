@@ -77,6 +77,11 @@ async function run() {
 
     requiredString(data.title, "frontmatter title", filePath);
     requiredString(data.publishedAt, "frontmatter publishedAt", filePath);
+    const articleSource = requiredString(data.source, "frontmatter source", filePath);
+
+    if (!articleSource.startsWith("my-cognitive-vault/")) {
+      fail(`${path.relative(root, filePath)} source must point at my-cognitive-vault`);
+    }
 
     if (frontmatterLocale !== locale) {
       fail(

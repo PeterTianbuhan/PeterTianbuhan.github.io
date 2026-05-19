@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArticleEntryCard } from "@/components/blog/article-entry-card";
 import { MdxContent } from "@/components/blog/mdx-content";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
@@ -6,6 +7,7 @@ import { Panel } from "@/components/ui/panel";
 import type { Post, PostListItem } from "@/lib/content";
 import type { Locale } from "@/lib/i18n";
 import { getSiteContent, type Dictionary } from "@/lib/site";
+import { getArticleProfile } from "@/lib/article-registry";
 import { getVisualNoteByArticleSlug } from "@/lib/visual-notes";
 
 export async function BlogPostView({
@@ -23,6 +25,9 @@ export async function BlogPostView({
 }) {
   const site = await getSiteContent(locale);
   const visualNote = locale === "zh" ? getVisualNoteByArticleSlug(post.slug) : null;
+  const articleProfile = locale === "zh" ? getArticleProfile(post.slug) : null;
+  const articleHref = `/${locale}/blog/${post.slug}`;
+  const visualHref = visualNote ? `/${locale}/visual-notes/${visualNote.slug}` : null;
 
   return (
     <main className="surface-grid min-h-screen px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
@@ -46,12 +51,16 @@ export async function BlogPostView({
           {visualNote ? (
             <Link
               className="mono mt-6 inline-flex border border-[color:var(--accent)] bg-[color:var(--accent)] px-4 py-3 text-[10px] uppercase tracking-[0.24em] text-white transition hover:bg-[color:var(--accent-strong)]"
-              href={`/${locale}/visual-notes/${visualNote.slug}`}
+              href={visualHref ?? articleHref}
             >
               图像笔记
             </Link>
           ) : null}
         </Panel>
+
+        {articleProfile ? (
+          <ArticleEntryCard articleHref={articleHref} profile={articleProfile} visualHref={visualHref} />
+        ) : null}
 
         <Panel className="boot-in delay-1 px-6 py-8 sm:px-8 sm:py-10">
           <article className="prose-shell">

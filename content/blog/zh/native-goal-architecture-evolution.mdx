@@ -32,6 +32,7 @@ public: true
 featured: false
 locale: "zh"
 translationKey: "native-goal-architecture-evolution"
+source: "my-cognitive-vault/90-Public-Candidates/native-goal-architecture-evolution-2026-05-06.md"
 ---
 
 这是一篇阶段性记录。它不是最终结论，而是把最近几次实验里逐渐清晰起来的架构变化写下来：最初我们为了让长任务持续推进，做了一个人工循环式的 `goal-loop`；后来发现 Codex 原生 `/goal` 已经可以承担一部分目标保持能力，于是系统的重心从“脚本循环驱动 agent”转向“root supervisor 持有长期目标，按需组织 worker”。
