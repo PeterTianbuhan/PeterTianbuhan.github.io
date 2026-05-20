@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[97367,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"ViewportBoundary"]
+3:I[97367,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"MetadataBoundary"]
+4:"$Sreact.suspense"
+5:I[27201,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"IconMark"]
+0:{"rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"人工智能基础作业记录：Transformer 机器翻译学习 | System Portfolio"}],["$","meta","1",{"name":"description","content":"从 RNN memory 的直觉出发，记录我如何理解 Transformer 里的状态表示、Q/K/V、Decoder 前缀预测，以及它们怎样落到机器翻译作业代码里。"}],["$","link","2",{"rel":"icon","href":"/icon.svg?icon.0rf6nkx7rtn93.svg","sizes":"any","type":"image/svg+xml"}],["$","$L5","3",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"JQ_Ly4qJ_iCQHDLurMzI7"}
