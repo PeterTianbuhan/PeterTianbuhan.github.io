@@ -294,6 +294,47 @@
       line-height: 1;
     }
 
+    .definition-card {
+      min-height: calc(100% - 46px);
+      display: grid;
+      gap: 14px;
+      align-content: stretch;
+    }
+
+    .definition-core,
+    .definition-item {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfaf6;
+    }
+
+    .definition-core {
+      background: #f5fbf8;
+      border-color: #cbded8;
+    }
+
+    .definition-core strong,
+    .definition-item strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .definition-core p,
+    .definition-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .definition-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
     .flow {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -611,6 +652,7 @@
         min-height: auto;
       }
 
+      .definition-grid,
       .flow,
       .methods,
       .system,
@@ -644,6 +686,7 @@
       }
 
       .two-lanes,
+      .definition-grid,
       .flow,
       .methods,
       .compare,
@@ -672,8 +715,8 @@
 <body>
   <header class="wrap">
     <p class="kicker">视觉泛读 · 不纠结措辞和小数点，只抓主线</p>
-    <h1>Agent 记忆不是“存历史”，而是让系统持续变聪明</h1>
-    <p class="lead">这篇 survey 把 LLM agent memory 从一个外挂功能，提升成一个完整系统问题：什么要记、怎样管理、何时取用、怎么评估、什么时候该忘。</p>
+    <h1>Agent 记忆是让长期智能体持续适应的状态系统</h1>
+    <p class="lead">作者开头把 memory 定义为跨交互持久化、组织并选择性召回信息的能力；这篇 survey 追问这种能力如何被设计、实现、评估和治理。</p>
     <div class="meta-row">
       <a class="pill" href="https://arxiv.org/abs/2603.07670" target="_blank" rel="noreferrer">原文 arXiv</a>
       <a class="pill" href="https://arxiv.org/html/2603.07670" target="_blank" rel="noreferrer">HTML 原文</a>
@@ -704,30 +747,36 @@
       <div class="story">
         <div>
           <div class="num">01</div>
-          <h2>这篇文章想解决什么问题</h2>
-          <p>它不是在介绍某个单一算法，而是在回答一个更大的问题：当 LLM 变成长期工作的 agent，它怎样保存过去经验，并在未来行动时用上这些经验。</p>
-          <p>作者反对一个简单想法：只要把历史塞进上下文，或者接一个向量库，就叫有记忆。长期 agent 需要的是一套记忆生命周期。</p>
+          <h2>作者怎样定义 agent memory</h2>
+          <p>作者把 memory 放在 agent 能力的中心位置：它让 agent 能够把跨会话发生过的事、学到的知识、用户偏好和失败经验组织起来，并在未来任务中选择性取用。</p>
+          <p>这一定义直接回答了整篇文章的出发点：长期 agent 需要一种可持续更新的内部状态，才能在多次交互中保持连续性、适应性和个性化。</p>
         </div>
-        <div class="keep">读完这篇，你应该把 agent memory 理解成“持续运行系统的状态管理”，而不是“聊天记录搜索”。</div>
+        <div class="keep">第一章的锚点：memory 是让无状态文本生成器变成自适应 agent 的关键能力。</div>
       </div>
       <div class="diagram">
-        <h3>从一次回答，到长期协作</h3>
-        <div class="two-lanes">
-          <div class="lane bad">
-            <div class="lane-title">普通 LLM</div>
-            <div class="mini-card">看到当前问题</div>
-            <div class="arrow-down">↓</div>
-            <div class="mini-card">临时生成回答</div>
-            <div class="arrow-down">↓</div>
-            <div class="mini-card">会话结束后基本清空</div>
+        <h3>作者的总体定义</h3>
+        <div class="definition-card">
+          <div class="definition-core">
+            <strong>Memory</strong>
+            <p>一种跨交互持久化、组织并选择性召回信息的能力，使 agent 能把过去经验转化为未来行动的可用状态。</p>
           </div>
-          <div class="lane good">
-            <div class="lane-title">长期 Agent</div>
-            <div class="mini-card">看到当前任务和历史线索</div>
-            <div class="arrow-down">↓</div>
-            <div class="mini-card">调用工具、行动、观察反馈</div>
-            <div class="arrow-down">↓</div>
-            <div class="mini-card">把有用经验变成下次可用的记忆</div>
+          <div class="definition-grid">
+            <div class="definition-item">
+              <strong>Persist</strong>
+              <p>留下发生过什么、学到什么、哪些错误不该重复。</p>
+            </div>
+            <div class="definition-item">
+              <strong>Organize</strong>
+              <p>压缩、去重、标注、更新、处理矛盾和优先级。</p>
+            </div>
+            <div class="definition-item">
+              <strong>Recall</strong>
+              <p>在当前目标下选择真正有用的信息，而不是机械搬回历史。</p>
+            </div>
+          </div>
+          <div class="definition-core">
+            <strong>结果</strong>
+            <p>连续性、适应性、个性化、少重复犯错，以及能随着交互持续改进。</p>
           </div>
         </div>
       </div>
@@ -1049,14 +1098,14 @@
           <p>这篇 survey 的贡献不是一个新模型，而是给你一张判断 agent memory 的地图。以后看到任何新系统，你都可以问：它写什么、怎么管、怎么读、会不会更新、能不能遗忘、错了能不能查。</p>
           <p>它也提醒你：长期 agent 的可靠性，不只取决于底座模型，也取决于记忆架构。</p>
         </div>
-        <div class="keep">一句话：agent memory 是长期智能体的状态管理系统，遗忘是这个系统必须具备的治理能力。</div>
+        <div class="keep">一句话：agent memory 通过持久化、组织和选择性召回跨交互信息，支撑长期智能体的状态管理；遗忘是这个系统必须具备的治理能力。</div>
       </div>
       <div class="diagram">
         <h3>保留在脑子里的三件事</h3>
         <div class="takeaways">
           <div class="take">
-            <strong>记忆不是历史堆积</strong>
-            <p>有价值的是经过筛选、更新和组织后，能影响未来行动的状态。</p>
+            <strong>记忆是可用状态</strong>
+            <p>有价值的是经过筛选、更新和组织后，能影响未来行动的信息。</p>
           </div>
           <div class="take">
             <strong>检索不是完整记忆</strong>
