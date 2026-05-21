@@ -1,6 +1,6 @@
 ﻿---
 title: "从 memory 直觉到状态表示：我如何理解 Transformer"
-excerpt: "把 Transformer 从 RNN memory 的直觉里拆出来，记录我现在更想留下的几个判断：状态表示才是主线，语境必须带着位置信息，Q/K/V 分离匹配和内容，memory 这个名字容易误导，以及机器翻译和通用大模型的类比边界。"
+excerpt: "把 Transformer 从 RNN memory 的直觉里拆出来，记录我现在更想留下的几个判断：状态表示才是主线，语境必须带着位置信息，Q/K/V 和多头注意力分离关系视角，embedding 也是可训练参数，memory 这个名字容易误导。"
 publishedAt: "2026-05-18"
 updatedAt: "2026-05-21"
 type: "study"
@@ -19,6 +19,7 @@ topics:
 concepts:
   - RNN
   - Self-Attention
+  - Multi-Head Attention
   - QKV
   - attention matrix
   - decoder
@@ -27,6 +28,7 @@ concepts:
   - causal self-attention
   - positional encoding
   - embedding
+  - contextual embedding
   - logits
   - token probability
 related:
@@ -50,8 +52,10 @@ source: "my-cognitive-vault/90-Public-Candidates/ai-foundations-transformer-lear
 2. 人所说的语境不是一袋词，而是带上下文和位置关系的集合；Transformer 不顺序扫描，所以必须把位置信息显式写进表示里。
 3. `memory` 这个名字容易把人带回 RNN，但 encoder-decoder Transformer 里的 `memory` 不是一根压缩链，而是一组仍可被访问的位置状态。
 4. Q/K/V 的命名不只是助记，它把“如何匹配”和“拿到什么内容”拆开了。
-5. 翻译模型里的 `memory` 不能直接等同于通用大模型里的 user input；decoder-only 大模型把 user/system/history 和已生成前缀放在同一条上下文里。
-6. 如果只看成功架构，很容易把 Transformer 的形状当成理所当然。以后我更想回头看失败架构为什么失败。
+5. 多头 attention 不是给每个 head 单独考试，而是让多套 Q/K/V 合作形成状态，最后一起接受任务 loss 的反向传播。
+6. embedding 表本身也是可训练参数；语义相近的词靠近，更多是预测任务长期塑形后的结果，不是直接人工规定。
+7. 翻译模型里的 `memory` 不能直接等同于通用大模型里的 user input；decoder-only 大模型把 user/system/history 和已生成前缀放在同一条上下文里。
+8. 如果只看成功架构，很容易把 Transformer 的形状当成理所当然。以后我更想回头看失败架构为什么失败。
 
 所以这篇不是一篇 Transformer 教程，而是我把作业里的代码、shape 和生成过程压缩成几个理解支点。
 
@@ -96,6 +100,22 @@ attention: 决定当前位置应该重点看哪些可见 token
 
 所以“人看句子有重点”在 Transformer 里更接近 attention 权重的作用；“句子顺序带来含义差异”则主要靠位置编码先写入状态，再由 attention 在不同上下文里动态放大或弱化。
 
+## embedding 不是静态词典，而是会被任务塑形的参数表
+
+顺着位置编码往前看，token embedding 本身也是一层参数。它不是从 token 到向量的固定字典，而是一张可训练的表：
+
+```text
+token id -> embedding vector
+```
+
+训练时，loss 并不会直接说“把语义相近的词放近一点”。模型真正接受的监督通常是任务目标，比如机器翻译里预测正确的目标 token，语言模型里预测下一个 token。embedding 表会通过反向传播一起被更新。
+
+所以“语义相近的词在 embedding 空间里更近”更像是一种训练结果，而不是直接目标。两个词如果经常出现在相似上下文里、承担相似功能、对最终预测产生相似影响，它们的 embedding 就可能在训练中被推向相近方向。
+
+但这个“近”也不能只理解成语义近。它可能混合了语法功能、上下文分布和任务需要。比如两个词在翻译任务中经常对应相近输出，或者在语言模型中经常触发相似预测，它们就可能靠近。
+
+更重要的是，Transformer 最终拿去预测的通常不是最初的静态 embedding，而是经过位置编码、attention、多层变换之后形成的上下文状态。同一个 token 的初始 embedding 可以相同，但放在不同句子里，最后的 hidden state 会不同。
+
 ## Q/K/V 把匹配和内容拆开
 
 Q/K/V 一开始很像三个方便记忆的名字：`Q` 像我要找什么，`K` 像我拿什么被匹配，`V` 像我真正提供出去的内容。这个说法没错，但如果只停在助记层面，就会漏掉一个设计判断。
@@ -115,6 +135,42 @@ H = A V
 ```
 
 `QK^T` 产生的是当前输入内部的动态关系矩阵；`V` 才是被聚合的内容。匹配和内容分开以后，同一个 token 可以在不同上下文里以不同方式被访问。对我来说，这是 Q/K/V 真正值得留下的地方：它不是三个“翻译成中文的术语”，而是一种把寻址和取值分离的结构。
+
+## 多头 attention：多套关系视角共同形成状态
+
+如果只看一个 attention head，token 间的交互确实像二元关系：当前位置的 `Q` 和另一个位置的 `K` 算相关性，再用这个权重去取 `V`。我自然会问：如果语义里有三元甚至更多元关系，Transformer 怎么处理？
+
+我现在的理解是：高阶关系通常不是显式写成“三元关系表”，而是在多层、多头和非线性变换中被组合出来。
+
+第一层之后，每个 token 的表示已经不是原来的 token embedding，而是在语义空间里被其它 token 改写过的状态。下一层再做 attention 时，参与交互的已经是这些上下文化状态：
+
+```text
+第 0 层：h_i = token embedding + position
+第 1 层：h_i' = h_i 从其它 token 拿回信息后的状态
+第 2 层：h_i'' = 已带上下文的 h_i' 再和其它已带上下文的 h_j' 交互
+```
+
+所以表面上每次还是二元 attention，但第二层以后的“二元关系”已经发生在复合状态之间。一个 token 状态里可能已经带着多个 token 的影响，再和另一个状态交互时，多元关系就被隐式折叠进 hidden state 里。
+
+多头 attention 则是在同一层里并行给模型多套 Q/K/V 参数：
+
+```text
+head1 = Attention(Q1, K1, V1)
+head2 = Attention(Q2, K2, V2)
+head3 = Attention(Q3, K3, V3)
+...
+concat(head1, head2, head3, ...) -> W_O -> 新状态
+```
+
+我的直觉是：既然给了多套参数，就希望它们在相同输入下产生不同关系视角，合作建立状态信息。这可以增加模型表达复杂关系的能力。但标准训练里通常不会给每个 head 单独算 loss。loss 仍然来自最后的任务输出：
+
+```text
+logits vs 正确 token
+```
+
+然后梯度从最终 loss 一路反传到 `W_O`、每个 head 的输出、每套 Q/K/V 参数。也就是说，每个 head 没有单独的“考试成绩”；它们共同贡献最终状态，最终预测错了或对了，责任通过反向传播分摊回各自参数。
+
+这也说明了一个边界：多头 attention 给了模型分工的机会，但并不保证每个 head 都学到人能命名的功能。它们可能学出不同模式，也可能有冗余。attention 机制更早就存在；多头 attention 是 2017 年 Transformer 论文中被系统化并普及的核心设计，现在已经是现代 Transformer 的基础组件。
 
 ## Decoder 的本质是把前缀变成问题
 

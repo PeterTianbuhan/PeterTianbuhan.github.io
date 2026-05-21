@@ -258,7 +258,7 @@ export const visualNotes: VisualNote[] = [
   },
   {
     articleSlug: "ai-foundations-transformer-learning-record",
-    description: "围绕状态表示这条主线，把 Transformer 理解拆成 Q/K/V、Decoder 前缀、代码 shape、Encoder/Decoder 职责、实验边界和 H[-1] 到 logits[-1] 的完整预测链路。",
+    description: "围绕状态表示这条主线，把 Transformer 理解拆成 Q/K/V、多头关系视角、embedding、Decoder 前缀、代码 shape、实验边界和 H[-1] 到 logits[-1] 的完整预测链路。",
     slug: "transformer-nmt",
     title: "从 memory 到状态表示",
     images: [
