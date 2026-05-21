@@ -73,7 +73,7 @@ export const articleProfiles: ArticleProfile[] = [
     related: ["attention-memory-development-record", "current-workflow"],
     seriesId: "ai-workflow",
     slug: "agent-memory-survey",
-    thesis: "Agent memory 不是聊天记录搜索，而是一套决定什么要记、怎么管、何时取用、什么时候忘的状态管理系统。",
+    thesis: "Agent memory 是跨交互持久化、组织并选择性召回信息的能力，支撑长期智能体的连续性、适应性和个性化。",
   },
   {
     audience: "想理解我如何把 Codex、Linear、GitHub、HomePage 和复盘串起来的读者。",

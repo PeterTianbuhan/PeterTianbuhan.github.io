@@ -21,7 +21,7 @@ export type VisualNote = {
 export const visualNotes: VisualNote[] = [
   {
     articleSlug: "agent-memory-survey",
-    description: "把 agent memory 这篇综述压缩成三张直觉图和一份完整 HTML 视觉导读，先理解问题、生命周期和遗忘意义。",
+    description: "把 agent memory 这篇综述压缩成三张直觉图和一份完整 HTML 视觉导读，先理解作者定义、生命周期和遗忘意义。",
     htmlGuideSrc: "/visual-notes/agent-memory-survey/index.html",
     htmlGuideTitle: "完整 HTML 视觉导读",
     slug: "agent-memory-survey",
@@ -29,7 +29,7 @@ export const visualNotes: VisualNote[] = [
     images: [
       {
         alt: "AI 助手把过去经验整理进记忆架，并把它们转化为未来行动路线的插图。",
-        caption: "总览：agent memory 不是历史堆积，而是把过去经验整理成未来行动的可用状态。",
+        caption: "总览：agent memory 通过持久化、组织和选择性召回信息，把过去经验变成未来行动的可用状态。",
         height: 941,
         id: "overview",
         src: "/visual-notes/agent-memory-survey/01-overview.png",
