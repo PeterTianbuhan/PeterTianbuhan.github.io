@@ -66,6 +66,16 @@ export const articleSeries: ArticleSeries[] = [
 
 export const articleProfiles: ArticleProfile[] = [
   {
+    audience: "想快速理解 LLM agent 长期记忆、检索、反思和选择性遗忘的读者。",
+    order: 4,
+    prerequisites: ["attention-memory-development-record"],
+    question: "长期运行的 agent 到底需要什么样的记忆系统？",
+    related: ["attention-memory-development-record", "current-workflow"],
+    seriesId: "ai-workflow",
+    slug: "agent-memory-survey",
+    thesis: "Agent memory 不是聊天记录搜索，而是一套决定什么要记、怎么管、何时取用、什么时候忘的状态管理系统。",
+  },
+  {
     audience: "想理解我如何把 Codex、Linear、GitHub、HomePage 和复盘串起来的读者。",
     order: 1,
     question: "一个想法如何变成可执行、可审计、可复盘的个人工作流？",

@@ -11,12 +11,51 @@ export type VisualNoteImage = {
 export type VisualNote = {
   articleSlug?: string;
   description: string;
+  htmlGuideSrc?: string;
+  htmlGuideTitle?: string;
   images: VisualNoteImage[];
   slug: string;
   title: string;
 };
 
 export const visualNotes: VisualNote[] = [
+  {
+    articleSlug: "agent-memory-survey",
+    description: "把 agent memory 这篇综述压缩成三张直觉图和一份完整 HTML 视觉导读，先理解问题、生命周期和遗忘意义。",
+    htmlGuideSrc: "/visual-notes/agent-memory-survey/index.html",
+    htmlGuideTitle: "完整 HTML 视觉导读",
+    slug: "agent-memory-survey",
+    title: "Agent 记忆视觉泛读",
+    images: [
+      {
+        alt: "AI 助手把过去经验整理进记忆架，并把它们转化为未来行动路线的插图。",
+        caption: "总览：agent memory 不是历史堆积，而是把过去经验整理成未来行动的可用状态。",
+        height: 941,
+        id: "overview",
+        src: "/visual-notes/agent-memory-survey/01-overview.png",
+        title: "01 记忆让 agent 持续变聪明",
+        width: 1672,
+      },
+      {
+        alt: "记忆卡片在写入、整理、召回和行动之间循环流动的插图。",
+        caption: "生命周期：真正困难的不是存下来，而是写入、管理、读取和反馈形成闭环。",
+        height: 1122,
+        id: "memory-loop",
+        src: "/visual-notes/agent-memory-survey/02-memory-loop.png",
+        title: "02 write-manage-read 循环",
+        width: 1402,
+      },
+      {
+        alt: "记忆园丁保留有用记忆、修剪过期和矛盾记忆、锁起敏感记忆的插图。",
+        caption: "选择性遗忘：长期 agent 需要知道何时更新、衰减、归档和删除，而不是只会记住更多。",
+        height: 1086,
+        id: "selective-forgetting",
+        src: "/visual-notes/agent-memory-survey/03-selective-forgetting.png",
+        title: "03 遗忘也是记忆治理",
+        width: 1448,
+      },
+    ],
+  },
   {
     articleSlug: "defensive-programming-robustness",
     description: "把软件设计实践中正确性、健壮性、问题链条、RIP 模型、防御性编程工具和健壮性方法权衡整理成七张复习图。",

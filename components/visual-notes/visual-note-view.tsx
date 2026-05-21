@@ -200,6 +200,40 @@ export function VisualNoteView({
           <ArticleEntryCard articleHref={articleHref} profile={articleProfile} visualHref={visualHref} />
         ) : null}
 
+        {note.htmlGuideSrc ? (
+          <section
+            className="border border-[color:var(--rule)] bg-[rgba(255,254,251,0.94)] p-5 shadow-[var(--shadow-panel)] lg:p-6"
+            id="html-guide"
+          >
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <div className="mono text-[10px] uppercase tracking-[0.24em] text-[color:var(--text-muted)]">
+                  Interactive Guide
+                </div>
+                <h2 className="academic-serif mt-3 text-3xl font-normal tracking-normal text-[color:var(--ink)]">
+                  {note.htmlGuideTitle ?? "HTML 视觉导读"}
+                </h2>
+              </div>
+              <Link
+                className="mono inline-flex self-start border border-[color:var(--rule)] bg-white px-4 py-3 text-[10px] uppercase tracking-[0.22em] text-[color:var(--ink-soft)] transition hover:border-[color:var(--accent)] hover:text-[color:var(--ink)]"
+                href={note.htmlGuideSrc}
+                rel="noreferrer"
+                target="_blank"
+              >
+                单独打开
+              </Link>
+            </div>
+            <div className="mt-5 overflow-hidden border border-[color:var(--rule)] bg-white">
+              <iframe
+                className="h-[76vh] min-h-[620px] w-full bg-white"
+                loading="lazy"
+                src={note.htmlGuideSrc}
+                title={note.htmlGuideTitle ?? "HTML 视觉导读"}
+              />
+            </div>
+          </section>
+        ) : null}
+
         <div className="grid gap-6 xl:grid-cols-[310px_minmax(0,1fr)]">
           <aside className="space-y-4 xl:sticky xl:top-6 xl:self-start">
             <nav className="border border-[color:var(--rule)] bg-white p-4 shadow-[var(--shadow-panel)]">
