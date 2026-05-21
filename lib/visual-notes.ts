@@ -258,7 +258,7 @@ export const visualNotes: VisualNote[] = [
   },
   {
     articleSlug: "ai-foundations-transformer-learning-record",
-    description: "围绕状态表示这条主线，把 Transformer 理解拆成 Q/K/V、多头关系视角、embedding、Decoder 前缀、代码 shape、实验边界和 H[-1] 到 logits[-1] 的完整预测链路。",
+    description: "围绕状态表示这条主线，把 Transformer 理解拆成 Q/K/V、embedding 与位置、多头关系视角、Decoder 前缀、代码 shape、实验边界和 H[-1] 到 logits[-1] 的完整预测链路。",
     slug: "transformer-nmt",
     title: "从 memory 到状态表示",
     images: [
@@ -323,6 +323,24 @@ export const visualNotes: VisualNote[] = [
         id: "prediction-flow",
         src: "/visual-notes/transformer-nmt/07-prediction-flow.png",
         title: "07 从 memory 到 logits[-1]",
+        width: 1536,
+      },
+      {
+        alt: "Embedding 和位置编码图，展示 token id 查询 embedding 表，token embedding 与 position 相加形成初始状态，并由最终 loss 反向传播更新 embedding 表。",
+        caption: "Embedding 与位置：embedding 表是可训练参数；位置让语境不是一袋词，最终 loss 会反向传播塑形这张表。",
+        height: 1024,
+        id: "embedding-position",
+        src: "/visual-notes/transformer-nmt/08-embedding-position.png",
+        title: "08 Embedding 与位置",
+        width: 1536,
+      },
+      {
+        alt: "多头和多层 attention 图，展示单个 head 的二元关系、多个 head 并行形成多套关系视角、多层状态继续交互，以及最终 loss 反向传播到各个 head。",
+        caption: "多头与多层：单次 attention 是二元关系；多头和多层让复杂关系折叠进 hidden state，head 不单独算 loss。",
+        height: 1024,
+        id: "multihead-layers",
+        src: "/visual-notes/transformer-nmt/09-multihead-layers.png",
+        title: "09 多头与多层",
         width: 1536,
       },
     ],
