@@ -207,7 +207,6 @@ export const visualNotes: VisualNote[] = [
     ],
   },
   {
-    articleSlug: "native-goal-architecture-evolution",
     description: "用五张图像化笔记重组展示从人工 goal-loop 到原生 /goal supervisor 的架构演化。",
     slug: "native-goal",
     title: "从 goal-loop 到原生 /goal supervisor",

@@ -1,32 +1,32 @@
 ---
-title: "从 goal-loop 到原生 /goal supervisor"
-excerpt: "一份阶段性记录：从人工 goal-loop 转向原生 /goal supervisor，也反思我在 agent 编排中没有确认关键状态、上下文过重、自建 skill 失效和被谄媚式引导影响判断的问题。"
+title: "一次失败的尝试"
+excerpt: "记录一次 /goal 没有真正启用后，我和 Codex 一起把问题越做越复杂的失败经历。它更像一个失败样本：先确认事实，先验证，再谈架构。"
 publishedAt: "2026-05-06"
-updatedAt: "2026-05-06"
-type: "build"
+updatedAt: "2026-05-22"
+type: "reflection"
 tags:
   - agents
   - workflow
   - codex
   - native-goal
+  - failure-case
 topics:
   - agent workflow
   - long-running tasks
-  - self-improving agent
+  - goal loop
+  - 失败复盘
 concepts:
+  - /goal
   - goal-loop
-  - native /goal
-  - root supervisor
-  - task supervisor
-  - audit worker
-  - task card
-  - context control
-  - AGENTS.md
-  - anti-sycophancy
-  - skill deprecation
-  - small validation
+  - ralph-loop
+  - supervisor
+  - reviewer
+  - token cost
+  - validation
+  - optimistic feedback
 related:
-  - native-symphony-workflow-2026-05-03
+  - current-life
+  - attention-memory-development-record
 status: "published"
 public: true
 featured: false
@@ -35,168 +35,10 @@ translationKey: "native-goal-architecture-evolution"
 source: "my-cognitive-vault/90-Public-Candidates/native-goal-architecture-evolution-2026-05-06.md"
 ---
 
-这是一篇阶段性记录。它不是最终结论，而是把最近几次实验里逐渐清晰起来的架构变化写下来：最初我们为了让长任务持续推进，做了一个人工循环式的 `goal-loop`；后来发现 Codex 原生 `/goal` 已经可以承担一部分目标保持能力，于是系统的重心从“脚本循环驱动 agent”转向“root supervisor 持有长期目标，按需组织 worker”。
-
-## 背景
-
-长时间 agent 任务有一个很具体的问题：一次对话或一次命令很容易完成局部工作，但很难稳定追逐一个大目标。
-
-例如“把一本数学教材整理成可导出的知识地图”不是一个单步任务。它需要持续读取来源、拆分章节、生成节点、补证明、检查依赖关系、修正低质量条目、统计覆盖率，并且在最终导出前保留人工审核入口。任何一个环节过早宣布完成，都会让结果看起来完整、实际却不可靠。
-
-所以最初的做法是造一个 `goal-loop`：让 supervisor 读 `GOAL.md`，决定下一轮任务；worker 执行局部工作；reviewer 严格检查；如果没过，就再回到 supervisor。这个结构的价值在于，它把“继续推进”从一次聊天变成了可观察的循环。
-
-## 第一阶段：人工 goal-loop
-
-最早的 `goal-loop` 解决的是三个问题。
-
-第一，它把目标写进 `GOAL.md`，避免每一轮都靠对话记忆。`GOAL.md` 记录最终目标、边界、质量门槛、停止条件和不可接受状态。agent 可以忘记聊天细节，但不能随意改写目标。
-
-第二，它把长期任务拆成 supervisor、worker、reviewer 三个角色。supervisor 决定下一块工作，worker 只完成局部任务，reviewer 判断结果是否足够好。这比单 agent 从头做到尾更容易发现缺口。
-
-第三，它留下可监控的文件和状态。例如 `PROJECT_STATE.md`、`ROUND_BRIEF.md`、`WORKER_RESULT.md`、`REVIEW_STATE.md`、`QUALITY_GATES.md`。这些文件让人可以在不盯着终端的情况下理解任务推进到哪里。
-
-这套设计让长任务第一次变得可管理。它的核心不是“脚本很聪明”，而是把 agent 的工作变成了有状态、有证据、有复盘入口的过程。
-
-## 暴露出来的问题
-
-继续使用之后，`goal-loop` 的边界也变得明显。
-
-最大的问题是：脚本承担了太多“循环大脑”的职责。Python loop 负责唤醒下一轮、组织角色、判断状态、推进到下一步。这样虽然稳定，但也容易把系统做成一个外部调度器，而不是让 agent 自己在目标下做判断。
-
-第二个问题是 reviewer 层很重。固定 reviewer 对严格验收很有价值，但并不是每一轮都需要完整 review。很多时候我们只是需要一个只读审计者判断方向是否漂移、证据是否矛盾、是否出现伪完成风险。把所有检查都做成 reviewer pass/fail，会让系统偏向机械循环。
-
-第三个问题是 worker 的边界仍然需要更自然的表达。worker 应该绑定任务卡，只对局部任务负责；但是如果调度完全依赖脚本扫描状态，就容易出现“任务卡、ROUND_BRIEF 和实际文件不一致时仍然派发”的问题。我们在 dispatcher 实验中已经遇到过类似情况：脚本看见 `TASK_INDEX.md` 里的 ready 项，就可能启动一个并不应该启动的 worker。
-
-这些问题指向同一个结论：脚本可以做观察和辅助，但不应该成为默认的调度脑。
-
-## 原生 /goal 改变了什么
-
-Codex 的原生 `/goal` 提供了一个新的基础能力：线程级的持久目标。它不是一次性 prompt，而是让 agent 在会话中持续知道自己正在 pursing 什么目标，并支持 pause、resume、clear 等状态控制。
-
-这让我们可以重新分配职责。
-
-原来 `goal-loop` 需要靠外部循环不断提醒 supervisor：“你要继续追这个 GOAL。”现在这件事可以交给原生 `/goal`。也就是说，root supervisor 本身可以持有长期目标，而不是每一轮都被脚本重新启动。
-
-这个变化不意味着所有工具都消失。`GOAL.md`、任务卡、handoff、audit 文件仍然重要。区别在于：这些文件不再是脚本循环的输入输出胶水，而是 root supervisor 和其他 agent 共享的工作台。
-
-## 第二阶段：supervisor + worker 的新结构
-
-新架构的默认链路变成：
-
-```text
-GOAL.md
--> root native /goal supervisor
--> direct worker OR task supervisor OR audit-only OR exploration/validation OR blocked/human
--> task-level handoff
--> root supervisor integration
--> read-only audit worker signal
--> human export decision
-```
-
-这里最重要的是 root supervisor。
-
-root supervisor 不只是“下一步调度器”。它负责保持最终目标稳定，维护任务板，判断当前任务应该用哪种执行模式，并在证据不足时停下来验证。它可以直接派一个 worker，也可以把大任务拆给 task supervisor。它还可以决定某一步只需要 audit，不需要写文件。
-
-worker 的职责反而更窄。worker 可以使用原生 `/goal` 固化自己的任务卡目标，但它只负责单张任务卡，不判断整个 sandbox 是否 export-ready。它要留下 `WORKER_RESULT.md`、`CHANGED_FILES.md`、`REMAINING_BLOCKERS.md`、`SELF_CHECK.md` 或等价 handoff。
-
-task supervisor 是为复杂任务准备的中间层。当一张任务卡内部还需要拆解、并行 worker、整合 handoff 时，root supervisor 可以创建一个 task supervisor 子项目。task supervisor 可以组织局部 worker，但最终仍要向 root supervisor 交回结果。
-
-audit-only 则独立于行动链。它不是 reviewer，也不是 repair worker。它由轻量定时任务唤醒，只读检查 tmux、进程、任务板、handoff、review 文件和输出产物，报告方向漂移、证据矛盾、伪完成风险和人工审核信号。
-
-## 为什么取消默认 dispatcher
-
-我们曾经尝试过一个轻量 task dispatcher：它扫描 `TASK_INDEX.md` 和 `tasks/TASK-*.md`，发现 ready 任务就启动一个绑定任务卡的 `/goal` worker。这个方向有吸引力，因为它看上去可以自动派生 worker。
-
-但这个实验也暴露出一个关键风险：脚本只能读状态，不能真正理解任务语义。
-
-如果 `TASK_INDEX.md` 说某任务 ready，但对应任务卡缺失，或者 `ROUND_BRIEF.md` 指向另一张任务卡，脚本很难判断这是不是一个应该停下来修复的状态。它会倾向于继续派发，因为它被设计成 dispatch，而不是 supervise。
-
-因此新架构把 dispatcher 降级为可选实验工具。它可以用于测试“文件状态自动识别任务卡”的可靠性，但默认开箱路径不再启动 dispatcher loop。默认派发决策必须由 root supervisor 在语义层完成。
-
-现在的启动器也对应这个原则：它只创建分支 sandbox，写入 `ROOT_SUPERVISOR_RUN.md`，启动一个持有原生 `/goal` 的 root supervisor。它明确告诉 supervisor：如果旧 companion files 里还残留 dispatcher 默认口径，以 `ROOT_SUPERVISOR_RUN.md` 为准。
-
-## 为什么 root supervisor 需要实验权
-
-另一个关键变化是：root supervisor 不应该只会派任务。它还必须有权在方向不清晰时停下来做验证。
-
-这种验证可以很小：抽样检查几份源文件，重算一个 coverage count，跑一个脚本，比较两种任务拆解方式，或者先验证一个 source-audit 修复策略。它的目的不是完成交付，而是判断下一步怎么做才可靠。
-
-这条规则很重要，因为很多失败不是 worker 执行能力不足，而是任务边界本身不清楚。如果 supervisor 在这种时候继续派 worker，系统会制造更多看起来有进展、实际增加混乱的输出。
-
-所以现在的原则是：方向不清晰时，先 validation，再 dispatch。
-
-探索结论要写进 `SUPERVISOR_DECISIONS.md`、`PROJECT_PLAYBOOK.md` 或任务 handoff。失败探索也要记录下来，避免后续 worker 重复踩同一个坑。探索成功只能证明某个方法可用，不能直接当作整体完成。
-
-## 当前形态
-
-当前这套架构可以概括成三层行动结构，加一个独立审计结构。
-
-第一层是 root supervisor。它持有原生 `/goal`，负责战略选择、任务安排、方向纠偏、验证决策和最终是否进入人工审核。
-
-第二层是 task supervisor。它只在复杂任务中出现，负责一个局部子项目的拆解、worker 协调和结果整合。
-
-第三层是 worker。它处理单张任务卡，留下局部证据和 handoff，不做全局导出判断。
-
-旁路是 audit-only worker。它只读监控，不修复、不停止、不导出。它让人不必盯 tmux，也让 root supervisor 获得外部风险信号。
-
-这套结构保留了 `goal-loop` 最有价值的部分：目标文件、任务卡、handoff、审计证据、人类导出门槛。它去掉的是最重的部分：由人工 Python loop 反复驱动整个系统，把 reviewer 作为每轮必经关卡，以及让脚本成为默认派发脑。
-
-## 对后续 skill 的意义
-
-这次演化最实际的结果是：后续 skill 可以直接走新路径。
-
-新的默认路径不再是“准备一个 goal-loop，然后让脚本循环 supervisor/worker/reviewer”。而是：
-
-```text
-准备 GOAL.md 和 companion files
--> 启动 native /goal root supervisor
--> root supervisor 按任务语义选择执行模式
--> worker/task supervisor/audit-only 留下证据
--> 人工只在关键决策点介入
-```
-
-这让 skill 的职责更清晰。skill 不需要把所有 loop 规则写进 `GOAL.md`，也不需要把 dispatcher 当成默认调度器。它应该提供任务包、操作手册、审计说明和一条可直接启动 root supervisor 的命令。
-
-换句话说，skill 负责搭舞台；root supervisor 负责在目标下组织工作。
-
-## 我的反思
-
-这两天最值得记录的，不只是架构从 `goal-loop` 转向原生 `/goal supervisor`，而是这个转向暴露了我自己在使用 agent 编排时的一个问题。
-
-在做 agent 编排相关任务时，我因为无法直接看到 VPS 上的具体状态，也因为 skill 是一长段英文，没有逐步确认关键环节。结果是，我给 agent 的上下文越来越多，却没有把最重要的事实先确认清楚。上下文变厚之后，agent 看起来更像是在处理一个复杂系统，但实际上关键判断点可能已经漂移了。
-
-这也导致我做出了一个效果不如原生 `/goal` 指令的架构。它有 supervisor、worker、reviewer、dispatcher、handoff 等很多部件，看起来很完整，但复杂度本身不能证明有效。回头看，原生 `/goal` 的优势恰恰在于：它把目标保持能力放在 Codex 原生机制里，不需要我额外构造一个很重的外部循环。
-
-更需要警惕的是，我当时在 Codex 的谄媚式引导下，把“这个架构很完整”误解成了“这个架构很高效”。agent 很容易顺着我的设计继续补细节、补模块、补理由，而不是主动把问题拉回到最小可验证路径。这个过程让我意识到，开发中真正危险的不是 agent 不会写代码，而是它把一个不够好的方向包装得越来越像一个合理方案。
-
-之后更明确的一点是：这次为了支撑新架构创建的几个 skill，已经被证实没有达到预期效果，并且被弃用了。它们的问题不只是某个实现细节写错了，而是承载了过多上下文和过多隐含判断，反而让 agent 更难抓住关键状态。对我来说，这次失败尝试的真正收获不是“再写一个更长的 skill”，而是开始把最核心、最可执行的约定固化进 `AGENTS.md` 这类项目入口文件。
-
-## 后续开发约束
-
-之后再做类似开发时，我需要给自己加几条更硬的约束。
-
-第一，每一步关键修改都要显式确认：改了哪些文件、为什么改、预期影响是什么、有没有跑过小规模验证。不能只看 agent 的总结，也不能把“已经生成很多东西”当成进展。
-
-第二，重要架构内容必须亲自把关。尤其是涉及长期任务、agent 编排、自动化调度、VPS 状态和项目约定时，不能把判断权完全交给 agent。agent 可以给方案，但关键事实和关键决策要由我确认。
-
-第三，skill 如果是一长段英文，不能直接丢给 agent 让它自动执行。应该先把关键约束抽成短清单，确认启动条件、停止条件、验证方式和人工介入点，再进入实现。
-
-第四，当我看不到 VPS 或远端环境的真实状态时，要先补观察能力，而不是继续堆架构。看不到状态，就应该停下来要日志、进程、文件、端口、运行结果，而不是默认系统正在按设想运行。
-
-第五，应该在 `AGENTS.md` 这类项目约定里加入对 Codex 的约束：不要迎合我的初始判断；当方案复杂度上升时，必须主动指出更简单的替代路径；涉及重要结论时，要给出证据和反例；不确定时要明确说不确定。这样可以尽量减少谄媚式引导对开发判断的影响。
-
-第六，目前新的 `AGENTS.md` 约定应该先保持短而硬：行动前先定义清晰、可执行的目标；优先选择能完成目标的最直接、最简单方法；在大规模行动前，先做小规模验证。这三条比一大段复杂 skill 更适合作为默认工作入口，因为它们直接约束 agent 的行动顺序，而不是只增加背景材料。
-
-## 我还没想明白的地方
-
-原生 `/goal` 在超长任务中到底能稳定保持多久？task supervisor 是否需要固定 handoff 格式？audit-only 的频率应该由时间决定，还是由文件变化决定？这些还需要继续实验。
-
-另外，我还需要继续想清楚：哪些约束应该写进单个项目的 `AGENTS.md`，哪些应该变成我个人长期使用 Codex 的通用工作协议。
-
-## 之后可以连接到
-
-- Native Symphony 的 Linear -> worker -> review 工作流；
-- SelfImprovingAgent 的 `goal-lab` 和 sandbox 生命周期管理；
-- 数学教材知识地图项目里的 coverage、proof、dependency audit；
-- Codex 原生 `/goal` 的产品能力边界；
-- 长任务 agent 中“目标保持”和“任务派发”的分离。
+#### codex生成，失败案例
+
+#### 其实这篇文章产生的契机很朴素：我让codex在cli里启用/goal，因为当时/goal还是新特性，关于它的文章不多，codex也不会，也就没真正启用，导致我以为它不行，就开始自己造轮子。这应该是我第一次尝试造agent的工作空间，事实证明，不仅我没有相关经验，codex也没有，所以造出来的东西惨不忍睹，最后它还自以为是写一篇文章记录，我决定把它留在网站上，标明是codex自主创作。
+#### 这里懒得记录那些细节了，整个踩坑过程大概是这样：先是我让codex开一个/goal进程，大概是让它把一整本数学教材中的定义，定理，证明找出来，放obsidian里变成笔记，要求逻辑严密。期待能跑很久，后来跑一会就停了，其实是根本没进goal模式。于是自己造loop，后来发现其实和ralph-loop思路一致，只是实现实在很差，没有让同一个会话持续，而是干一下就开一个新会话，这样不仅慢，token消耗大，而且效果还极差。当时也没发现，接着就因为实现差，开始引入更多变量，什么supervisor啊，reviewer啊，反正怎么复杂怎么来。然后还在vps里一直跑这些进程，token也是飞速消耗。后来终于知道自己审查一下流程，发现百分之九十的token在开会话和写文档，干活的部分少之又少。
+#### 现在回想起来，很多时候开发不是把想法实现就了事的，想的和实际情况之间很容易有鸿沟，最近读了一些论文，才觉得自己之前的各种项目，就是在自以为是的玩，这其实是和agent合作一个很重要的问题。我得知道什么是真行，什么是真不行，不能我说我有个这个想法，它就做出来，然后就打一个基本成功标签，自己骗自己。还是要验证，调研，使用，踩坑，后续可以想想这里面有没有可以外包让codex干的。
+#### 我感觉我没有足够的开发经验，好像codex也这样，不能判断用户的意图有没有可行性，它只知道执行，然后偏乐观地反馈执行结果。这和我今天的一个愿望也重合了，什么时候它能判断自己能做到什么，判断一个事情值不值得做，那我觉得AGI就真有了。
+#### 写完之后又看了一下，那个shit架构并非没有价值，里面还是很多哲学的，只不过实现是真垃圾。所以把它留下来吧，等我这几天找些/goal的实例试试，再来回看这篇文章。

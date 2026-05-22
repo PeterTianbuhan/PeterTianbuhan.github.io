@@ -85,14 +85,14 @@ export const articleProfiles: ArticleProfile[] = [
     thesis: "目前最重要的变化不是更复杂的自动化，而是把日常生活、工具使用和公开写作重新收回到自己的表达里。",
   },
   {
-    audience: "想理解长任务、/goal、worker 编排和自动化边界的读者。",
+    audience: "想看一次 agent 工作流失败复盘的人。",
     order: 2,
     prerequisites: ["current-life"],
-    question: "从人工 goal-loop 转向原生 /goal supervisor，架构边界应该怎么重新划分？",
+    question: "一次看起来完整的 agent 架构为什么会失败？",
     related: ["current-life", "attention-memory-development-record"],
     seriesId: "ai-workflow",
     slug: "native-goal-architecture-evolution",
-    thesis: "长期目标应该由更稳定的 supervisor 持有，脚本和 dispatcher 只负责有限、可验证的执行片段。",
+    thesis: "这次失败的关键不是某个模块没写好，而是一开始没有确认 /goal 是否真正启用，后面所有复杂架构都在给错误前提打补丁。",
   },
   {
     audience: "想看轻量 agent 记忆、prompt-only 记忆约定和项目记忆仓库的读者。",
