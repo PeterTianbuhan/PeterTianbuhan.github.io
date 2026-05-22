@@ -302,7 +302,7 @@ const rawSiteContent: RawSiteContent = {
       slug: "homepage",
       statusTone: "blue",
       link: "https://github.com/PeterTianbuhan/PeterTianbuhan.github.io",
-      logHref: "/blog/current-workflow",
+      logHref: "/blog/current-life",
       stack: ["Next.js", "MDX", "GitHub Pages"],
       status: { zh: "更新中", en: "Evolving" },
       name: { zh: "个人主页", en: "Personal Homepage" },
