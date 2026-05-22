@@ -146,14 +146,13 @@ export const visualNotes: VisualNote[] = [
     ],
   },
   {
-    articleSlug: "current-workflow",
-    description: "把个人工作流拆成从想法、任务、代码、验证到复盘的六个阶段，便于快速看清整套系统如何运转。",
+    description: "把个人工作流和早期自动化探索拆成从想法、任务、代码、验证到复盘的六个阶段；worker 相关内容不代表当前主流程。",
     slug: "current-workflow",
-    title: "我目前的工作流",
+    title: "工作流阶段性探索",
     images: [
       {
-        alt: "当前工作流总览图，串联想法、Linear、Codex、GitHub、HomePage 和复盘。",
-        caption: "总览：把从想法到产品、再到复盘的主链路压缩成一张图。",
+        alt: "工作流阶段性探索总览图，串联想法、Codex、GitHub、HomePage 和复盘。",
+        caption: "总览：把从想法到产品、再到复盘的链路压缩成一张图，其中自动化部分是阶段性探索。",
         height: 1049,
         id: "overview",
         src: "/visual-notes/current-workflow/01-overview.png",
@@ -161,12 +160,12 @@ export const visualNotes: VisualNote[] = [
         width: 1499,
       },
       {
-        alt: "从 goal、规格、worker 到 PR 的任务推进流程图。",
-        caption: "任务推进：先把目标说清楚，再让 worker 按边界产出可审查结果。",
+        alt: "从 goal、规格、worker 到 PR 的早期任务推进探索图。",
+        caption: "任务推进：这是早期 worker 探索，不代表当前主流程。",
         height: 1050,
         id: "goal-spec-worker-pr",
         src: "/visual-notes/current-workflow/02-goal-spec-worker-pr.png",
-        title: "02 目标、规格、worker 与 PR",
+        title: "02 目标、规格与早期 worker 探索",
         width: 1498,
       },
       {

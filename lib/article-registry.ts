@@ -43,7 +43,7 @@ export const readingModes: Record<"skim" | "understand" | "full", ReadingMode> =
 
 export const articleSeries: ArticleSeries[] = [
   {
-    description: "围绕 Codex、worker、目标保持、记忆和个人工作流，记录如何把 AI 变成可执行、可审计的协作系统。",
+    description: "围绕 Codex、目标保持、记忆和个人工作流，记录如何把 AI 变成可执行、可审计的协作系统；worker 相关内容主要作为阶段性探索保留。",
     id: "ai-workflow",
     title: "AI 工作流与 agent 系统",
   },
@@ -76,13 +76,13 @@ export const articleProfiles: ArticleProfile[] = [
     thesis: "Agent memory 是跨交互持久化、组织并选择性召回信息的能力，支撑长期智能体的连续性、适应性和个性化。",
   },
   {
-    audience: "想理解我如何把 Codex、Linear、GitHub、HomePage 和复盘串起来的读者。",
+    audience: "想了解我现在怎样使用 Codex、Obsidian、Zotero 和个人网站的人。",
     order: 1,
-    question: "一个想法如何变成可执行、可审计、可复盘的个人工作流？",
+    question: "我现在的生活和工具入口大概是什么样？",
     related: ["native-goal-architecture-evolution", "attention-memory-development-record"],
     seriesId: "ai-workflow",
     slug: "current-workflow",
-    thesis: "AI 工作流真正有价值的部分，不是让 agent 自动忙起来，而是让任务、证据、验收和复盘形成闭环。",
+    thesis: "目前最重要的变化不是更复杂的自动化，而是把日常生活、工具使用和公开写作重新收回到自己的表达里。",
   },
   {
     audience: "想理解长任务、/goal、worker 编排和自动化边界的读者。",
