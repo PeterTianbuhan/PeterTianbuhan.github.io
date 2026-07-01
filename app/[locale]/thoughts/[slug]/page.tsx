@@ -6,12 +6,17 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { Panel } from "@/components/ui/panel";
 import { getPostBySlug } from "@/lib/content";
-import { isSupportedLocale, type Locale } from "@/lib/i18n";
+import { defaultLocale, isSupportedLocale, type Locale } from "@/lib/i18n";
 import { getDictionary, getSiteContent } from "@/lib/site";
 import { getAllThoughtNotes, getThoughtNoteBySlug } from "@/lib/thoughts";
 
 export async function generateStaticParams() {
   const notes = await getAllThoughtNotes();
+
+  // output: export 不允许"零参数"的动态路由；内容清空期给一个会 notFound 的占位。
+  if (notes.length === 0) {
+    return [{ locale: defaultLocale, slug: "__placeholder__" }];
+  }
 
   return notes.map((note) => ({
     locale: note.locale,

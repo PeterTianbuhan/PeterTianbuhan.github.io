@@ -8,7 +8,6 @@ import type { Post, PostListItem } from "@/lib/content";
 import type { Locale } from "@/lib/i18n";
 import { getSiteContent, type Dictionary } from "@/lib/site";
 import { getArticleProfile } from "@/lib/article-registry";
-import { getVisualNoteByArticleSlug } from "@/lib/visual-notes";
 
 export async function BlogPostView({
   alternatePath,
@@ -24,10 +23,8 @@ export async function BlogPostView({
   relatedPosts: PostListItem[];
 }) {
   const site = await getSiteContent(locale);
-  const visualNote = locale === "zh" ? getVisualNoteByArticleSlug(post.slug) : null;
   const articleProfile = locale === "zh" ? getArticleProfile(post.slug) : null;
   const articleHref = `/${locale}/blog/${post.slug}`;
-  const visualHref = visualNote ? `/${locale}/visual-notes/${visualNote.slug}` : null;
 
   return (
     <main className="surface-grid min-h-screen px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
@@ -48,18 +45,10 @@ export async function BlogPostView({
             <span>{post.meta.publishedAtLabel}</span>
             {post.meta.updatedAtLabel ? <span>{post.meta.updatedAtLabel}</span> : null}
           </div>
-          {visualNote ? (
-            <Link
-              className="mono mt-6 inline-flex border border-[color:var(--accent)] bg-[color:var(--accent)] px-4 py-3 text-[10px] uppercase tracking-[0.24em] text-white transition hover:bg-[color:var(--accent-strong)]"
-              href={visualHref ?? articleHref}
-            >
-              图像笔记
-            </Link>
-          ) : null}
         </Panel>
 
         {articleProfile ? (
-          <ArticleEntryCard articleHref={articleHref} profile={articleProfile} visualHref={visualHref} />
+          <ArticleEntryCard articleHref={articleHref} profile={articleProfile} />
         ) : null}
 
         <Panel className="boot-in delay-1 px-6 py-8 sm:px-8 sm:py-10">

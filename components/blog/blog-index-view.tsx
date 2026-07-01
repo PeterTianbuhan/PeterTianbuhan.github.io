@@ -6,7 +6,6 @@ import type { PostListItem } from "@/lib/content";
 import type { Locale } from "@/lib/i18n";
 import { getSiteContent, type Dictionary } from "@/lib/site";
 import { getArticleProfile, getArticleSeries } from "@/lib/article-registry";
-import { getVisualNoteByArticleSlug } from "@/lib/visual-notes";
 
 export async function BlogIndexView({
   dictionary,
@@ -18,10 +17,9 @@ export async function BlogIndexView({
   posts: PostListItem[];
 }) {
   const site = await getSiteContent(locale);
-  const postsWithVisualNotes = posts.map((post) => ({
+  const postsWithProfiles = posts.map((post) => ({
     profile: locale === "zh" ? getArticleProfile(post.slug) : null,
     post,
-    visualNote: locale === "zh" ? getVisualNoteByArticleSlug(post.slug) : null,
   }));
 
   return (
@@ -43,26 +41,10 @@ export async function BlogIndexView({
           <p className="mt-6 max-w-[42rem] text-base leading-8 text-[color:var(--text-soft)]">
             {dictionary.blog.description}
           </p>
-          {locale === "zh" ? (
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link
-                className="mono inline-flex border border-[color:var(--accent)] bg-[color:var(--accent)] px-4 py-3 text-[10px] uppercase tracking-[0.24em] text-white transition hover:bg-[color:var(--accent-strong)]"
-                href={`/${locale}/reading-map`}
-              >
-                阅读地图
-              </Link>
-              <Link
-                className="mono inline-flex border border-[color:var(--rule)] bg-white px-4 py-3 text-[10px] uppercase tracking-[0.24em] text-[color:var(--ink-soft)] transition hover:border-[color:var(--accent)] hover:text-[color:var(--ink)]"
-                href={`/${locale}/visual-notes`}
-              >
-                可视化文章库
-              </Link>
-            </div>
-          ) : null}
         </Panel>
 
         <section className="grid gap-4">
-          {postsWithVisualNotes.map(({ post, profile, visualNote }, index) => {
+          {postsWithProfiles.map(({ post, profile }, index) => {
             const series = profile ? getArticleSeries(profile.seriesId) : null;
 
             return (
@@ -115,14 +97,6 @@ export async function BlogIndexView({
                 >
                   阅读原文
                 </Link>
-                {visualNote ? (
-                  <Link
-                    className="mono inline-flex border border-[#9b6a43] bg-[#f8f2ea] px-4 py-3 text-[10px] uppercase tracking-[0.22em] text-[#6f4c30] transition hover:bg-[#f4eadc] hover:text-[color:var(--ink)]"
-                    href={`/${locale}/visual-notes/${visualNote.slug}`}
-                  >
-                    可视化展示
-                  </Link>
-                ) : null}
               </div>
               </article>
             );

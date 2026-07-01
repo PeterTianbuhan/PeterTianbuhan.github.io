@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "publish": "node ./scripts/publish-from-vault.mjs",
+    "publish:check": "node ./scripts/publish-from-vault.mjs --dry-run",
     "articles:sync": "node ./scripts/sync-vault-articles.mjs",
     "post:intake": "node ./scripts/post-intake.mjs",
     "articles:check": "node ./scripts/verify-article-sources.mjs",

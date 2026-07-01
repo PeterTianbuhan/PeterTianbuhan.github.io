@@ -7,11 +7,16 @@ import {
   getPostTranslation,
   getRelatedPosts,
 } from "@/lib/content";
-import { isSupportedLocale, locales, type Locale } from "@/lib/i18n";
+import { defaultLocale, isSupportedLocale, locales, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/site";
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
+
+  // output: export 不允许"零参数"的动态路由；内容清空期给一个会 notFound 的占位。
+  if (posts.length === 0) {
+    return [{ locale: defaultLocale, slug: "__placeholder__" }];
+  }
 
   return posts.map((post) => ({
     locale: post.locale,

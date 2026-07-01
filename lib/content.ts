@@ -6,6 +6,9 @@ import type { Locale } from "@/lib/i18n";
 
 const contentRoot = path.join(process.cwd(), "content", "blog");
 
+// 首页栏目 key（对应 life vault 的种类），由发布脚本从文件夹推导写入。
+export type SectionKey = "thinking" | "learning" | "building" | "life";
+
 type RawFrontmatter = {
   title: string;
   excerpt: string;
@@ -15,6 +18,7 @@ type RawFrontmatter = {
   featured: boolean;
   locale: Locale;
   translationKey: string;
+  section?: SectionKey;
 };
 
 export type PostListItem = {
@@ -25,6 +29,7 @@ export type PostListItem = {
   locale: Locale;
   translationKey: string;
   featured: boolean;
+  section: SectionKey;
   publishedAt: string;
   publishedAtLabel: string;
   updatedAt?: string;
@@ -83,6 +88,7 @@ function normalizePost(slug: string, locale: Locale, source: string): Post {
       locale: frontmatter.locale,
       translationKey: frontmatter.translationKey,
       featured: Boolean(frontmatter.featured),
+      section: frontmatter.section ?? "thinking",
       publishedAt: frontmatter.publishedAt,
       publishedAtLabel: formatDate(frontmatter.publishedAt, locale),
       updatedAt: frontmatter.updatedAt,

@@ -12,9 +12,10 @@
   --text-muted: var(--muted);
   --rule: #d7d0c4;
   --rule-soft: #e6ded2;
-  --accent: #217a5f;
-  --accent-strong: #155c47;
-  --accent-soft: #d4eadf;
+  --accent: #c0603c;
+  --accent-strong: #9b4a2c;
+  --accent-soft: #f0e2d6;
+  --accent-line: rgba(192, 96, 60, 0.22);
   --shadow-panel: 0 24px 70px rgba(31, 28, 21, 0.13);
   --radius-panel: 3px;
   --content-width: 1200px;
