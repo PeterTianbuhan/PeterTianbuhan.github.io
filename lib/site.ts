@@ -165,8 +165,8 @@ const rawSiteContent: RawSiteContent = {
     en: "A personal log of coursework, small projects, build notes, and unfinished thoughts.",
   },
   heroTitle: {
-    zh: "公开学习，慢慢构建。",
-    en: "Learning in public, building slowly.",
+    zh: "公开学习，慢慢构建",
+    en: "Learning in public, building slowly",
   },
   heroTagline: {
     zh: "Be patient, keep shipping.",

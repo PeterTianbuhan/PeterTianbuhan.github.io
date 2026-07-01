@@ -139,7 +139,6 @@ export function HomeView({ dictionary, locale, posts, site }: HomeViewProps) {
         <h1 className="academic-serif max-w-[15ch] text-5xl font-normal leading-[1.04] tracking-tight text-[color:var(--ink)] sm:text-[5.5rem]">
           {site.heroTitle}
         </h1>
-        <div className="mt-7 h-[3px] w-24 bg-[color:var(--accent)]" />
         <p className="mt-8 max-w-[44ch] text-lg leading-9 text-[color:var(--ink-soft)]">
           {site.intro}
         </p>
