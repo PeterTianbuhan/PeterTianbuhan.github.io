@@ -1,5 +1,0 @@
-1:"$Sreact.fragment"
-2:I[97367,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
-3:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"min-h-screen bg-[color:var(--background)] px-6 py-10 text-[color:var(--ink)]","children":[["$","meta",null,{"httpEquiv":"refresh","content":"0; url=/zh/blog/current-life/"}],["$","link",null,{"rel":"canonical","href":"/zh/blog/current-life/"}],["$","p",null,{"children":["这篇文章已经移动到 ",["$","a",null,{"href":"/zh/blog/current-life/","children":"目前的生活"}],"。"]}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"aFm1vTzymUWNzZsxqwZRr"}
-4:null
