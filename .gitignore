@@ -17,3 +17,6 @@ Thumbs.db
 legacy-homepage/
 legacy-site/
 output/
+
+# local browser-verification screenshots
+.playwright-mcp/

@@ -48,6 +48,10 @@ type RawSiteContent = {
   social: {
     github: string;
     githubLabel: string;
+    x?: string;
+    xLabel?: string;
+    codexProfile?: string;
+    codexProfileLabel?: string;
     linkedin: string;
     linkedinLabel: string;
   };

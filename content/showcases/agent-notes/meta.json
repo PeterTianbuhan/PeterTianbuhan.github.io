@@ -1,0 +1,78 @@
+{
+  "slug": "agent-notes",
+  "title": {
+    "zh": "Agent 札记",
+    "en": "Agent Notes"
+  },
+  "tagline": {
+    "zh": "我怎么慢慢理解 Agent",
+    "en": "How I keep understanding agents"
+  },
+  "description": {
+    "zh": "从上下文、工具到权限，先收四篇写给完全非技术读者的入门讲解。以后见闻、定位和更长的整理，也可以继续收进这本札记。",
+    "en": "Four approachable pieces on context, tools, and permissions — written for non-technical readers. More observations and longer notes can join later."
+  },
+  "command": "open agent-notes",
+  "label": {
+    "zh": "Agent 札记",
+    "en": "Agent Notes"
+  },
+  "chapters": [
+    {
+      "slug": "context",
+      "file": "01-context.mdx",
+      "number": "01",
+      "title": {
+        "zh": "大模型眼前有什么",
+        "en": "What the model can see"
+      },
+      "subtitle": {
+        "zh": "为什么它能接着回答",
+        "en": "Why it can keep answering"
+      },
+      "kind": "intro"
+    },
+    {
+      "slug": "hands",
+      "file": "02-hands.mdx",
+      "number": "02",
+      "title": {
+        "zh": "给大模型一双手",
+        "en": "Giving the model hands"
+      },
+      "subtitle": {
+        "zh": "从一个大模型，到一个 Agent",
+        "en": "From a model to an agent"
+      },
+      "kind": "intro"
+    },
+    {
+      "slug": "hotwords",
+      "file": "03-hotwords.mdx",
+      "number": "03",
+      "title": {
+        "zh": "Agent 热词都在说什么",
+        "en": "What the buzzwords actually mean"
+      },
+      "subtitle": {
+        "zh": "MCP、Memory、Skill 和 Subagent",
+        "en": "MCP, Memory, Skill, and Subagent"
+      },
+      "kind": "intro"
+    },
+    {
+      "slug": "permissions",
+      "file": "04-permissions.mdx",
+      "number": "04",
+      "title": {
+        "zh": "Agent 到底有多大权限",
+        "en": "How much power does an agent have"
+      },
+      "subtitle": {
+        "zh": "权限不属于大模型",
+        "en": "Power does not belong to the model"
+      },
+      "kind": "intro"
+    }
+  ]
+}
