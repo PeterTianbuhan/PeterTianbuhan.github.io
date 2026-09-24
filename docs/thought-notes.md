@@ -13,24 +13,24 @@
 
 先看候选文章，不写文件：
 
-```powershell
+```bash
 npm run thoughts:intake -- --title "想法标题" --body "想法内容"
 ```
 
 确认能并入某篇文章：
 
-```powershell
+```bash
 npm run thoughts:intake -- --title "想法标题" --body "想法内容" --article current-workflow --write
 ```
 
 确认是新方向：
 
-```powershell
+```bash
 npm run thoughts:intake -- --title "想法标题" --body "想法内容" --new --write
 ```
 
 校验随想文件：
 
-```powershell
+```bash
 npm run thoughts:check
 ```

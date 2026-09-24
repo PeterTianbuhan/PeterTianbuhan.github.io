@@ -3,15 +3,7 @@ import nextTypescript from "eslint-config-next/typescript";
 
 const eslintConfig = [
   {
-    ignores: [
-      ".next/**",
-      ".publish/**",
-      ".tmp-legacy-repo/**",
-      "legacy/**",
-      "legacy-homepage/**",
-      "legacy-site/**",
-      "out/**",
-    ],
+    ignores: [".next/**", ".publish/**", "archive/**", "out/**"],
   },
   ...nextCoreVitals,
   ...nextTypescript,

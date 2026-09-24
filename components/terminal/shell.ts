@@ -43,6 +43,7 @@ export const COMMANDS = [
   "echo",
   "lang",
   "history",
+  "imgcat",
   "q",
   "exit",
 ] as const;
@@ -51,12 +52,18 @@ export function cwdOf(page: string) {
   if (page === "home") return "~";
   if (page === "about") return "~/about";
   if (page === "writing" || page.startsWith("read/")) return "~/writing";
+  if (page === "projects" || page.startsWith("project/")) return "~/projects";
   const slash = page.indexOf("/");
   return `~/${slash === -1 ? page : page.slice(0, slash)}`;
 }
 
 export function pageOfDir(dir: string) {
   return dir === "~" ? "home" : dir.slice(2);
+}
+
+// Resolve a directory argument the way `cd` would; null when it doesn't exist.
+export function resolveDir(ctx: ShellContext, arg: string) {
+  return findDir(ctx, cwdOf(ctx.page), arg);
 }
 
 function normalizeArg(arg: string) {
@@ -133,21 +140,21 @@ export function runShell(input: string, ctx: ShellContext): ShellResult {
         lines: zh
           ? [
               "可用命令：",
-              "  ls [dir]        列出目录",
-              "  cd <dir>        进入目录（cd ~ 回到首页）",
-              "  open <file>     打开一篇文字或章节",
-              "  cat README.md   关于我",
-              "  q               退出当前文件",
+              "  ls [dir]           列出目录",
+              "  cd <dir>           about / writing / projects（cd ~ 回首页）",
+              "  open / cat <file>  打开文件",
+              "  cat README.md      关于我",
+              "  q                  退出当前文件",
               "  date / pwd / whoami / clear / lang en",
               "  Tab 补全，↑↓ 翻历史，Ctrl+C 取消",
             ]
           : [
               "available commands:",
-              "  ls [dir]        list a directory",
-              "  cd <dir>        enter a directory (cd ~ goes home)",
-              "  open <file>     open a note or chapter",
-              "  cat README.md   about me",
-              "  q               quit the current file",
+              "  ls [dir]           list a directory",
+              "  cd <dir>           about / writing / projects (cd ~ home)",
+              "  open / cat <file>  open a file",
+              "  cat README.md      about me",
+              "  q                  quit the current file",
               "  date / pwd / whoami / clear / lang zh",
               "  Tab completes, ↑↓ browse history, Ctrl+C cancels",
             ],
@@ -206,12 +213,23 @@ export function runShell(input: string, ctx: ShellContext): ShellResult {
       }
       const file = findFile(ctx, cwd, arg);
       if (!file) return { lines: [`${cmd}: ${arg}: No such file or directory`] };
+      if (/\.png$/.test(file.name) && cmd !== "open")
+        return { lines: [`${cmd}: ${file.name}: binary file (try imgcat)`] };
+      return { lines: [], navigate: file.target };
+    }
+    case "imgcat": {
+      const arg = args[0] ?? "weiming.png";
+      const file = findFile(ctx, cwd, arg);
+      if (!file) return { lines: [`imgcat: ${arg}: No such file or directory`] };
+      if (!/\.png$/.test(file.name))
+        return { lines: [`imgcat: ${file.name}: not an image`] };
       return { lines: [], navigate: file.target };
     }
     case "q":
     case ":q":
     case ":q!": {
       if (ctx.page.startsWith("read/")) return { lines: [], navigate: "writing" };
+      if (ctx.page.startsWith("project/")) return { lines: [], navigate: "projects" };
       const slash = ctx.page.indexOf("/");
       if (slash !== -1) return { lines: [], navigate: ctx.page.slice(0, slash) };
       return { lines: [`zsh: command not found: ${cmd}`] };
@@ -239,7 +257,7 @@ export function runShell(input: string, ctx: ShellContext): ShellResult {
       return { lines: [], href: `/${next}/` };
     }
     case "uname":
-      return { lines: ["weiming 1.0 pixel-terminal (Next.js static export)"] };
+      return { lines: ["homepage 1.0 pixel-terminal (Next.js static export)"] };
     case "sudo":
       return {
         lines: [
@@ -253,9 +271,8 @@ export function runShell(input: string, ctx: ShellContext): ShellResult {
     case "exit":
     case "logout":
       return { lines: ["logout"], navigate: "home" };
-    case "imgcat":
     case "weiming":
-      return { lines: [], navigate: "home" };
+      return { lines: [], navigate: "lake" };
     default:
       return { lines: [`zsh: command not found: ${cmd}`] };
   }

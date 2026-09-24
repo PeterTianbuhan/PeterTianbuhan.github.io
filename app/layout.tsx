@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-
-const display = Space_Grotesk({
-  variable: "--font-display",
-  subsets: ["latin"],
-});
 
 // 缝合像素字体 (Fusion Pixel), 12px monospaced, SIL OFL 1.1. Rendered at exact
 // multiples of 12px so the bitmap grid stays crisp.
@@ -16,12 +10,6 @@ const pixel = localFont({
   weight: "400",
   display: "swap",
   fallback: ["PingFang SC", "Noto Sans SC", "monospace"],
-});
-
-const mono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -36,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${display.variable} ${mono.variable} ${pixel.variable}`}>{children}</body>
+      <body className={pixel.variable}>{children}</body>
     </html>
   );
 }

@@ -3,7 +3,10 @@
 import type { ReactNode, RefObject } from "react";
 import type { Locale } from "@/lib/i18n";
 import type { ShowcaseChapterMeta, ShowcaseMeta } from "@/lib/showcases";
-import { PromptLine } from "@/components/terminal/prompt-line";
+import {
+  PromptLine,
+  showsInnerPrompt,
+} from "@/components/terminal/prompt-line";
 import styles from "@/components/terminal/terminal.module.css";
 
 type Props = {
@@ -11,6 +14,7 @@ type Props = {
   showcase: ShowcaseMeta;
   chapter?: ShowcaseChapterMeta & { content?: ReactNode };
   headingRef?: RefObject<HTMLHeadingElement | null>;
+  typed?: string; // the command that produced this block
   onNavigate: (target: string, command: string) => void;
 };
 
@@ -19,11 +23,13 @@ export function ShowcaseView({
   showcase,
   chapter,
   headingRef,
+  typed = "",
   onNavigate,
 }: Props) {
   const zh = locale === "zh";
   const base = showcase.slug;
   const dir = `~/${base}`;
+  const inner = showsInnerPrompt(typed);
 
   const anchor = (
     target: string,
@@ -47,8 +53,7 @@ export function ShowcaseView({
   if (!chapter) {
     return (
       <div>
-        <PromptLine path="~">cd {base}</PromptLine>
-        <PromptLine path={dir}>ls -l</PromptLine>
+        {inner && <PromptLine path={dir}>ls -l</PromptLine>}
         <h1 ref={headingRef} tabIndex={-1} className={styles.heading}>
           {showcase.title}
         </h1>
@@ -96,8 +101,7 @@ export function ShowcaseView({
 
   return (
     <div>
-      <PromptLine path="~">cd {base}</PromptLine>
-      <PromptLine path={dir}>less {file}</PromptLine>
+      {inner && <PromptLine path={dir}>less {file}</PromptLine>}
       <div className={styles.fileBar}>
         <span>
           &quot;{dir}/{file}&quot;

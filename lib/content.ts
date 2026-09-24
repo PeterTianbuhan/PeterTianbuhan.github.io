@@ -5,6 +5,11 @@ import matter from "gray-matter";
 import type { Locale } from "@/lib/i18n";
 
 const contentRoot = path.join(process.cwd(), "content", "blog");
+const draftRoot = path.join(process.cwd(), "content", "drafts");
+// Explicit local design samples. Drafts never enter the production export.
+const previewSlugs = process.env.NODE_ENV === "development"
+  ? ["interface-no-longer-fixed", "knowledge-can-grow-on-its-own", "when-answers-are-no-longer-scarce", "why-i-want-to-keep-living"]
+  : [];
 
 // 首页栏目 key（对应 life vault 的种类），由发布脚本从文件夹推导写入。
 export type SectionKey = "thinking" | "learning" | "building" | "life";
@@ -19,9 +24,11 @@ type RawFrontmatter = {
   locale: Locale;
   translationKey: string;
   section?: SectionKey;
+  series?: string;
 };
 
 export type PostListItem = {
+  preview?: boolean;
   slug: string;
   title: string;
   excerpt: string;
@@ -30,6 +37,7 @@ export type PostListItem = {
   translationKey: string;
   featured: boolean;
   section: SectionKey;
+  series?: string;
   publishedAt: string;
   publishedAtLabel: string;
   updatedAt?: string;
@@ -90,6 +98,7 @@ function normalizePost(slug: string, locale: Locale, source: string): Post {
       translationKey: frontmatter.translationKey,
       featured: Boolean(frontmatter.featured),
       section: frontmatter.section ?? "thinking",
+      series: frontmatter.series,
       publishedAt: frontmatter.publishedAt,
       publishedAtLabel: formatDate(frontmatter.publishedAt, locale),
       updatedAt: frontmatter.updatedAt,
@@ -102,7 +111,15 @@ function normalizePost(slug: string, locale: Locale, source: string): Post {
 
 async function readPostFile(locale: Locale, slug: string) {
   const filePath = path.join(contentRoot, locale, `${slug}.mdx`);
-  return fs.readFile(filePath, "utf8");
+  try {
+    return { source: await fs.readFile(filePath, "utf8"), preview: false };
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT" || locale !== "zh" || !previewSlugs.includes(slug)) throw error;
+    return {
+      source: await fs.readFile(path.join(draftRoot, locale, `${slug}.mdx`), "utf8"),
+      preview: true,
+    };
+  }
 }
 
 function sortPosts<T extends { publishedAt: string }>(posts: T[]) {
@@ -111,11 +128,12 @@ function sortPosts<T extends { publishedAt: string }>(posts: T[]) {
 
 export const getPostsByLocale = cache(async (locale: Locale): Promise<PostListItem[]> => {
   const files = await readLocaleDirectory(locale);
+  const slugs = new Set(files.map((file) => file.name.replace(/\.mdx$/, "")));
+  if (locale === "zh") previewSlugs.forEach((slug) => slugs.add(slug));
   const posts = await Promise.all(
-    files.map(async (file) => {
-      const slug = file.name.replace(/\.mdx$/, "");
-      const source = await readPostFile(locale, slug);
-      return normalizePost(slug, locale, source).meta;
+    [...slugs].map(async (slug) => {
+      const { source, preview } = await readPostFile(locale, slug);
+      return { ...normalizePost(slug, locale, source).meta, preview };
     }),
   );
 
@@ -132,8 +150,10 @@ export const getLatestPosts = cache(async (locale: Locale, limit = 3) => {
 
 export const getPostBySlug = cache(async (locale: Locale, slug: string): Promise<Post | null> => {
   try {
-    const source = await readPostFile(locale, slug);
-    return normalizePost(slug, locale, source);
+    const { source, preview } = await readPostFile(locale, slug);
+    const post = normalizePost(slug, locale, source);
+    post.meta.preview = preview;
+    return post;
   } catch {
     return null;
   }

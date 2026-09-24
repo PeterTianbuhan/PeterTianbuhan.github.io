@@ -4,8 +4,8 @@ Use this when you want to create a new blog post without touching MDX files by h
 
 ## Command
 
-```powershell
-npm run post:intake -- .\templates\post-intake.template.json --dry-run
+```bash
+npm run post:intake -- ./templates/post-intake.template.json --dry-run
 ```
 
 Remove `--dry-run` to actually write the files.

@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState, useMemo } from "react";
-import { beijingHour, timeOfDay } from "./time-of-day";
+import { beijingHour, timeOfDay } from "@/components/terminal/time-of-day";
 
-export function useLakeTime() {
+export function useSiteTime() {
   const [hour, setHour] = useState(18.5);
   useEffect(() => {
     // Development-only art direction preview; deployed pages always use Beijing time.

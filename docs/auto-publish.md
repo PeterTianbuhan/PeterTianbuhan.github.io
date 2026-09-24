@@ -8,31 +8,25 @@ For normal article edits, prefer the automatic workflow in `.github/workflows/pu
 
 If you are adding a new article, write it first:
 
-```powershell
-npm run post:intake -- .\templates\post-intake.template.json
+```bash
+npm run post:intake -- ./templates/post-intake.template.json
 ```
 
 Check that every live route has a single source MDX file:
 
-```powershell
+```bash
 npm run articles:check
-```
-
-Then refresh the old homepage bridge only when `legacy-homepage/index.html` exists in your workspace:
-
-```powershell
-npm run legacy:refresh
 ```
 
 Build the static site:
 
-```powershell
+```bash
 npm run build
 ```
 
 Then prepare the final GitHub Pages bundle:
 
-```powershell
+```bash
 npm run publish:bundle
 ```
 

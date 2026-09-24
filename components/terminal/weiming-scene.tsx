@@ -1,10 +1,44 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import type { TimeOfDay } from "./time-of-day";
+import { useEffect, useRef, useState } from "react";
+import styles from "./terminal.module.css";
+import { mixColor, type TimeOfDay } from "./time-of-day";
 
-// A deliberately composed, low-resolution painting. Geometry is drawn once;
-// only the reflected scanlines and small water highlights move.
+// The lake is rendered as text: quadrant block glyphs (▘▝▖▗▀▄▌▐▚▞…) at the
+// bitmap font's native 12px, one cell per terminal column, two colours per
+// cell (foreground + background) — the way chafa or timg draw a picture in a
+// real terminal. The painting is still composed on an offscreen canvas at
+// 720×280; each frame is sampled into 240×92 texels, snapped to a fixed
+// palette, and packed into 120×46 character cells.
+const COLS = 120;
+const ROWS = 46;
+const TEX_W = COLS * 2;
+const TEX_H = ROWS * 2;
+const DITHER = 12;
+const BAYER = [
+  [-0.375, 0.125],
+  [0.375, -0.125],
+];
+// Bit order: top-left 8, top-right 4, bottom-left 2, bottom-right 1.
+const QUADRANTS = [
+  " ",
+  "▗",
+  "▖",
+  "▄",
+  "▝",
+  "▐",
+  "▞",
+  "▟",
+  "▘",
+  "▚",
+  "▌",
+  "▙",
+  "▀",
+  "▜",
+  "▛",
+  "█",
+];
+
 export function WeimingScene({
   paused = false,
   time,
@@ -12,7 +46,24 @@ export function WeimingScene({
   paused?: boolean;
   time: TimeOfDay;
 }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const preRef = useRef<HTMLPreElement>(null);
+  // Visible columns: a narrow terminal crops the picture (keeping Boya Tower
+  // in frame) instead of shrinking it, like `imgcat` in a small pane.
+  const [cols, setCols] = useState(COLS);
+  useEffect(() => {
+    // Measure the block the picture is printed into (the wrapper itself is
+    // fit-content, so its width follows the picture and cannot be used).
+    const pre = preRef.current?.parentElement?.parentElement;
+    if (!pre) return;
+    const measure = () => {
+      const fs = parseFloat(getComputedStyle(preRef.current!).fontSize) || 12;
+      setCols(Math.max(20, Math.min(COLS, Math.floor(pre.clientWidth / fs))));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(pre);
+    return () => ro.disconnect();
+  }, []);
   useEffect(() => {
     const p = time.palette;
     const colorMap: Record<string, string> = {
@@ -56,15 +107,213 @@ export function WeimingScene({
       "#536152": p.nearLight,
       "#3c5350": p.nearMid,
     };
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const pre = preRef.current;
+    if (!pre) return;
     const width = 720,
       height = 280,
       shore = 144;
-    canvas.width = width;
-    canvas.height = height;
+    // Every frame is composed here at full resolution, then sampled into cells.
+    const fine = document.createElement("canvas");
+    fine.width = width;
+    fine.height = height;
+    const ctx = fine.getContext("2d", { willReadFrequently: true })!;
+    const waterLight = mixColor(p.waterTop, "#ffffff", 0.45);
+    const starColor = "#e6f0ff";
+    const sunColor = "#fff1be";
+    const moonColor = "#f2f2e4";
+    const lampColor = "#ffd27a";
+    // Quantization palette: the scene colours, banded sky and water, and the
+    // half-mixes the reflections produce. UI colours are deliberately left out
+    // so the painting never borrows the terminal's text colour.
+    const bands = (a: string, b: string, c: string, n: number) =>
+      Array.from({ length: n }, (_, i) => {
+        const t = i / (n - 1);
+        return t < 0.5 ? mixColor(a, b, t * 2) : mixColor(b, c, (t - 0.5) * 2);
+      });
+    const skyBands = bands(p.skyTop, p.skyMiddle, p.skyBottom, 9);
+    const waterBands = bands(p.waterTop, p.waterMiddle, p.waterBottom, 6);
+    const reflected = [
+      p.treeShade,
+      p.treeMid,
+      p.towerShade,
+      p.towerMid,
+      p.towerLight,
+      p.nearShade,
+      p.nearMid,
+      p.farShade,
+      p.farMid,
+      p.templeWall,
+      p.stoneLight,
+    ];
+    const quantPalette = Array.from(
+      new Set([
+        ...Object.entries(p)
+          .filter(
+            ([key]) =>
+              ![
+                "bg",
+                "panel",
+                "edge",
+                "text",
+                "muted",
+                "accent",
+                "chrome",
+                "prompt",
+                "code",
+              ].includes(key),
+          )
+          .map(([, value]) => value),
+        ...skyBands,
+        ...waterBands,
+        ...[waterBands[0], waterBands[2], waterBands[4]].flatMap((w) =>
+          reflected.map((c) => mixColor(w, c, 0.4)),
+        ),
+        waterLight,
+        starColor,
+        sunColor,
+        moonColor,
+        lampColor,
+      ]),
+    ).map((hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)));
+    const quantHex = quantPalette.map(
+      ([r, g, b]) =>
+        "#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join(""),
+    );
+    const nearestCache = new Map<number, number>();
+    const nearest = (r: number, g: number, b: number) => {
+      const key = ((r >> 2) << 12) | ((g >> 2) << 6) | (b >> 2);
+      const hit = nearestCache.get(key);
+      if (hit !== undefined) return hit;
+      let best = 0,
+        bestDist = Infinity;
+      for (let i = 0; i < quantPalette.length; i++) {
+        const [pr, pg, pb] = quantPalette[i];
+        // Perceptual-ish weighting keeps greens from collapsing into greys.
+        const dr = pr - r,
+          dg = pg - g,
+          db = pb - b;
+        const dist = dr * dr * 2 + dg * dg * 4 + db * db * 3;
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
+        }
+      }
+      nearestCache.set(key, best);
+      return best;
+    };
+    const colorDist = (a: number, b: number) => {
+      const [ar, ag, ab] = quantPalette[a],
+        [br, bg, bb] = quantPalette[b];
+      return (ar - br) ** 2 * 2 + (ag - bg) ** 2 * 4 + (ab - bb) ** 2 * 3;
+    };
+    const texels = new Uint8Array(TEX_W * TEX_H);
+    const rowY = Array.from({ length: TEX_H + 1 }, (_, i) =>
+      Math.round((i * height) / TEX_H),
+    );
+    const texelize = (fromRow: number) => {
+      const src = ctx.getImageData(0, 0, width, height).data;
+      const clamp = (v: number) => (v < 0 ? 0 : v > 255 ? 255 : Math.round(v));
+      for (let ty = fromRow; ty < TEX_H; ty++) {
+        const y0 = rowY[ty],
+          y1 = Math.max(rowY[ty] + 1, rowY[ty + 1]);
+        for (let tx = 0; tx < TEX_W; tx++) {
+          let r = 0,
+            g = 0,
+            b = 0,
+            n = 0;
+          for (let y = y0; y < y1; y++) {
+            let o = (y * width + tx * 3) * 4;
+            for (let x = 0; x < 3; x++, o += 4) {
+              r += src[o];
+              g += src[o + 1];
+              b += src[o + 2];
+              n++;
+            }
+          }
+          const bias = BAYER[ty & 1][tx & 1] * DITHER;
+          texels[ty * TEX_W + tx] = nearest(
+            clamp(r / n + bias),
+            clamp(g / n + bias),
+            clamp(b / n + bias),
+          );
+        }
+      }
+    };
+    // Pack 2×2 texels into one character cell with two colours.
+    const cellHtml = (cx: number, cy: number) => {
+      const o = cy * 2 * TEX_W + cx * 2;
+      const q = [texels[o], texels[o + 1], texels[o + TEX_W], texels[o + TEX_W + 1]];
+      const distinct = Array.from(new Set(q));
+      // A full block, never a space: the font's space is half-width, and a
+      // uniform cell must stay exactly one column wide.
+      if (distinct.length === 1) return ["█", q[0], q[0]] as const;
+      let a = distinct[0],
+        b = distinct[1];
+      if (distinct.length > 2) {
+        let best = -1;
+        for (let i = 0; i < distinct.length; i++)
+          for (let j = i + 1; j < distinct.length; j++) {
+            const d = colorDist(distinct[i], distinct[j]);
+            if (d > best) {
+              best = d;
+              a = distinct[i];
+              b = distinct[j];
+            }
+          }
+      }
+      let mask = 0,
+        countA = 0;
+      q.forEach((c, i) => {
+        const toA = c === a || (c !== b && colorDist(c, a) <= colorDist(c, b));
+        if (toA) {
+          mask |= 8 >> i;
+          countA++;
+        }
+      });
+      // The colour covering more of the cell becomes the background.
+      if (countA > 2) return [QUADRANTS[15 - mask], b, a] as const;
+      return [QUADRANTS[mask], a, b] as const;
+    };
+    const rows: HTMLDivElement[] = [];
+    pre.replaceChildren();
+    for (let i = 0; i < ROWS; i++) {
+      const div = document.createElement("div");
+      pre.appendChild(div);
+      rows.push(div);
+    }
+    const rowCache = new Array<string>(ROWS).fill("");
+    const offset =
+      cols >= COLS ? 0 : Math.max(0, Math.min(COLS - cols, 30 - Math.floor(cols * 0.3)));
+    const renderRows = (fromRow: number) => {
+      for (let cy = fromRow; cy < ROWS; cy++) {
+        let html = "",
+          run = "",
+          fg = -1,
+          bg = -1;
+        const flush = () => {
+          if (run)
+            html += `<span style="color:${quantHex[fg]};background:${quantHex[bg]}">${run}</span>`;
+          run = "";
+        };
+        for (let cx = offset; cx < offset + cols; cx++) {
+          const [ch, f, g] = cellHtml(cx, cy);
+          if (f !== fg || g !== bg) {
+            flush();
+            fg = f;
+            bg = g;
+          }
+          run += ch;
+        }
+        flush();
+        if (rowCache[cy] !== html) {
+          rowCache[cy] = html;
+          rows[cy].innerHTML = html;
+        }
+      }
+    };
+    // Rows above the waterline never change within a palette.
+    const waterTexRow = Math.floor((shore / height) * TEX_H) - 1;
+    const waterCellRow = Math.floor(waterTexRow / 2);
     const land = document.createElement("canvas");
     land.width = width;
     land.height = height;
@@ -104,18 +353,6 @@ export function WeimingScene({
     sky.addColorStop(1, p.skyBottom);
     g.fillStyle = sky;
     g.fillRect(0, 0, width, height);
-    // Sparse dithering gives the sky a material grain, without a noise overlay.
-    for (let i = 0; i < 5400; i++) {
-      g.globalAlpha = 0.06;
-      rect(
-        rnd() * width,
-        rnd() * shore,
-        1,
-        1,
-        rnd() > 0.5 ? "#ffe4ba" : "#453b63",
-      );
-    }
-    g.globalAlpha = 1;
     [
       [89, 58, 82],
       [118, 64, 105],
@@ -123,18 +360,18 @@ export function WeimingScene({
       [321, 33, 130],
       [573, 83, 65],
     ].forEach(([x, y, w]) => {
-      rect(x, y, w, 2, p.cloud);
-      rect(x + 12, y - 2, w * 0.52, 2, p.cloudShade);
-      rect(x - 9, y + 3, w + 18, 1, p.cloudLight);
+      rect(x, y, w, 3, p.cloud);
+      rect(x + 12, y - 3, w * 0.52, 3, p.cloudShade);
+      rect(x - 9, y + 3, w + 18, 2, p.cloudLight);
     });
     // Illustrated daylight cycle, intentionally independent of astronomical ephemerides.
     g.globalAlpha = time.daylight;
-    g.fillStyle = "#fff1be";
+    g.fillStyle = sunColor;
     g.beginPath();
     g.arc(time.sunX, time.sunY, 11, 0, Math.PI * 2);
     g.fill();
     g.globalAlpha = 1 - time.daylight;
-    g.fillStyle = "#e8e8d4";
+    g.fillStyle = moonColor;
     g.beginPath();
     g.arc(time.moonX, time.moonY, 10, 0, Math.PI * 2);
     g.fill();
@@ -145,10 +382,13 @@ export function WeimingScene({
     g.fill();
     // The independent seed keeps the tree geometry identical through the day.
     for (let i = 0; i < 75; i++) {
-      const x = (i * 137.51 + 57) % width,
-        y = (i * 43.17 + 11) % 110;
-      rect(x, y, i % 13 === 0 ? 2 : 1, 1, "#c8d8e5");
-      if (i % 13 === 0) rect(x, y - 1, 1, 3, "#c8d8e5");
+      const x = Math.round(((i * 137.51 + 57) % width) / 2) * 2,
+        y = Math.round(((i * 43.17 + 11) % 110) / 2) * 2;
+      rect(x, y, 2, 2, starColor);
+      if (i % 13 === 0) {
+        rect(x - 2, y, 6, 2, starColor);
+        rect(x, y - 2, 2, 6, starColor);
+      }
     }
     g.globalAlpha = 1;
     poly(
@@ -376,7 +616,7 @@ export function WeimingScene({
     g.globalAlpha = 1 - time.daylight;
     [150, 231, 278, 345, 391, 459].forEach((x) => {
       rect(x, 157, 1, 8, p.towerShade);
-      rect(x - 1, 155, 2, 3, "#f6ce87");
+      rect(x - 1, 154, 2, 4, lampColor);
     });
     g.globalAlpha = 1;
     g.resetTransform();
@@ -621,7 +861,8 @@ export function WeimingScene({
     g.drawImage(near, 0, 0);
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0,
-      previous = 0;
+      previous = 0,
+      first = true;
     const draw = (time: number) => {
       ctx.imageSmoothingEnabled = false;
       ctx.drawImage(land, 0, 0);
@@ -638,7 +879,9 @@ export function WeimingScene({
           Math.sin(depth * 0.23 + time * 0.0008) * (1 + depth * 0.035) +
             Math.sin(depth * 0.61 - time * 0.0004),
         );
-        ctx.globalAlpha = 0.52 - depth * 0.002;
+        // Lighter than a mirror: the water colour must stay dominant so the
+        // reflection reads as bright water, not a muddy second shoreline.
+        ctx.globalAlpha = 0.42 - depth * 0.002;
         ctx.drawImage(land, 0, source, width, 1, shift, y, width, 1);
       }
       ctx.globalAlpha = 1;
@@ -669,17 +912,17 @@ export function WeimingScene({
       };
       reflectLayer(island, 161, 515);
       reflectLayer(boat, 162, 600);
-      for (let i = 0; i < 95; i++) {
+      for (let i = 0; i < 70; i++) {
         const x = (i * 137.21) % width,
-          y = shore + 3 + ((i * 31.17) % (height - shore - 7));
-        const shimmer = 0.1 + 0.07 * Math.sin(time * 0.001 + i);
+          y = shore + 4 + ((i * 31.17) % (height - shore - 8));
+        const shimmer = 0.35 + 0.3 * Math.sin(time * 0.001 + i);
         ctx.globalAlpha = shimmer;
-        ctx.fillStyle = p.stoneLight;
+        ctx.fillStyle = waterLight;
         ctx.fillRect(
-          Math.round(x + Math.sin(time * 0.0003 + i) * 3),
-          Math.round(y),
-          4 + (i % 15),
-          1,
+          Math.round((x + Math.sin(time * 0.0003 + i) * 3) / 2) * 2,
+          Math.round(y / 2) * 2,
+          4 + (i % 7) * 2,
+          2,
         );
       }
       ctx.globalAlpha = 1;
@@ -695,9 +938,17 @@ export function WeimingScene({
       ctx.drawImage(island, 0, 0);
       ctx.drawImage(boat, 0, 0);
       ctx.drawImage(foreground, 0, 0);
+      if (first) {
+        texelize(0);
+        renderRows(0);
+        first = false;
+      } else {
+        texelize(waterTexRow * 1);
+        renderRows(waterCellRow);
+      }
     };
     const loop = (time: number) => {
-      if (time - previous > 80) {
+      if (time - previous > 100) {
         draw(time);
         previous = time;
       }
@@ -717,13 +968,13 @@ export function WeimingScene({
       document.removeEventListener("visibilitychange", restart);
       motion.removeEventListener("change", restart);
     };
-  }, [paused, time]);
+  }, [paused, time, cols]);
   return (
-    <canvas
-      ref={canvasRef}
+    <pre
+      ref={preRef}
       role="img"
+      className={styles.art}
       aria-label={`${time.period}的未名湖：左侧博雅塔、柳树间的花神庙、远处图书馆屋顶，右侧湖心岛与石舫，水中波光倒影`}
-      style={{ display: "block", imageRendering: "pixelated" }}
     />
   );
 }

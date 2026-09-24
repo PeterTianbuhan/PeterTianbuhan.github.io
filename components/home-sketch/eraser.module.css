@@ -1,0 +1,94 @@
+.veil {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  cursor: progress;
+}
+
+.veil svg {
+  display: block;
+}
+
+/* once the scrubbing is done the whole page is blank paper until the next one arrives */
+.veil[data-covered="true"] {
+  background: #f8f4ea;
+}
+
+.veil[data-clearing="true"] {
+  animation: lift 0.35s ease both;
+}
+
+.rub {
+  fill: none;
+  stroke: #f8f4ea;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  animation: rub 1.05s cubic-bezier(0.45, 0.1, 0.55, 0.9) both;
+}
+
+.eraser {
+  position: absolute;
+  left: 0;
+  top: 0;
+  offset-rotate: 0deg;
+  offset-anchor: 45% 70%;
+  filter: drop-shadow(2px 3px 0 rgba(42, 42, 46, 0.08));
+  animation: follow 1.05s cubic-bezier(0.45, 0.1, 0.55, 0.9) both;
+}
+
+.veil[data-covered="true"] .eraser {
+  animation: follow 1.05s cubic-bezier(0.45, 0.1, 0.55, 0.9) both, away 0.25s ease 1.05s both;
+}
+
+.eraser svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.rubber {
+  fill: #eba5a0;
+}
+
+.sleeve {
+  fill: #7f8ea3;
+  opacity: 0.85;
+}
+
+.outline {
+  fill: none;
+  stroke: #2a2a2e;
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+@keyframes rub {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes follow {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes away {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes lift {
+  to {
+    opacity: 0;
+  }
+}

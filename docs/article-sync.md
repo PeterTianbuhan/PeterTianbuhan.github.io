@@ -36,7 +36,7 @@ D:\projects\my-cognitive-vault
 Push the vault change to `github.com/PeterTianbuhan/my-cognitive-vault`. HomePage
 then pulls the published article source from GitHub raw content:
 
-```powershell
+```bash
 npm run articles:sync
 ```
 
@@ -69,7 +69,7 @@ This keeps `source` editable and keeps `main` as the live GitHub Pages output.
 
 Before pushing an article update:
 
-```powershell
+```bash
 npm run articles:sync
 npm run articles:check
 npm run build

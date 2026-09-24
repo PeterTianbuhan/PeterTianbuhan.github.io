@@ -1,0 +1,18 @@
+## How it started
+
+At first I wanted a PKU version of oneTHU, pulling the school's various sites into one app. Along the way I found a lot of PKU's sites don't work the same way, so doing all of it was hard, and I picked the few features I actually use.
+
+## What it does
+
+- **Replays**: stream while downloading, change speed, resume where you stopped, watch offline once cached, with subtitles generated on the machine.
+- **Course files**: files and replays saved into one folder by term and course, instead of digging through each course's page.
+- **Assignments and grades**: every course's assignments in one list, plus grades and GPA.
+- Also notices, the school calendar, the campus card and free classrooms.
+
+## How it's built
+
+A Tauri desktop app with the core written in Rust and a React interface. Talking to the school's services uses PKU CLI, which fellow students open-sourced. Sign-in is by QR code or SMS; no passwords are stored.
+
+## Now
+
+v0.1.0 came out in September, open source under MIT. The released build is Apple Silicon Mac only; Windows already works, the PR just isn't merged yet. Feature-wise this is about it; I'll add things if a lot of people need them. Mostly I'm the one using it.

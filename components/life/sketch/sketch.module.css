@@ -1,0 +1,176 @@
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #f8f4ea;
+}
+
+.ink {
+  fill: none;
+  stroke: #2a2a2e;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* pathLength=1, so a dash of 1 is the whole stroke */
+.stroke {
+  stroke-dasharray: 1 1.02;
+  stroke-dashoffset: 1.01;
+  opacity: 0;
+  animation: draw var(--d) cubic-bezier(0.45, 0.05, 0.3, 1) var(--t) both;
+}
+
+.ghost {
+  stroke-width: 0.9;
+  opacity: 0;
+  transform: translate(2px, 1.5px);
+  animation-name: drawGhost;
+}
+
+/* washes layer like real watercolour: each one darkens what's under it */
+.colour {
+  mix-blend-mode: multiply;
+}
+
+.multiply {
+  mix-blend-mode: multiply;
+}
+
+.brush {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1 1.02;
+  stroke-dashoffset: 1.01;
+  animation: paint var(--d) ease-in-out var(--t) both;
+}
+
+.streak {
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 1 1.02;
+  stroke-dashoffset: 1.01;
+  animation: paint var(--d) ease-out var(--t) both;
+}
+
+.seal {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: stamp var(--d) cubic-bezier(0.2, 1.4, 0.4, 1) var(--t) both;
+}
+
+/* after the drawing is finished */
+.ripples {
+  animation: ripple 5s ease-in-out var(--idle) infinite;
+}
+
+.drift {
+  animation: drift 40s ease-in-out var(--idle) infinite;
+}
+
+@keyframes draw {
+  0% {
+    stroke-dashoffset: 1.01;
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes drawGhost {
+  0% {
+    stroke-dashoffset: 1.01;
+    opacity: 0;
+  }
+  1% {
+    opacity: 0.35;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.35;
+  }
+}
+
+@keyframes paint {
+  from {
+    stroke-dashoffset: 1.01;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes stamp {
+  from {
+    opacity: 0;
+    transform: scale(1.35) rotate(-6deg);
+  }
+  to {
+    opacity: 0.92;
+    transform: scale(1) rotate(-3deg);
+  }
+}
+
+@keyframes ripple {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-40px);
+  }
+}
+
+.finished .stroke,
+.finished .ghost,
+.finished .brush,
+.finished .streak,
+.finished .seal,
+.finished .ripples,
+.finished .drift {
+  animation-duration: 0s;
+  animation-delay: 0s;
+}
+
+.finished .ripples {
+  animation: ripple 5s ease-in-out infinite;
+}
+
+.finished .drift {
+  animation: drift 40s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stroke,
+  .ghost,
+  .brush,
+  .streak,
+  .seal {
+    animation-duration: 0s;
+    animation-delay: 0s;
+  }
+
+  .ripples,
+  .drift {
+    animation: none;
+  }
+}

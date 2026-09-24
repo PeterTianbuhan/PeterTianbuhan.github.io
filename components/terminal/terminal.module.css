@@ -1,28 +1,32 @@
 /* ------------------------------------------------------------------
    Pixel terminal.
-   Everything sits on one character grid: the bitmap font is 12px, we
-   render it at exactly 2x (24px) so each font pixel is a crisp 2×2 CSS
-   block. Half-width glyphs are 0.5em, CJK glyphs are 1em, lines are 1.5em.
+   Everything sits on one character grid: the bitmap font is 12px and is
+   rendered at exactly 1x, so on a Retina screen each font pixel is a crisp
+   2×2 device-pixel block. Half-width glyphs are 0.5em, CJK glyphs are 1em,
+   lines are var(--lh) em (1.5 → 18px). Only integer scales keep the pixels
+   square: --fs may be 12px or 24px, never in between. The title bar, the
+   status line and the lake are always 12px (1em at this size).
    No border-radius, no shadows, no eased transitions — real terminals
    don't fade.
    ------------------------------------------------------------------ */
 
 .world {
-  --bg: #19282d;
-  --panel: #203238;
-  --edge: #385057;
-  --text: #dfddd0;
-  --muted: #8a9e9e;
-  --accent: #c5cf9e;
-  --chrome: #25373d;
-  --prompt: #1d2e34;
-  --code: #152a30;
-  --skyMiddle: #84758d;
-  --chromeText: #9db0ae;
-  --promptText: #b7c7a5;
-  --codeText: #d1d9b2;
-  --selectionText: #fff5da;
-  --fs: 24px;
+  --bg: #254568;
+  --panel: #315672;
+  --edge: #577e9b;
+  --text: #fff0d4;
+  --muted: #c1d0ce;
+  --accent: #ffdfa0;
+  --chrome: #38607b;
+  --prompt: #2b4f6f;
+  --code: #254768;
+  --skyMiddle: #e097be;
+  --chromeText: #c1d0ce;
+  --promptText: #ffdfa0;
+  --codeText: #ffdfa0;
+  --selectionText: #fff0d4;
+  --fs: 12px;
+  --lh: 1.5; /* line height in em; 12px × 1.5 = 18px, a whole pixel */
   --cell: 0.5em; /* one half-width character */
   --scan: 0.045;
   background: var(--bg);
@@ -30,7 +34,7 @@
   font-family:
     var(--font-pixel), "PingFang SC", "Noto Sans SC", ui-monospace, monospace;
   font-size: var(--fs);
-  line-height: 1.5;
+  line-height: var(--lh);
   font-weight: 400;
   font-synthesis: none;
   font-variant-ligatures: none;
@@ -53,7 +57,7 @@
 }
 .world a:focus-visible,
 .world button:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 1px solid var(--accent);
   outline-offset: 0;
 }
 
@@ -62,8 +66,11 @@
   width: 100%;
   height: 100%;
   background: var(--panel);
-  display: flex;
-  flex-direction: column;
+  /* Three-row grid keeps the title bar and status line outside the
+     scrollport even when the lake/content is taller than the window.
+     minmax(0, 1fr) is required — a bare 1fr will not shrink below content. */
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
   overflow: hidden;
 }
 /* Faint CRT scanlines: 1px dark line every 3px, multiplied so it survives
@@ -77,14 +84,14 @@
   background: repeating-linear-gradient(
     to bottom,
     rgba(0, 0, 0, var(--scan)) 0 1px,
-    transparent 1px 3px
+    transparent 1px 2px
   );
   mix-blend-mode: multiply;
 }
 
 /* ---------- window title bar ---------- */
 .chrome {
-  flex-shrink: 0;
+  min-height: 1.5em;
   height: 1.5em;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -92,21 +99,21 @@
   padding: 0 1em;
   background: var(--chrome);
   color: var(--chromeText);
-  border-bottom: 2px solid var(--edge);
-  font-size: 0.5em; /* 12px: the bitmap font at 1x */
+  border-bottom: 1px solid var(--edge);
+  font-size: 1em; /* 12px: the bitmap font at 1x */
   line-height: 1;
   white-space: nowrap;
   overflow: hidden;
 }
 .lights {
   display: flex;
-  gap: 6px;
+  gap: 4px;
 }
 .lights i {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   background: #b0766a;
-  box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: inset -1px -1px 0 rgba(0, 0, 0, 0.25);
 }
 .lights i:nth-child(2) {
   background: #c2ad76;
@@ -126,7 +133,6 @@
 
 /* ---------- scrollback ---------- */
 .viewport {
-  flex: 1;
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
@@ -136,7 +142,7 @@
   cursor: text;
 }
 .viewport::-webkit-scrollbar {
-  width: 12px;
+  width: 6px;
 }
 .viewport::-webkit-scrollbar-track {
   background: var(--prompt);
@@ -151,7 +157,8 @@
 }
 .feed {
   padding: 0.5em 1em 1.5em;
-  max-width: calc(var(--cell) * 132); /* ~132 columns */
+  /* Wide enough for the 120-column lake plus padding; prose has its own measure. */
+  max-width: calc(var(--cell) * 244);
 }
 .feed p,
 .feed h1,
@@ -165,7 +172,7 @@
 /* ---------- prompt lines ---------- */
 .line {
   display: block;
-  min-height: 1.5em;
+  min-height: calc(var(--lh) * 1em);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
@@ -195,8 +202,8 @@
 .cursor {
   display: inline-block;
   width: var(--cell);
-  height: 1.5em;
-  margin-bottom: -0.5em; /* full-cell block without growing the line box */
+  height: calc(var(--lh) * 1em);
+  margin-bottom: calc((1 - var(--lh)) * 1em); /* full-cell block without growing the line box */
   background: var(--text);
   animation: blink 1.06s steps(1) infinite;
   vertical-align: baseline;
@@ -211,6 +218,15 @@
   margin: 0;
   font-size: 16px; /* keeps iOS from zooming when it gains focus */
   pointer-events: none;
+}
+
+/* one echoed command and its output */
+.block {
+  margin: 0;
+}
+.print {
+  /* height is animated inline while a block "prints" */
+  min-height: 0;
 }
 
 /* command output */
@@ -232,28 +248,36 @@
   margin-top: 0;
 }
 .gap {
-  height: 1.5em;
+  height: calc(var(--lh) * 1em);
 }
 
-/* ---------- inline image (the lake) ---------- */
-.landscape {
-  --px: 2;
+/* ---------- inline image (the lake), drawn as text ---------- */
+.artWrap {
   position: relative;
-  overflow: hidden;
-  background: var(--skyMiddle);
-  width: 100%;
-  height: min(calc(280px * var(--px)), 57svh);
+  width: fit-content;
+  max-width: 100%;
   margin: 0 0 0.75em;
-  border: 2px solid var(--edge);
 }
-.landscape canvas {
-  position: absolute;
-  width: calc(720px * var(--px));
-  height: calc(280px * var(--px));
-  /* Keep Boya Tower (x = 182 in the painting) in frame as the crop narrows;
-     wide views stay left-aligned. Vertical crop takes mostly from the water. */
-  left: min(0px, calc(50% - 182px * var(--px)));
-  top: min(0px, calc((100% - 280px * var(--px)) * 0.35));
+.art {
+  /* The bitmap font at 1x: block glyphs are full-width, so one 12px cell per
+     terminal column, and rows abut with line-height 1. */
+  font-family: inherit;
+  font-size: 1em;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  overflow: hidden;
+  letter-spacing: 0;
+  display: block;
+  color: var(--text);
+}
+.art > div {
+  height: 1em;
+}
+.artWrap:hover .pause,
+.pause:focus-visible {
+  opacity: 1;
 }
 .pause {
   position: absolute;
@@ -261,20 +285,16 @@
   top: 0;
   z-index: 2;
   border: 0;
-  border-left: 2px solid var(--edge);
-  border-bottom: 2px solid var(--edge);
+  border-left: 1px solid var(--edge);
+  border-bottom: 1px solid var(--edge);
   background: var(--prompt);
   color: var(--text);
   font: inherit;
-  font-size: 0.5em;
+  font-size: 1em;
   line-height: 1;
-  width: 2.5em;
-  height: 2.5em;
+  width: 2em;
+  height: 2em;
   opacity: 0;
-}
-.landscape:hover .pause,
-.pause:focus-visible {
-  opacity: 1;
 }
 
 /* ---------- ls -l style listings ---------- */
@@ -297,7 +317,7 @@
   grid-template-columns: subgrid;
   align-items: baseline;
   color: var(--text);
-  min-height: 1.5em;
+  min-height: calc(var(--lh) * 1em);
 }
 .row:hover,
 .row:focus-visible {
@@ -351,7 +371,7 @@
   display: grid;
   grid-template-columns: calc(var(--cell) * 9) minmax(0, 1fr);
   column-gap: calc(var(--cell) * 2);
-  min-height: 1.5em;
+  min-height: calc(var(--lh) * 1em);
   color: var(--text);
 }
 .kv:hover,
@@ -385,7 +405,7 @@
   justify-content: space-between;
   gap: 1em;
   color: var(--muted);
-  border-bottom: 2px solid var(--edge);
+  border-bottom: 1px solid var(--edge);
   margin-bottom: 0.75em;
   white-space: nowrap;
   overflow: hidden;
@@ -437,7 +457,7 @@
 /* ---------- prose rendered as plain terminal text ---------- */
 .prose {
   color: var(--text);
-  max-width: calc(var(--cell) * 96);
+  max-width: calc(var(--cell) * 124); /* ~62 CJK characters a line */
   overflow-wrap: anywhere;
 }
 .prose > :first-child {
@@ -505,7 +525,7 @@
   background: var(--code);
   color: var(--codeText);
   padding: 0.75em 1em;
-  border: 2px solid var(--edge);
+  border: 1px solid var(--edge);
   margin: 0 0 0.75em;
   scrollbar-width: thin;
   scrollbar-color: var(--edge) transparent;
@@ -535,13 +555,13 @@
 }
 .prose hr {
   border: 0;
-  border-top: 2px solid var(--edge);
+  border-top: 1px solid var(--edge);
   margin: 0.75em 0;
 }
 .prose img {
   max-width: 100%;
   image-rendering: pixelated;
-  border: 2px solid var(--edge);
+  border: 1px solid var(--edge);
 }
 .prose table {
   display: block;
@@ -552,7 +572,7 @@
 }
 .prose td,
 .prose th {
-  border: 2px solid var(--edge);
+  border: 1px solid var(--edge);
   padding: 0 var(--cell);
   text-align: left;
   font-weight: 400;
@@ -564,8 +584,8 @@
 
 /* ---------- tmux-style status line ---------- */
 .status {
-  flex-shrink: 0;
-  height: 1.5em;
+  min-height: 2em;
+  height: 2em;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -573,8 +593,9 @@
   padding: 0 1em;
   background: var(--prompt);
   color: var(--promptText);
-  border-top: 2px solid var(--edge);
-  font-size: 0.5em; /* 12px, 1x bitmap */
+  /* Stronger than panel so the bar never disappears into the feed bg. */
+  border-top: 1px solid var(--accent);
+  font-size: 1em; /* 12px, 1x bitmap */
   line-height: 1;
   white-space: nowrap;
   overflow: hidden;
@@ -582,7 +603,7 @@
 .status a {
   color: inherit;
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 1px;
 }
 .status a:hover {
   background: var(--promptText);
@@ -591,8 +612,8 @@
 .statusWin {
   background: var(--promptText);
   color: var(--prompt);
-  padding: 2px 6px;
-  margin-right: 8px;
+  padding: 1px 4px;
+  margin-right: 6px;
 }
 .statusHint {
   border: 0;
@@ -606,13 +627,13 @@
 .statusHint:hover {
   opacity: 1;
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 1px;
 }
 .statusLeft,
 .statusRight {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -665,9 +686,6 @@
   .ls4 .rowMeta {
     display: none;
   }
-  .landscape {
-    height: min(calc(280px * var(--px)), 42svh);
-  }
   .pause {
     opacity: 1;
   }
@@ -675,13 +693,71 @@
     grid-template-columns: 1fr;
   }
 }
-@media (max-height: 600px) {
-  .landscape {
-    height: min(calc(280px * var(--px)), 46svh);
-  }
-}
 @media (prefers-reduced-motion: reduce) {
   .cursor {
     animation: none;
   }
+}
+
+/* A quiet terminal opening. The shell remains usable beyond the three links. */
+.world {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+.terminal {
+  max-width: 960px;
+  height: min(680px, calc(100svh - 80px));
+  border: 1px solid var(--edge);
+}
+.chrome {
+  min-height: 30px;
+  height: 30px;
+  padding: 0 18px;
+}
+.feed {
+  padding: 48px 64px 36px;
+  max-width: none;
+}
+.homeIntro { padding: 18px 0 30px; }
+.feed .homeName {
+  font-size: 36px;
+  line-height: 1.5;
+  color: var(--text);
+}
+.feed .homeRole {
+  margin: 6px 0 36px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 2;
+}
+.homeLinks { margin: 12px 0 0; width: min(100%, 390px); }
+.homeLink {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  gap: 24px;
+  padding: 6px 0;
+}
+.world .homeLink { color: var(--text); }
+.homeCommand { width: 144px; font-size: 24px; color: var(--accent); }
+.homeLabel { color: var(--muted); font-size: 12px; }
+.homeArrow { margin-left: auto; color: var(--accent); opacity: 0; }
+.homeLink:hover .homeArrow, .homeLink:focus-visible .homeArrow { opacity: 1; }
+.homeLink:hover .homeCommand { text-decoration: underline; text-underline-offset: 5px; }
+@media (max-width: 600px) {
+  .world { padding: 12px 8px; }
+  .terminal { height: calc(100svh - 24px); }
+  .chrome { padding: 0 12px; }
+  .feed { padding: 36px 22px; }
+  .feed .homeName { font-size: 36px; }
+  .homeLink { gap: 12px; }
+  .homeCommand { width: 132px; }
+  .homeLinks { max-width: 320px; }
+}
+@media (max-height: 560px) and (min-width: 601px) {
+  .world { padding: 12px 24px; }
+  .terminal { height: calc(100svh - 24px); }
+  .feed { padding: 24px 40px; }
 }

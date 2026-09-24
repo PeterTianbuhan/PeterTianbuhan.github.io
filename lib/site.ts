@@ -5,6 +5,7 @@ type LocalizedString = Record<Locale, string>;
 
 type Project = {
   slug: string;
+  series?: "built-projects" | "played-projects";
   statusTone: "blue" | "amber" | "green";
   link?: string;
   logHref: string;
@@ -159,10 +160,10 @@ const dictionary = {
 
 const rawSiteContent: RawSiteContent = {
   name: "Peter Tian",
-  shortMark: "PKU EECS '28",
+  shortMark: "PKU EECS '29",
   role: {
-    zh: "北京大学信息科学技术学院大一学生",
-    en: "Freshman at Peking University EECS",
+    zh: "北京大学信息科学技术学院 2029 届",
+    en: "Peking University EECS, Class of 2029",
   },
   intro: {
     zh: "一个放课程、小项目、构建笔记和未完成想法的个人主页。",
@@ -208,6 +209,8 @@ const rawSiteContent: RawSiteContent = {
   social: {
     github: "https://github.com/PeterTianbuhan",
     githubLabel: "github.com/PeterTianbuhan",
+    x: "https://x.com/Peter_Lee1015",
+    xLabel: "@Peter_Lee1015",
     linkedin: "https://www.linkedin.com/",
     linkedinLabel: "to be filled",
   },
@@ -301,36 +304,8 @@ const rawSiteContent: RawSiteContent = {
       ],
     },
   ],
-  projects: [
-    {
-      slug: "homepage",
-      statusTone: "blue",
-      link: "https://github.com/PeterTianbuhan/PeterTianbuhan.github.io",
-      logHref: "/blog/current-life",
-      stack: ["Next.js", "MDX", "GitHub Pages"],
-      status: { zh: "更新中", en: "Evolving" },
-      name: { zh: "个人主页", en: "Personal Homepage" },
-      summary: {
-        zh: "当前正在使用的个人网站，用来展示笔记、学习记录、项目进展和阶段性复盘。",
-        en: "The personal site I am using for notes, learning records, project updates, and retrospectives.",
-      },
-      meta: { zh: "已上线 - petertianwork.me", en: "Live - petertianwork.me" },
-    },
-    {
-      slug: "attention-memory",
-      statusTone: "green",
-      link: "https://github.com/PeterTianbuhan/attention-memory",
-      logHref: "/blog/attention-memory-development-record",
-      stack: ["Codex", "Markdown", "Project Memory"],
-      status: { zh: "已发布", en: "Published" },
-      name: { zh: "Attention Memory", en: "Attention Memory" },
-      summary: {
-        zh: "一套只用 AGENTS.md、goal.md、memory.md 和 archive 维护项目记忆的轻量化约定。",
-        en: "A lightweight project-memory convention using AGENTS.md, goal.md, memory.md, and an archive.",
-      },
-      meta: { zh: "已整理成公开仓库", en: "Published as a public repository" },
-    },
-  ],
+  // Curated showcase: add only projects the author has chosen to feature.
+  projects: [],
 };
 
 function localize<T extends LocalizedString>(value: T, locale: Locale) {
@@ -341,6 +316,7 @@ export type Dictionary = (typeof dictionary)[Locale];
 
 export type LocalizedProject = {
   slug: string;
+  series: "built-projects" | "played-projects";
   statusTone: Project["statusTone"];
   link?: string;
   logHref: string;
@@ -406,6 +382,7 @@ export const getSiteContent = cache(async (locale: Locale): Promise<SiteContent>
   skills: rawSiteContent.skills,
   projects: rawSiteContent.projects.map((project) => ({
     slug: project.slug,
+    series: project.series ?? "built-projects",
     statusTone: project.statusTone,
     link: project.link,
     logHref: project.logHref,

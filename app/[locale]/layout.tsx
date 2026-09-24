@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { EraserProvider } from "@/components/home-sketch/eraser";
 import { isSupportedLocale, locales, type Locale } from "@/lib/i18n";
 
 export function generateStaticParams() {
@@ -18,5 +19,9 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  return <div data-locale={locale as Locale}>{children}</div>;
+  return (
+    <div data-locale={locale as Locale}>
+      <EraserProvider>{children}</EraserProvider>
+    </div>
+  );
 }

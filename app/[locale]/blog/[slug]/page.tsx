@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BlogPostView } from "@/components/blog/blog-post-view";
+import { SketchArticle } from "@/components/home-sketch/reading";
 import {
   getAllPosts,
   getPostBySlug,
-  getPostTranslation,
   getRelatedPosts,
 } from "@/lib/content";
-import { defaultLocale, isSupportedLocale, locales, type Locale } from "@/lib/i18n";
-import { getDictionary } from "@/lib/site";
+import { defaultLocale, isSupportedLocale, type Locale } from "@/lib/i18n";
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
@@ -42,8 +40,9 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${post.meta.title} | System Portfolio`,
+    title: `${post.meta.title} | Peter Tian`,
     description: post.meta.excerpt,
+    robots: post.meta.preview ? { index: false, follow: false } : undefined,
   };
 }
 
@@ -59,8 +58,7 @@ export default async function BlogPostPage({
   }
 
   const typedLocale = locale as Locale;
-  const [dictionary, post, relatedPosts] = await Promise.all([
-    getDictionary(typedLocale),
+  const [post, relatedPosts] = await Promise.all([
     getPostBySlug(typedLocale, slug),
     getRelatedPosts(typedLocale, slug),
   ]);
@@ -69,18 +67,7 @@ export default async function BlogPostPage({
     notFound();
   }
 
-  const translation = await getPostTranslation(post.meta.translationKey, typedLocale);
-  const alternatePath = translation
-    ? `/${translation.locale}/blog/${translation.slug}`
-    : `/${locales.find((item) => item !== typedLocale)}/blog`;
-
   return (
-    <BlogPostView
-      alternatePath={alternatePath}
-      dictionary={dictionary}
-      locale={typedLocale}
-      post={post}
-      relatedPosts={relatedPosts}
-    />
+    <SketchArticle locale={typedLocale} post={post} next={relatedPosts} />
   );
 }

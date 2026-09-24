@@ -1,8 +1,14 @@
 import { execFileSync } from "node:child_process";
-import path from "node:path";
 
-const expectedRepoUrl = "https://github.com/PeterTianbuhan/PeterTianbuhan.github.io.git";
-const expectedWorkspaceSuffix = path.join("HomePage-source");
+const expectedRepo = "PeterTianbuhan/PeterTianbuhan.github.io";
+
+// Accept both https and ssh remotes for the same repository.
+function repoOf(url) {
+  return url
+    .replace(/^https:\/\/github\.com\//, "")
+    .replace(/^git@github\.com:/, "")
+    .replace(/\.git$/, "");
+}
 
 function git(args) {
   return execFileSync("git", args, {
@@ -18,18 +24,13 @@ function fail(message) {
 
 const branch = git(["branch", "--show-current"]);
 const originUrl = git(["remote", "get-url", "origin"]);
-const workspace = process.cwd();
 
 if (branch === "main") {
   fail("source work must not be done directly on main; target source instead.");
 }
 
-if (originUrl !== expectedRepoUrl) {
-  fail(`origin should be ${expectedRepoUrl}, got ${originUrl || "(none)"}.`);
-}
-
-if (!workspace.endsWith(expectedWorkspaceSuffix)) {
-  fail(`workspace should end with ${expectedWorkspaceSuffix}, got ${workspace}.`);
+if (repoOf(originUrl) !== expectedRepo) {
+  fail(`origin should point at ${expectedRepo}, got ${originUrl || "(none)"}.`);
 }
 
 if (process.exitCode) {

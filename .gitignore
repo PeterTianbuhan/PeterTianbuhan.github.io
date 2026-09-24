@@ -1,7 +1,5 @@
 .next/
 node_modules/
-.npm-cache/
-.codex-runtime/
 .vercel/
 dist/
 out/
@@ -11,12 +9,11 @@ tsconfig.tsbuildinfo
 Thumbs.db
 .DS_Store
 
-.vercel
 .publish/
-.tmp-legacy-repo/
-legacy-homepage/
-legacy-site/
-output/
 
 # local browser-verification screenshots
 .playwright-mcp/
+
+# 来处 art sources: raw generations are large, references are third-party photos
+art/life/raw/
+art/life/ref/

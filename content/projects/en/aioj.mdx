@@ -1,0 +1,25 @@
+## What it is
+
+AIOJ is an online judge for competitive-programming (OI) students and coaches: solve problems, submit, get judged, run contests, manage teams. That part is just a normal judge, but it has to be good to use, or nobody will train on it.
+
+## The one extra thing
+
+What we want to do on top is record how students actually practise.
+
+A lot of students already learn with ChatGPT and the like, and those tools have memory too, but they only see what you paste in: a piece of code, or "why is this WA". They don't see how you got there, that you wrote a brute force first, changed it a few times, submitted four times and what went wrong each time. All of that happens on the judge, so the platform can record it and organise it into something an agent can read, for the AI inside the platform and for whatever agent the student uses. Switch tools and nothing is lost.
+
+## Why record it
+
+AI is already pretty good at solving and explaining competitive-programming problems; that's not the part we need to add. What it's missing is knowing the student in front of it. If it knows where they are, what kind of thing they usually get stuck on, how this solution just went off track, it can judge better how much to say, like whether to lay out the idea this time or just give one hint and let them think.
+
+Further out, with enough users, we could find similar sticking points across many students and suggest the right next problem. We want to do this, but how to measure "similar" and whether the suggestions are any good, we'll only know once real people use it.
+
+## My part
+
+It's a team project and I'm the main developer; I wrote most of the web app. It's also a 2026 PKU EECS "Innovation+" workstation project, which I lead.
+
+The web app is Next.js, React and TypeScript, with PostgreSQL, and Redis with BullMQ for queues. The judge is a separate service that compiles and runs code in an isolate sandbox. For models it uses DeepSeek, MiMo and OpenAI-compatible services.
+
+## Now
+
+Not launched yet; there's still a fair amount to finish first. Later I'd also like an AIOJ MCP, so you can read and submit problems from your own AI editor without installing our app.
