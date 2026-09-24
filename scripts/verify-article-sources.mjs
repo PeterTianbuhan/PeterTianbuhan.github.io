@@ -79,13 +79,14 @@ async function run() {
     requiredString(data.publishedAt, "frontmatter publishedAt", filePath);
     const articleSource = requiredString(data.source, "frontmatter source", filePath);
 
-    // Articles are published from the life vault now; older ones came from
-    // my-cognitive-vault. Both are legitimate sources.
+    // Articles are published from the life vault or written here in the
+    // homepage repo; older ones came from my-cognitive-vault.
     if (
+      articleSource !== "homepage" &&
       !articleSource.startsWith("life-vault/") &&
       !articleSource.startsWith("my-cognitive-vault/")
     ) {
-      fail(`${path.relative(root, filePath)} source must point at life-vault or my-cognitive-vault`);
+      fail(`${path.relative(root, filePath)} source must be "homepage" or point at life-vault or my-cognitive-vault`);
     }
 
     if (frontmatterLocale !== locale) {

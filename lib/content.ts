@@ -7,9 +7,7 @@ import type { Locale } from "@/lib/i18n";
 const contentRoot = path.join(process.cwd(), "content", "blog");
 const draftRoot = path.join(process.cwd(), "content", "drafts");
 // Explicit local design samples. Drafts never enter the production export.
-const previewSlugs = process.env.NODE_ENV === "development"
-  ? ["interface-no-longer-fixed", "knowledge-can-grow-on-its-own", "when-answers-are-no-longer-scarce", "why-i-want-to-keep-living"]
-  : [];
+const previewSlugs: string[] = [];
 
 // 首页栏目 key（对应 life vault 的种类），由发布脚本从文件夹推导写入。
 export type SectionKey = "thinking" | "learning" | "building" | "life";
