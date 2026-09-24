@@ -4,6 +4,7 @@ import { SketchArticle } from "@/components/home-sketch/reading";
 import {
   getAllPosts,
   getPostBySlug,
+  getPostTranslation,
   getRelatedPosts,
 } from "@/lib/content";
 import { defaultLocale, isSupportedLocale, type Locale } from "@/lib/i18n";
@@ -67,7 +68,14 @@ export default async function BlogPostPage({
     notFound();
   }
 
+  const translation = await getPostTranslation(post.meta.translationKey, typedLocale);
+
   return (
-    <SketchArticle locale={typedLocale} post={post} next={relatedPosts} />
+    <SketchArticle
+      locale={typedLocale}
+      post={post}
+      next={relatedPosts}
+      other={translation ? `/${translation.locale}/blog/${translation.slug}/` : undefined}
+    />
   );
 }

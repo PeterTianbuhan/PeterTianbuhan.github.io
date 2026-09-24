@@ -10,12 +10,23 @@ import { Vignette } from "./vignettes";
 import styles from "./gallery.module.css";
 
 // An essay on its own pages of the sketchbook.
-export function SketchArticle({ locale, post, next }: { locale: Locale; post: Post; next: PostListItem[] }) {
+export function SketchArticle({
+  locale,
+  post,
+  next,
+  other,
+}: {
+  locale: Locale;
+  post: Post;
+  next: PostListItem[];
+  // the same essay in the other language, when it has been translated
+  other?: string;
+}) {
   const zh = locale === "zh";
   const series = getWritingSeries(post.meta.series, locale);
   const minutes = Math.max(1, Math.ceil(post.content.replace(/https?:\/\/\S+/g, "").length / (zh ? 420 : 1100)));
   return (
-    <PageShell locale={locale}>
+    <PageShell locale={locale} other={other}>
       <article className={styles.reading}>
         <Seen as="header" className={styles.readingHead}>
           <p className={styles.label}>

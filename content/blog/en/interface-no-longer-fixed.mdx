@@ -1,0 +1,93 @@
+---
+title: "When the interface is no longer fixed"
+excerpt: "I dreamt of a huge white screen with a Grok Bot avatar in the middle and an input box below. I typed, and it arranged pages for me on the screen. When I woke up I kept thinking: if you split software into resources, capabilities and interfaces, an app is just those three bound together in advance, and with agents that binding can happen again while you use it."
+publishedAt: "2026-09-18"
+updatedAt: "2026-09-24"
+section: "thinking"
+series: "thought-wanderings"
+locale: "en"
+translationKey: "interface-no-longer-fixed"
+featured: false
+tags:
+  - "Interfaces"
+  - "Agents"
+  - "Software design"
+source: "homepage"
+origin: "translated from content/blog/zh/interface-no-longer-fixed.mdx"
+---
+
+Last night I had a dream. There was a huge, pure white screen with nothing on it but a Grok Bot avatar in the middle and an input box underneath. I typed into it, it answered, and all the while it kept arranging pages for me on the screen.
+
+That was the whole dream. When I woke up, I kept thinking about how that screen would work.
+
+## Roughly how the screen works
+
+Say I tell it, "Write down the dream I just had, I want to make an essay out of it." First a short note appears on the screen. As I keep talking, the structure of the essay slowly grows next to it; the parts I've figured out stay where they are, and ideas that contradict each other get put side by side. The agent listens and answers me out loud.
+
+I say "put these two versions together" and the screen turns into a side-by-side comparison. I say "I want to write this part myself" and only then does an editor appear next to it. If I need to look something up, it shows up next to what I'm working on, instead of me opening another app and finding the right page.
+
+I can also just use my hands. Too much piled up in front of me, I wave it away; a moment later I remember one of those pages was useful, I make a fist and the change is undone. These gestures aren't precise dragging of coordinates; they're more like telling it what I mean.
+
+The next time I write an essay, the screen still remembers how I like to compare things, which decisions I want to make myself, and when it should say less.
+
+Agents can't do this yet. They mostly still live in a chat box: I send some text, it sends some text back. It can make images, charts, web pages and clickable components, but in the end they get stuffed into a message stream that scrolls down.
+
+I think getting from the chat box to that screen takes more than a different way to type. Software itself needs to be organised differently.
+
+## Splitting software into three things
+
+I tried splitting interactive software into three things: Resource, Capability and Interface.
+
+A Resource is something that exists in the system: a piece of code, an essay, an email, an order, or some state that's currently running.
+
+A Capability is something the system can do: save, read, search, run, send, compare, buy, undo.
+
+An Interface is how people see and work with those things: an editor, a table, a timeline, a map, a form, a player, a voice. The same Resource can have different Interfaces, and the same Capability can be called from different Interfaces.
+
+The place where these Interfaces sit together I call a Scene. A Scene is a canvas. It holds the Interfaces needed right now and remembers where each one is, how big it is, and what sits next to what. The white screen in my dream was a Scene.
+
+## An app is bound in advance
+
+Software today binds these three things together in advance into apps.
+
+Spotify binds music and playlists, the ability to search, play and save, and a player and recommendation pages. A calendar binds events, creating and reminding, and month and week views. That used to make a lot of sense: software didn't understand what people wanted, so developers had to guess how users would use it and prepare a set of pages and paths. Using software is really finding, among paths someone else built ahead of time, the one closest to where you're going.
+
+But real tasks don't follow app boundaries. Preparing for tomorrow's exam needs course materials, past mistakes, a calendar and study records, plus searching, scheduling, reminders and practice tests. Today you switch back and forth between documents, the calendar, a problem bank, notes and a chat tool.
+
+With agents this can be different. If the system can understand what I'm trying to do right now, and can call the underlying capabilities, these three things don't have to stay bound the way they were. An agent can rearrange them into a Scene around the task at hand. Exam prep can have a Scene that exists only for this exam; after the exam the materials are still there, and the Scene can be saved and used again next time.
+
+I don't think apps will disappear any time soon. It's more a possibility I want: apps don't have to be the fixed boundary of these three things forever.
+
+## Scenes and Interfaces
+
+A Scene decides which things are in front of you at this moment and how they're laid out. Interfaces are the specific components inside it.
+
+A piece of code can start in a reader, gain an editor when you start changing it, and a side-by-side diff when you need to compare. If a component is taken off the canvas, the code is still there; only the way it's shown right now has changed.
+
+Interfaces don't have to be locked inside one app either. As long as they fit, the same table, timeline or diff view can be used in many places. Developers should still offer recommended Interfaces, since they know best how interaction in their field should work, but that's only a starting point. What ends up in a Scene and how it's combined, people and agents can keep deciding.
+
+## Everyone's interface is different
+
+A fixed interface makes everyone go through roughly the same pages and menus. A Scene can be arranged around the person in front of it.
+
+This isn't only changing a theme or a font size. Some people comparing code like the original on the left, some want to see the diff first. Some want the agent to ask less and just do it; some want it to stop at the first ambiguity. Even for the same person, how close they want the agent to be differs between writing, studying and paying for something.
+
+What people say, the adjustments they make, the pauses, are all signals, but not every signal should make the agent change its mind. When to keep going and when to stop and ask is hard to write as one rule for everyone. People and their agents will end up with their own boundaries, which differ from person to person and shift slowly over time.
+
+So I think what's worth saving isn't only the layout of one session, but these preferences too: which components someone likes for which kind of thing, which Interfaces often go together, how proactive the agent should be, what it can do first and explain later, and what it must ask about first. These can carry across tasks, even across fields.
+
+## How to build it
+
+I think the key isn't having a model generate pages directly. It's that Resources, Capabilities and Interfaces stop being owned by any one page or app.
+
+The agent itself doesn't need to be rebuilt. Its existing tools stay, for reading and changing Resources and calling Capabilities. On top of that it gets a set of Scene tools, for putting Interfaces on the canvas, moving, resizing and removing them, and seeing what's in front of the person right now. Scene tools don't give it any extra permissions: putting a Resource into an Interface doesn't mean it can read that Resource.
+
+Permissions don't have to be a wall that always stands in front, either. People already hand agents almost complete control of their computers, and many capabilities can be granted long-term without confirming every step. What needs guarding is mainly the facts: an agent can work with files, run programs and arrange the interface, but it can't write a failure up as a success, or change what actually happened to make things look better.
+
+As for where to start, I think the Web can be the first runtime for Scenes. Today's web pages can come in as Interfaces first, and then slowly be taken apart and recombined.
+
+## Finally
+
+The chat box is the first way we learned to get along with agents, but I don't think it'll be the last.
+
+What I want isn't an agent that gets better at clicking buttons in today's software for me. I want software itself to change shape around what I'm trying to do, and the longer I use it, the more it becomes my own.
