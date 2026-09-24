@@ -46,6 +46,7 @@ export default async function LocaleHomePage({
         locale={typedLocale}
         things={shelvesIn(notes).flatMap((shelf) => shelf.things)}
         role={site.role}
+        bio={site.bio}
         essays={posts.map((post) => ({
           href: `${base}/blog/${post.slug}/`,
           title: post.title,

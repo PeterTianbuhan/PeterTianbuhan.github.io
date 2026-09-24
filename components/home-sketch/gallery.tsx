@@ -134,6 +134,7 @@ type Props = {
   locale: Locale;
   things: { name: string; gist?: string; id: string }[];
   role: string;
+  bio: string[];
   essays: Essay[];
   exhibits: Exhibit[];
   email: string;
@@ -141,7 +142,7 @@ type Props = {
   x?: string;
 };
 
-export function Gallery({ locale, things, role, essays, exhibits, email, github, x }: Props) {
+export function Gallery({ locale, things, role, bio, essays, exhibits, email, github, x }: Props) {
   const zh = locale === "zh";
   return (
     <div className={`${styles.paper} ${signature.variable}`}>
@@ -188,6 +189,11 @@ export function Gallery({ locale, things, role, essays, exhibits, email, github,
         <Heading id="about" title={zh ? "关于" : "About"} script="Hello" />
         <Seen className={styles.about}>
           <p className={styles.lead}>{role}</p>
+          <div className={styles.bio}>
+            {bio.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
+          </div>
           <dl className={styles.contact}>
             <div>
               <dt>{zh ? "邮箱" : "Email"}</dt>

@@ -345,6 +345,18 @@
   letter-spacing: 0.12em;
 }
 
+.bio {
+  max-width: 36em;
+  margin: 0 0 36px;
+}
+
+.bio p {
+  margin: 0 0 14px;
+  font-size: 15px;
+  line-height: 1.95;
+  color: rgba(42, 42, 46, 0.82);
+}
+
 .contact {
   display: grid;
   gap: 14px;

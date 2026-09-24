@@ -38,7 +38,7 @@ type RawSiteContent = {
   intro: LocalizedString;
   heroTitle: LocalizedString;
   heroTagline: LocalizedString;
-  bio: LocalizedString;
+  bio: Record<Locale, string[]>;
   availability: LocalizedString;
   focus: LocalizedString;
   location: LocalizedString;
@@ -178,8 +178,16 @@ const rawSiteContent: RawSiteContent = {
     en: "Be patient, keep shipping.",
   },
   bio: {
-    zh: "在北京大学学习，把阶段性的理解留给未来的自己，也留给偶然路过的人。",
-    en: "Made at Peking University, shared for future me and anyone curious.",
+    zh: [
+      "我经常冒出一些好玩的想法，会想把它们写下来，这里的长文大多是这么来的。我挺相信这辈子人的寿命会有不小的延长，所以觉得自己还在人生的孩童期，不太着急。",
+      "最近大部分时间在做 AIOJ，也在琢磨怎么让一群 agent 好好干活。",
+      "如果让我介绍自己，我会说我是个很神奇的人。",
+    ],
+    en: [
+      "I often have ideas that seem fun, and I want to write them down. Most of the essays here started that way. I fairly strongly believe people will live a good deal longer within my lifetime, so I think of myself as still in the childhood of my life, and I'm not in a hurry.",
+      "Lately I spend most of my time on AIOJ, and on working out how to get a crowd of agents to do good work.",
+      "If I had to describe myself, I'd say I'm a pretty magical person.",
+    ],
   },
   availability: {
     zh: "在读",
@@ -343,7 +351,7 @@ export type SiteContent = {
   intro: string;
   heroTitle: string;
   heroTagline: string;
-  bio: string;
+  bio: string[];
   availability: string;
   focus: string;
   location: string;
@@ -370,7 +378,7 @@ export const getSiteContent = cache(async (locale: Locale): Promise<SiteContent>
   intro: localize(rawSiteContent.intro, locale),
   heroTitle: localize(rawSiteContent.heroTitle, locale),
   heroTagline: localize(rawSiteContent.heroTagline, locale),
-  bio: localize(rawSiteContent.bio, locale),
+  bio: rawSiteContent.bio[locale],
   availability: localize(rawSiteContent.availability, locale),
   focus: localize(rawSiteContent.focus, locale),
   location: localize(rawSiteContent.location, locale),
