@@ -132,7 +132,7 @@ export function Wall({ locale, exhibits }: { locale: Locale; exhibits: Exhibit[]
 
 type Props = {
   locale: Locale;
-  things: { name: string; id: string }[];
+  things: { name: string; gist?: string; id: string }[];
   role: string;
   essays: Essay[];
   exhibits: Exhibit[];
@@ -171,7 +171,10 @@ export function Gallery({ locale, things, role, essays, exhibits, email, github,
           <ul className={styles.things}>
             {things.map((t) => (
               <li key={t.id}>
-                <EraseLink href={`/${locale}/i-think/#${t.id}`}>{t.name}</EraseLink>
+                <EraseLink href={`/${locale}/i-think/#${t.id}`}>
+                  {t.name}
+                  {t.gist && <span>{t.gist}</span>}
+                </EraseLink>
               </li>
             ))}
           </ul>

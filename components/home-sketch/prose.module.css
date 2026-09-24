@@ -144,6 +144,13 @@
   scroll-margin-top: 80px;
 }
 
+.gist {
+  margin-left: 0.8em;
+  font-size: 0.62em;
+  letter-spacing: 0.12em;
+  color: rgba(42, 42, 46, 0.5);
+}
+
 .notes h2 + h3 {
   margin-top: 1.4em;
 }

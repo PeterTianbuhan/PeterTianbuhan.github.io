@@ -1,6 +1,7 @@
+import type { ReactNode } from "react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-import { thingId } from "@/lib/i-think";
+import { splitThing } from "@/lib/i-think";
 import { InkBreak, InkHeading, InkStrike } from "./ink";
 import styles from "./prose.module.css";
 
@@ -19,13 +20,27 @@ function numberSections() {
     for (const node of tree.children) {
       if (node.type !== "heading") continue;
       if (node.depth === 2) node.data = { ...node.data, hProperties: { id: `section-${++n}` } };
-      if (node.depth === 3) node.data = { ...node.data, hProperties: { id: thingId(text(node)) } };
+      if (node.depth === 3) {
+        // "### name | gist": the name stays the heading, the gist goes beside it
+        const { name, gist, id } = splitThing(text(node));
+        node.children = [{ type: "text", value: name }];
+        node.data = { ...node.data, hProperties: gist ? { id, dataGist: gist } : { id } };
+      }
     }
   };
 }
 
+function Thing({ id, children, "data-gist": gist }: { id?: string; children?: ReactNode; "data-gist"?: string }) {
+  return (
+    <h3 id={id}>
+      {children}
+      {gist && <span className={styles.gist}>{gist}</span>}
+    </h3>
+  );
+}
+
 // ~~words~~ are crossed out by hand
-const components = { h2: InkHeading, hr: InkBreak, del: InkStrike };
+const components = { h2: InkHeading, h3: Thing, hr: InkBreak, del: InkStrike };
 
 export function Prose({ source, className }: { source: string; className?: string }) {
   return (

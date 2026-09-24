@@ -3,7 +3,7 @@ import { Gallery } from "@/components/home-sketch/gallery";
 import { SketchHome } from "@/components/home-sketch/sketch-home";
 import { getPostsByLocale } from "@/lib/content";
 import { getExhibits } from "@/lib/exhibits";
-import { getIThink, thingsIn } from "@/lib/i-think";
+import { getIThink, shelvesIn } from "@/lib/i-think";
 import { isSupportedLocale, type Locale } from "@/lib/i18n";
 import { getDictionary, getSiteContent } from "@/lib/site";
 import { getWritingSeries } from "@/lib/writing-series";
@@ -44,7 +44,7 @@ export default async function LocaleHomePage({
       />
       <Gallery
         locale={typedLocale}
-        things={thingsIn(notes)}
+        things={shelvesIn(notes).flatMap((shelf) => shelf.things)}
         role={site.role}
         essays={posts.map((post) => ({
           href: `${base}/blog/${post.slug}/`,

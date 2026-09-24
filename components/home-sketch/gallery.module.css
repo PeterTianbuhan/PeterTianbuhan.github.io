@@ -647,11 +647,87 @@
 
 /* "I think": the things talked about, on the home page */
 .things {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 26px;
-  margin: 0 0 22px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 14px 32px;
+  max-width: 880px;
+  margin: 0 0 26px;
   padding: 0;
   list-style: none;
-  font-size: 19px;
+  font-size: 18px;
+}
+
+.things span,
+.thingsIndex a span {
+  display: block;
+  margin-top: 2px;
+  font-size: 12.5px;
+  letter-spacing: 0.12em;
+  color: rgba(42, 42, 46, 0.5);
+}
+
+/* the "I think" page: the notes, with an index of names in the right margin */
+.notesLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 36em) minmax(160px, 1fr);
+  gap: 56px;
+  align-items: start;
+}
+
+.notesLayout aside {
+  position: sticky;
+  top: 90px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+.thingsIndex ul {
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+}
+
+.thingsIndex li {
+  margin: 0 0 11px;
+  padding-left: 12px;
+  border-left: 1.5px solid transparent;
+  font-size: 14.5px;
+  line-height: 1.35;
+  color: rgba(42, 42, 46, 0.6);
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.thingsIndex li[data-here="true"] {
+  color: #2a2a2e;
+  border-left-color: #2a2a2e;
+}
+
+.thingsIndex a span {
+  font-size: 11.5px;
+}
+
+@media (max-width: 1000px) {
+  .notesLayout {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .notesLayout aside {
+    position: static;
+    max-height: none;
+    width: 100%;
+  }
+
+  .thingsIndex ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px 20px;
+  }
+
+  .thingsIndex li {
+    margin: 0;
+    padding-left: 0;
+    border-left: none;
+  }
 }

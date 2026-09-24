@@ -1,11 +1,13 @@
 import type { Post, PostListItem } from "@/lib/content";
 import type { Exhibit } from "@/lib/exhibits";
+import { shelvesIn } from "@/lib/i-think";
 import type { Locale } from "@/lib/i18n";
 import { getWritingSeries } from "@/lib/writing-series";
 import { EraseLink } from "./eraser";
 import { Heading, PageShell } from "./gallery";
 import { InkFrame, InkRule, Seen } from "./ink";
 import { Prose } from "./prose";
+import { ThingsIndex } from "./things-index";
 import { Vignette } from "./vignettes";
 import styles from "./gallery.module.css";
 import prose from "./prose.module.css";
@@ -115,7 +117,12 @@ export function IThinkPage({ locale, source }: { locale: Locale; source: string 
               : "Or rather, I feel. All of it very subjective; when I change my mind I cross it out and write it again."}
           </p>
         </Seen>
-        <Prose source={source} className={prose.notes} />
+        <div className={styles.notesLayout}>
+          <Prose source={source} className={prose.notes} />
+          <aside>
+            <ThingsIndex shelves={shelvesIn(source)} />
+          </aside>
+        </div>
       </article>
     </PageShell>
   );
