@@ -49,6 +49,29 @@ const drawings: Record<Exhibit["slug"], { lines: Line[]; tints: Tint[]; extra?: 
       </text>
     ),
   },
+  // someone talking into a phone, the phone quietly laying it out as a timeline
+  "my-life": {
+    lines: [
+      { d: "M60,58 Q76,90 60,122", t: 0, dur: 0.3 },
+      { d: "M72,68 Q84,90 72,112", t: 0.2, dur: 0.25 },
+      { d: "M84,78 Q91,90 84,102", t: 0.4, dur: 0.2 },
+      { d: "M104,24 L146,24 Q152,24 152,30 L152,150 Q152,156 146,156 L104,156 Q98,156 98,150 L98,30 Q98,24 104,24", t: 0.55, dur: 0.7 },
+      { d: "M118,32 L132,32", t: 1.2, dur: 0.1 },
+      { d: "M112,46 L112,138", t: 1.3, dur: 0.35 },
+      { d: "M122,58 L144,58", t: 1.6, dur: 0.15 },
+      { d: "M122,65 L136,65", t: 1.7, dur: 0.1 },
+      { d: "M122,88 L144,88", t: 1.8, dur: 0.15 },
+      { d: "M122,95 L132,95", t: 1.9, dur: 0.1 },
+      { d: "M122,118 L142,118", t: 2.0, dur: 0.15 },
+      { d: "M122,125 L134,125", t: 2.1, dur: 0.1 },
+    ],
+    tints: [
+      { d: "M102,40 L148,40 L148,146 L102,146 Z", fill: "#eadcc0", t: 2.1 },
+      { d: "M108,61 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0", fill: "#e2583a", t: 2.25 },
+      { d: "M108,91 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0", fill: "#f2b731", t: 2.35 },
+      { d: "M108,121 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0", fill: "#4f9a6b", t: 2.45 },
+    ],
+  },
 };
 
 export function Vignette({ slug, delay }: { slug: Exhibit["slug"]; delay: number }) {

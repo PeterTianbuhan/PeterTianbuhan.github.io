@@ -1,0 +1,32 @@
+## How it started
+
+I love listening to my grandpa's stories, and I've always felt he has many more he's never told. A while ago I wanted to help him write down his life. He was excited, and then said, "I'm not educated enough. I can't write anything."
+
+That's when I realised that recording a person's life can now cost almost nothing but talking.
+
+Later my mum heard about it and said she wanted to use it too. So it isn't only for old people. Everyone has things that shouldn't disappear along with their memory.
+
+## What it does
+
+Open the app and talk. In the background, an agent slowly sorts what you say into a timeline of your life, the people you've met and the places you've been.
+
+- Your own words and recordings are kept; the organised version never overwrites them.
+- Time can be "when I was little" or "that summer". No need to make up exact dates.
+- Names it didn't catch and things that don't line up are noted for later, instead of being asked about over and over.
+- Everything stays on your own device, where you can read it, edit it and export it.
+
+## Why a separate app
+
+My grandparents probably won't open ChatGPT, let alone figure out how a web page works. I wanted agents to reach people like them in a simple enough form, so I made it a standalone app: install it, enter an API key, and after that just talk.
+
+People who already use an agent don't need the app. The repo has a prompt you can send to your own agent and start telling stories.
+
+## How it's built
+
+The interface is React, packaged as a mobile app with Capacitor, and the agent runs on pi. You use your own API key and connect straight to the model provider.
+
+## Now
+
+v0.2.0 came out in August, open source under MIT, with an Android APK. My family used it first, then I open-sourced it.
+
+I'm also sorting out my own memories with an agent, and I really enjoy looking back on my life. It's a small project, but I like it a lot. It may be the first open-source project I've made that's genuinely worth something.
