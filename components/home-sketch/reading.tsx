@@ -74,21 +74,15 @@ export function ProjectDetail({ locale, piece, body }: { locale: Locale; piece: 
           <div className={styles.projectFacts}>
             <p className={styles.label}>
               <span>{piece.year}</span>
-              <span>{piece.status}</span>
             </p>
             <h1>{piece.name}</h1>
-            <p className={styles.medium}>{piece.medium}</p>
-            {piece.honor && <p className={styles.honor}>{piece.honor}</p>}
-            <p className={styles.role}>
-              <span>{piece.role}</span>
-              {piece.link ? (
+            {piece.link && (
+              <p className={styles.role}>
                 <a href={piece.link.href} target="_blank" rel="noreferrer" className={styles.read}>
                   {piece.link.label} ↗
                 </a>
-              ) : (
-                <span className={styles.aside}>{zh ? "仓库暂未公开" : "Repository not public yet"}</span>
-              )}
-            </p>
+              </p>
+            )}
           </div>
         </Seen>
         <Prose source={body} />

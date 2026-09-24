@@ -94,17 +94,11 @@ function Piece({ locale, piece, flip }: { locale: Locale; piece: Exhibit; flip: 
       <div className={styles.placard}>
         <p className={styles.label}>
           <span>{piece.year}</span>
-          <span>{piece.status}</span>
         </p>
         <h3>
           <EraseLink href={href}>{piece.name}</EraseLink>
         </h3>
-        <p className={styles.medium}>{piece.medium}</p>
         <p className={styles.excerpt}>{piece.summary}</p>
-        {piece.honor && <p className={styles.honor}>{piece.honor}</p>}
-        <p className={styles.role}>
-          <span>{piece.role}</span>
-        </p>
         <p className={styles.role}>
           <EraseLink href={href} className={styles.read}>
             {zh ? "看看这个项目" : "More on this"} →
