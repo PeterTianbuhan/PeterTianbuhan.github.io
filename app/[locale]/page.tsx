@@ -3,6 +3,7 @@ import { Gallery } from "@/components/home-sketch/gallery";
 import { SketchHome } from "@/components/home-sketch/sketch-home";
 import { getPostsByLocale } from "@/lib/content";
 import { getExhibits } from "@/lib/exhibits";
+import { getIThink, thingsIn } from "@/lib/i-think";
 import { isSupportedLocale, type Locale } from "@/lib/i18n";
 import { getDictionary, getSiteContent } from "@/lib/site";
 import { getWritingSeries } from "@/lib/writing-series";
@@ -19,10 +20,11 @@ export default async function LocaleHomePage({
   }
 
   const typedLocale = locale as Locale;
-  const [site, dict, posts] = await Promise.all([
+  const [site, dict, posts, notes] = await Promise.all([
     getSiteContent(typedLocale),
     getDictionary(typedLocale),
     getPostsByLocale(typedLocale),
+    getIThink(typedLocale),
   ]);
   const base = `/${typedLocale}`;
   const zh = typedLocale === "zh";
@@ -36,11 +38,13 @@ export default async function LocaleHomePage({
         nav={[
           { href: "#writing", label: zh ? "长文" : "Essays" },
           { href: "#projects", label: dict.nav.projects },
+          { href: "#i-think", label: zh ? "我觉得" : "I think" },
           { href: "#about", label: dict.nav.contact },
         ]}
       />
       <Gallery
         locale={typedLocale}
+        things={thingsIn(notes)}
         role={site.role}
         essays={posts.map((post) => ({
           href: `${base}/blog/${post.slug}/`,

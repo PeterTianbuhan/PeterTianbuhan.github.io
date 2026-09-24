@@ -12,7 +12,12 @@
 }
 
 .prose p {
+  position: relative;
   margin: 0 0 1.3em;
+}
+
+.prose li {
+  position: relative;
 }
 
 .prose h3 {
@@ -129,6 +134,18 @@
   padding: 8px 14px;
   border-bottom: 1px solid rgba(42, 42, 46, 0.2);
   text-align: left;
+}
+
+/* the "I think" page: each thing talked about gets a proper name line */
+.notes h3 {
+  margin: 2.6em 0 0.7em;
+  font-size: 1.35em;
+  letter-spacing: 0.04em;
+  scroll-margin-top: 80px;
+}
+
+.notes h2 + h3 {
+  margin-top: 1.4em;
 }
 
 @media (max-width: 640px) {

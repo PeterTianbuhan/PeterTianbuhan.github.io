@@ -195,3 +195,46 @@ export function InkBreak() {
     </Seen>
   );
 }
+
+// words crossed out when I've changed my mind: one pen stroke through each line
+// they wrap onto, pulled across as they come into view
+export function InkStrike({ children }: { children?: ReactNode }) {
+  const [ref, seen] = useSeen<HTMLModElement>();
+  const words = useRef<HTMLSpanElement>(null);
+  const [lines, setLines] = useState<{ x: number; y: number; w: number; h: number }[]>([]);
+  useEffect(() => {
+    const el = words.current;
+    const box = ref.current?.offsetParent;
+    if (!el || !box) return;
+    const measure = () => {
+      const o = box.getBoundingClientRect();
+      setLines([...el.getClientRects()].map((r) => ({ x: r.left - o.left, y: r.top - o.top, w: r.width, h: r.height })));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(box);
+    document.fonts?.ready.then(measure);
+    return () => ro.disconnect();
+  }, [ref]);
+  const r = rng(String(children));
+  return (
+    <del ref={ref} className={styles.strike} data-seen={seen}>
+      <span ref={words}>{children}</span>
+      {lines.length > 0 && (
+        <svg className={`${styles.ink} ${styles.strikeInk}`} aria-hidden>
+          {lines.map((l, i) => {
+            const y = l.y + l.h * 0.5;
+            return (
+              <path
+                key={i}
+                d={stroke(r, [l.x - 3, y + (r() - 0.5) * 3], [l.x + l.w + 3, y + (r() - 0.5) * 4], 2)}
+                pathLength={1}
+                style={timing(0.3 + i * 0.35, 0.4)}
+              />
+            );
+          })}
+        </svg>
+      )}
+    </del>
+  );
+}

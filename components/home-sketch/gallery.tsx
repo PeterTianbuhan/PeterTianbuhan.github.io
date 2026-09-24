@@ -132,6 +132,7 @@ export function Wall({ locale, exhibits }: { locale: Locale; exhibits: Exhibit[]
 
 type Props = {
   locale: Locale;
+  things: { name: string; id: string }[];
   role: string;
   essays: Essay[];
   exhibits: Exhibit[];
@@ -140,7 +141,7 @@ type Props = {
   x?: string;
 };
 
-export function Gallery({ locale, role, essays, exhibits, email, github, x }: Props) {
+export function Gallery({ locale, things, role, essays, exhibits, email, github, x }: Props) {
   const zh = locale === "zh";
   return (
     <div className={`${styles.paper} ${signature.variable}`}>
@@ -159,6 +160,25 @@ export function Gallery({ locale, role, essays, exhibits, email, github, x }: Pr
       <section className={styles.room}>
         <Heading id="projects" title={zh ? "项目" : "Projects"} script="Works" />
         <Wall locale={locale} exhibits={exhibits} />
+      </section>
+
+      <section className={styles.room}>
+        <Heading id="i-think" title={zh ? "我觉得" : "I think"} script="I think" />
+        <Seen className={styles.about}>
+          <p className={styles.excerpt}>
+            {zh ? "对模型、工具和别人项目的一些很主观的感觉，改主意了就划掉重写。" : "Very subjective feelings about models, tools and other people's projects, crossed out and rewritten when I change my mind."}
+          </p>
+          <ul className={styles.things}>
+            {things.map((t) => (
+              <li key={t.id}>
+                <EraseLink href={`/${locale}/i-think/#${t.id}`}>{t.name}</EraseLink>
+              </li>
+            ))}
+          </ul>
+          <EraseLink href={`/${locale}/i-think/`} className={styles.read}>
+            {zh ? "看看我怎么说" : "Read them"} →
+          </EraseLink>
+        </Seen>
       </section>
 
       <section className={styles.room}>
@@ -224,6 +244,9 @@ export function PageShell({
           </EraseLink>
           <EraseLink href={`/${locale}/projects/`} className={styles.read}>
             {zh ? "项目" : "Projects"}
+          </EraseLink>
+          <EraseLink href={`/${locale}/i-think/`} className={styles.read}>
+            {zh ? "我觉得" : "I think"}
           </EraseLink>
           {other && (
             <EraseLink href={other} className={styles.read}>

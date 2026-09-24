@@ -3,11 +3,12 @@ import type { Exhibit } from "@/lib/exhibits";
 import type { Locale } from "@/lib/i18n";
 import { getWritingSeries } from "@/lib/writing-series";
 import { EraseLink } from "./eraser";
-import { PageShell } from "./gallery";
+import { Heading, PageShell } from "./gallery";
 import { InkFrame, InkRule, Seen } from "./ink";
 import { Prose } from "./prose";
 import { Vignette } from "./vignettes";
 import styles from "./gallery.module.css";
+import prose from "./prose.module.css";
 
 // An essay on its own pages of the sketchbook.
 export function SketchArticle({
@@ -96,6 +97,26 @@ export function ProjectDetail({ locale, piece, body }: { locale: Locale; piece: 
           {zh ? "← 回到所有项目" : "← All projects"}
         </EraseLink>
       </Seen>
+    </PageShell>
+  );
+}
+
+// "I think": subjective notes, crossed out and rewritten when my mind changes
+export function IThinkPage({ locale, source }: { locale: Locale; source: string }) {
+  const zh = locale === "zh";
+  return (
+    <PageShell locale={locale} other={`/${zh ? "en" : "zh"}/i-think/`}>
+      <article className={styles.reading}>
+        <Heading as="h1" title={zh ? "我觉得" : "I think"} script={zh ? "I think" : "I feel"} />
+        <Seen as="header" className={styles.readingHead}>
+          <p className={styles.standfirst}>
+            {zh
+              ? "或者说，我感觉。都是很主观的感受，改主意了就划掉重写。"
+              : "Or rather, I feel. All of it very subjective; when I change my mind I cross it out and write it again."}
+          </p>
+        </Seen>
+        <Prose source={source} className={prose.notes} />
+      </article>
     </PageShell>
   );
 }
