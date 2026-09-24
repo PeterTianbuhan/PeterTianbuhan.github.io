@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[75152,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0d3shmwh5_nmn.js","/_next/static/chunks/0hw8agbe~uv_9.js","/_next/static/chunks/0dngfctrebnl4.js"],"ProjectsPage"]
+3:I[97367,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"locale":"zh","exhibits":[{"slug":"aioj","name":"AIOJ","year":"2026","medium":"在线评测与 AI 辅导 · Next.js · PostgreSQL · isolate 沙箱","summary":"给信息学竞赛的学生和教练用的 OJ。除了做题和评测，我们还想把学生练习的过程记下来，比如一道题是怎么一步步改对的，整理好给 AI 用。AI 讲题已经挺强了，缺的是了解这个学生。","role":"团队项目，我是主要开发者","status":"开发中，还没正式上线","honor":"北大信科 2026 年度「创新+」工作站立项项目，我是负责人"},{"slug":"onepku","name":"OnePKU","year":"2026","medium":"桌面应用 · Tauri · Rust · React","summary":"一个北大的校园小工具。一开始想做成北大版的 oneTHU，后来发现北大的网站不太统一，就挑了几个自己用得上的功能：看课程回放、存课件、看作业和成绩。","role":"我一个人写的，也一直在维护","status":"v0.1.0 已发布，Windows 版快了","link":{"href":"https://github.com/PeterTianbuhan/onePKU","label":"GitHub"}}]}],[["$","script","script-0",{"src":"/_next/static/chunks/0dngfctrebnl4.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"lFheW4vJQaAqtEJrgpyex"}
+5:null
