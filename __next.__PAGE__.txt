@@ -2,5 +2,5 @@
 3:I[97367,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
 2:["$","p",null,{"style":{"padding":"18vh 24px","textAlign":"center","fontFamily":"var(--font-serif)","color":"#2a2a2e"},"children":["$","a",null,{"href":"/zh/","children":"这一页搬走了，点这里继续 →"}]}]
-0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"style":{"minHeight":"100vh","background":"#f8f4ea"},"children":[["$","script",null,{"dangerouslySetInnerHTML":{"__html":"window.location.replace(\"/zh/\");"}}],["$","noscript",null,{"children":"$2"}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"lFheW4vJQaAqtEJrgpyex"}
+0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"style":{"minHeight":"100vh","background":"#f8f4ea"},"children":[["$","script",null,{"dangerouslySetInnerHTML":{"__html":"window.location.replace(\"/zh/\");"}}],["$","noscript",null,{"children":"$2"}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"1q75y98Xl37638JjW-IkG"}
 5:null
