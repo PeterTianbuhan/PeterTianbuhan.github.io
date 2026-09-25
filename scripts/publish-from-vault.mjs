@@ -22,7 +22,7 @@ const vaultRoot =
   process.env.LIFE_VAULT_ROOT ||
   (os.platform() === "darwin" ? "/Users/peterlee/Documents/life vault" : "");
 
-// 种类文件夹 → 首页栏目 key（与 components/home/home-view.tsx 的 SECTIONS 对齐）
+// 种类文件夹 → 文章 frontmatter 的 section 字段
 const SECTION_BY_FOLDER = {
   内核: "thinking",
   学习笔记: "learning",

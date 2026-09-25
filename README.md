@@ -1,29 +1,24 @@
 # homepage
 
-Peter Tian 的个人主页（petertianwork.me）。一个采用终端视觉风格的 Next.js 静态站：像素字体、窗口外框和三个普通导航入口。保留轻量的命令导航（如 writing、cd writing），不模拟文件系统；昼夜配色与内页共用。
+Peter Tian 的个人主页（petertianwork.me）。Next.js 静态站，整站是一本速写本：首页是一幅自己画出来的钢笔水彩北大，下面同一张纸上接着放长文、项目、「我觉得」和关于。换页时橡皮擦把纸擦白，下一页再画出来。
 
 ## 目录
 
 ```
-网站本身
-  app/          Next.js App Router：/{zh,en}/ 首页，/about 关于，/projects 项目，/writing 统一文字列表，/blog/<slug>、/thoughts/<slug> 共用阅读外框
-  components/   home/（终端主视图）terminal/（shell、提示符、湖景、配色）showcases/ blog/ site/ ui/
-  lib/          内容加载：content.ts（文章）showcases.ts（札记）thoughts.ts site.ts i18n.ts article-registry.ts
-  content/      站点内容：blog/zh/*.mdx 由 vault 同步生成；showcases/agent-notes/ 手写
-  public/       静态资源（目前为空，图标在 app/icon.svg）
-
-运行依赖与产物
-  scripts/      发布链路：publish-from-vault、sync-vault-*、verify-*、prepare-github-pages、post/thought-intake
-                test-lake-time.mjs 是配色与时间逻辑的测试（node --test）
-  templates/    post-intake 模板
-  docs/         工作流说明（source 分支、自动发布、vault 同步）与 design/ 未名湖参考
-  .github/      publish-site.yml：push 到 source → 构建 → 发布到 main
-  .claude/      本机 dev server 启动配置（未纳入 git）
-  .next/ out/ .publish/ node_modules/   生成物，已 gitignore
-
-归档
-  archive/      过去的内容与不再运行的脚本，见 archive/README.md
+app/                      路由：/{zh,en}/ 首页，/writing 长文列表，/blog/<slug> 长文，
+                          /projects 和 /projects/<slug> 项目，/i-think 「我觉得」；/ 跳到 /zh/，其余走 404「这一页还没画」
+components/home-sketch/   速写本的一切：首页、画廊、正文排版、墨线动画、橡皮擦换页
+components/pku-sketch/    首屏那幅北大速写（一笔一笔画出来再上水彩）
+lib/                      content.ts 长文，exhibits.ts 项目，i-think.ts 「我觉得」，site.ts 个人信息，
+                          i18n.ts 中英文案，writing-series.ts 系列
+content/                  blog/ 长文（从 vault 同步），projects/ 项目正文，i-think/ 「我觉得」
+app/fonts/                像素字体、签名字体
+scripts/ templates/       发布链路：publish-from-vault、sync-vault-*、verify-*、prepare-github-pages、*-intake
+docs/                     工作流说明；tried.md 记录试过但没用上的方向
+.github/                  publish-site.yml：push 到 source → 构建 → 发布到 main
 ```
+
+没用上的探索（终端首页、未名湖场景、来处、故事短片）不在这个仓库里，在 `../homepage-lab/`，理由见 `docs/tried.md`。
 
 ## 日常
 
@@ -31,25 +26,11 @@ Peter Tian 的个人主页（petertianwork.me）。一个采用终端视觉风�
 npm run dev            # http://localhost:3000/zh/
 npm run build          # 静态导出到 out/
 npm run lint
-node --test scripts/test-lake-time.mjs
 ```
-
-开发时可用 `?previewTime=HH:MM` 预览任一时段的配色，例如 `/zh/?previewTime=23:00`。
 
 ## 分支
 
-- `source`：源码、内容、文档。所有 PR 的目标分支。
+- `source`：源码和内容。push 到这里会自动构建并上线。
 - `main`：GitHub Pages 的静态产物，由 workflow 写入，不要手改。
 
-内容的真实来源是私有的 life vault 仓库，`content/blog/**` 是同步出来的副本，一般不手改；`content/showcases/**` 是直接写在这里的。
-
-## 阅读预览
-
-`/zh/writing/` 是统一文字入口；旧 `/blog/`、`/thoughts/` 列表地址会转到这里，文章原地址保留。
-首页保留像素终端，阅读页使用独立正文排版和浏览器整页滚动。
-
-开发模式（`npm run dev`）额外加载 `content/drafts/zh/` 中的 `interface-no-longer-fixed` 和 `knowledge-can-grow-on-its-own` 两篇设计样本，标注“本地预览”。生产构建不读取这些草稿；正式发布仍走原有内容流程。
-
-内容和普通 URL 路由独立于视觉样式。`components/site/site-theme.tsx` 提供全站昼夜色彩变量；首页使用 `components/home/home.module.css`，内页使用 `components/reading/reading.module.css`。旧首页 hash 入口会转到对应普通页面。旧 shell/湖景/札记展示代码保留在源码中，目前没有被页面引用。
-
-开发时可用 `?layout=full` 对比铺满屏幕的首页；默认仍为窗口布局。这个参数不改变生产站点布局。
+长文的真实来源是私有的 life vault，`content/blog/**` 是同步出来的副本（`source: homepage` 的几篇是直接写在这里的）。随想的同步链路还在 CI 里跑，但网站目前不展示随想。

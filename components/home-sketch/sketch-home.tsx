@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState, type CSSProperties } from "react";
 import { signature } from "@/app/fonts/signature";
-import { SketchCanvas } from "@/components/life/sketch/sketch-canvas";
-import { DONE_AT } from "@/components/life/sketch/pku-scene";
+import { SketchCanvas } from "@/components/pku-sketch/sketch-canvas";
+import { DONE_AT } from "@/components/pku-sketch/pku-scene";
 import { EraseLink } from "./eraser";
 import type { Locale } from "@/lib/i18n";
 import styles from "./sketch-home.module.css";
