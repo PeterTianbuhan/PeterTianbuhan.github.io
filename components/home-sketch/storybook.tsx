@@ -61,7 +61,7 @@ function Art({ drawing, view, children }: { drawing: Drawing; view: string; chil
         {drawing.under.map(([fill, opacity, d]) => (
           <path key={d.length} fill={fill} opacity={opacity} d={d} filter="url(#sb-wash-soft)" />
         ))}
-        <g transform="translate(0 1254) scale(1 -1)" filter="url(#sb-wash-fine)">
+        <g transform={`translate(0 ${drawing.size[1]}) scale(1 -1)`} filter="url(#sb-wash-fine)">
           {drawing.washes.map(([fill, d]) => (
             <path key={fill + d.length} fill={fill} d={d} />
           ))}
@@ -69,7 +69,7 @@ function Art({ drawing, view, children }: { drawing: Drawing; view: string; chil
         {drawing.cheeks.map(([x, y]) => (
           <ellipse key={x} cx={x} cy={y} rx="25" ry="14" fill="#f2b731" opacity={0.8} />
         ))}
-        <path transform="translate(0 1254) scale(1 -1)" fill={INK} d={drawing.ink} />
+        <path transform={`translate(0 ${drawing.size[1]}) scale(1 -1)`} fill={INK} d={drawing.ink} />
       </g>
     </svg>
   );

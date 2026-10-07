@@ -14,7 +14,8 @@ lib/                      content.ts 长文，exhibits.ts 项目，i-think.ts �
 content/                  blog/ 长文（从 vault 同步），projects/ 项目正文，i-think/ 「我觉得」
 app/fonts/                像素字体、签名字体
 scripts/ templates/       发布链路：publish-from-vault、sync-vault-*、verify-*、prepare-github-pages、*-intake
-docs/                     工作流说明；tried.md 记录试过但没用上的方向
+docs/                     工作流说明；tried.md 记录试过但没用上的方向；storybook-screens.md 首页绘本页怎么加
+scripts/storybook/        绘本页的画：线稿原图、上色配置和描线脚本
 .github/                  publish-site.yml：push 到 source → 构建 → 发布到 main
 ```
 
