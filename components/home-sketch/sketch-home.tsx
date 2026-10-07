@@ -48,6 +48,7 @@ export function SketchHome({ locale, name, role, nav }: Props) {
     <main
       className={`${styles.root} ${signature.variable}`}
       data-finished={finished}
+      data-cover
       style={timing}
       onClick={() => setFinished(true)}
     >

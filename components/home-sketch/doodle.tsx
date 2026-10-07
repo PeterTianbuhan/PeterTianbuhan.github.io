@@ -24,6 +24,7 @@ export function Doodle({ erasing }: { erasing: boolean }) {
   const zh = pathname.startsWith("/zh");
   const [pose, setPose] = useState<Pose>("write");
   const [swap, setSwap] = useState(0);
+  const [onCover, setOnCover] = useState(true);
   const state = useRef({ drawing: true, hover: false, erasing: false, dozing: false, end: false, body: false });
   const shown = useRef<{ pose: Pose; at: number }>({ pose: "write", at: 0 });
   const later = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -94,6 +95,15 @@ export function Doodle({ erasing }: { erasing: boolean }) {
     return () => clearTimeout(t);
   }, [pathname]);
 
+  // the home page's cover is a drawing of its own; stay out of it until you
+  // scroll past
+  useEffect(() => {
+    const cover = document.querySelector("[data-cover]");
+    const io = new IntersectionObserver(([e]) => setOnCover(cover !== null && e.isIntersecting));
+    io.observe(cover ?? document.body);
+    return () => io.disconnect();
+  }, [pathname]);
+
   useEffect(() => {
     state.current.erasing = erasing;
     update.current(true);
@@ -105,7 +115,7 @@ export function Doodle({ erasing }: { erasing: boolean }) {
   }
 
   return (
-    <div className={`${styles.corner} ${signature.variable}`} data-pose={pose}>
+    <div className={`${styles.corner} ${signature.variable}`} data-pose={pose} data-hidden={onCover}>
       <span className={styles.hello}>hi there</span>
       <svg
         viewBox="-14 4 108 92"

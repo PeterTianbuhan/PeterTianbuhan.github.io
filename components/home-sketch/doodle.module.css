@@ -7,6 +7,12 @@
   width: 112px;
   /* above the eraser's veil, so he can be seen rubbing the page out */
   z-index: 101;
+  transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+.corner[data-hidden="true"] {
+  opacity: 0;
+  visibility: hidden;
 }
 
 /* where the page is too narrow to keep him clear of the words, he waits at
