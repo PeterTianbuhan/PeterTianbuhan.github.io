@@ -12,7 +12,7 @@ components/pku-sketch/    首屏那幅北大速写（一笔一笔画出来再上
 lib/                      content.ts 长文，exhibits.ts 项目，i-think.ts 「我觉得」，site.ts 个人信息，
                           i18n.ts 中英文案，writing-series.ts 系列
 content/                  blog/ 长文（从 vault 同步），projects/ 项目正文，i-think/ 「我觉得」
-app/fonts/                像素字体、签名字体
+app/fonts/                签名字体
 scripts/ templates/       发布链路：publish-from-vault、sync-vault-*、verify-*、prepare-github-pages、*-intake
 docs/                     工作流说明；tried.md 记录试过但没用上的方向
 .github/                  publish-site.yml：push 到 source → 构建 → 发布到 main
