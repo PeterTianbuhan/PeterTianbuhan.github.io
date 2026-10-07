@@ -12,7 +12,7 @@
    > Same character, same style as before (same head, hair, big round glasses, face, t-shirt, trousers and shoes). Scene for my "XX" page: ……. Black ink line art only on pure white, no fills, no shading, no text, uniform line weight. Square, centred, generous margin.
 
    一次画两张让人挑。只要黑线白底，别让它上色，上色我们自己来。
-3. **背景也让它画**（可选）。同样的话，加上 "BACKGROUND only, no character, wide landscape format (3:2)"，再说清楚哪一边留空放文字（"keep the LEFT half mostly empty"）。
+3. **要加点什么，就画成小贴纸。** 不画整幅背景（试过，见下面）。想让一页更热闹，就让它单独画一样小东西：风筝、风车、蘑菇、一座小塔，一张图只画一样，白底黑线。描好上色以后，在 `Sky` 里自己摆位置，躲开文字和小人。`scripts/storybook/art/backgrounds/` 里有四张没用上的整幅背景线稿，可以从里面挑东西让它单独重画。
 4. **存下来。** Chrome 只让网页自动下载一次，后面会拦。用图下面的「Copy image」，再在终端里把剪贴板存成文件：
 
    ```bash
@@ -49,4 +49,6 @@
 
 ## 为什么这么做
 
-试过在代码里手写坐标画小人的身体，比例和动作都不对，看着粗糙。人物和场景交给图像模型画线稿，代码只负责描线、上色和排版，这样画得好，又能保持同一套线条和颜色。
+试过在代码里手写坐标画小人的身体，比例和动作都不对，看着粗糙。人物交给图像模型画线稿，代码只负责描线、上色和排版，这样画得好，又能保持同一套线条和颜色。
+
+也试过每页让它画一整幅背景（云海、山坡小镇、小树林、湖边），叠在小人后面。背景和小人、文字搭不到一起：线从字底下穿过，湖和塔跟小人画里的重复，手机上又被裁掉一半。所以每页只放小人，要加东西就一样一样摆。
