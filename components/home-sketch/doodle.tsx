@@ -95,12 +95,19 @@ export function Doodle({ erasing }: { erasing: boolean }) {
     return () => clearTimeout(t);
   }, [pathname]);
 
-  // the home page's cover is a drawing of its own; stay out of it until you
-  // scroll past
+  // the home page's cover and the picture-book pages under it are drawings of
+  // their own, some with me already in them; stay out of those
   useEffect(() => {
-    const cover = document.querySelector("[data-cover]");
-    const io = new IntersectionObserver(([e]) => setOnCover(cover !== null && e.isIntersecting));
-    io.observe(cover ?? document.body);
+    const covers = [...document.querySelectorAll("[data-cover]")];
+    const seen = new Set<Element>();
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting && e.target !== document.body) seen.add(e.target);
+        else seen.delete(e.target);
+      }
+      setOnCover(seen.size > 0);
+    });
+    (covers.length > 0 ? covers : [document.body]).forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, [pathname]);
 

@@ -54,6 +54,7 @@ export default async function LocaleHomePage({
           date: post.publishedAtLabel,
           series: getWritingSeries(post.series, typedLocale)?.title,
           draft: post.preview,
+          featured: post.featured,
         }))}
         exhibits={getExhibits(typedLocale)}
         email={site.contactEmail}
