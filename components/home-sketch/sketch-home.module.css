@@ -120,7 +120,7 @@
 }
 
 .corner span {
-  color: rgba(42, 42, 46, 0.45);
+  color: rgba(42, 42, 46, 0.66);
   animation: fade 1s ease 2s both;
 }
 
