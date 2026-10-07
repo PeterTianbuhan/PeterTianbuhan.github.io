@@ -118,6 +118,17 @@
   overflow: visible;
 }
 
+/* a drawing with its patch of colour behind it takes a little more room */
+.scene.patched {
+  max-width: 540px;
+}
+
+@media (max-width: 860px) {
+  .scene.patched {
+    max-width: 360px;
+  }
+}
+
 /* scrolling through the page moves a few things a little */
 .drift {
   transform: translate(calc((var(--p) - 0.5) * -40px), calc((var(--p) - 0.5) * 12px));

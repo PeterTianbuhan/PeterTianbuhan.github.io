@@ -19,7 +19,8 @@ colours.json maps fills to area numbers, plus optional extras:
     }
 
 Areas not listed get the paper colour, so faces and hands stay opaque on a
-coloured page. "clear" areas stay see-through (gaps between legs, open sky).
+coloured page. "clear" areas stay see-through (gaps between legs, open sky). With
+"plain": true there are no washes at all, only the lines.
 "under" are soft washes painted under the drawing in its own coordinates (y
 down), for things the lines don't close off, like a lake or a patch of grass.
 
@@ -91,7 +92,7 @@ def build(png, colours_json, name):
     clear = set(spec.get("clear", [])) | {bg}
     fill_of = {k: fill for fill, ks in spec.get("fills", {}).items() for k in ks}
     groups = {}
-    for k in range(1, lab.max() + 1):
+    for k in range(1, lab.max() + 1) if not spec.get("plain") else []:
         if k not in clear:
             groups.setdefault(fill_of.get(k, PAPER), []).append(k)
     order = [PAPER] + [f for f in groups if f != PAPER] if PAPER in groups else list(groups)

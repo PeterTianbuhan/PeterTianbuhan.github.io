@@ -5,7 +5,7 @@ import type { Thing } from "@/lib/i-think";
 import { EraseLink } from "./eraser";
 import type { Essay } from "./gallery";
 import { BookPage } from "./storybook-page";
-import { BUILDER, CHAT, LAKE, WRITER, type Drawing } from "./storybook-drawings";
+import { BG_ESSAYS, BUILDER, CHAT, LAKE, WRITER, type Drawing } from "./storybook-drawings";
 import styles from "./storybook.module.css";
 
 // The pages of a picture book under the cover, one per section, each with the
@@ -52,10 +52,51 @@ function Filters() {
   );
 }
 
-// a traced drawing: washes under the ink, the ink on top
-function Art({ drawing, view, children }: { drawing: Drawing; view: string; children?: ReactNode }) {
+type Patch = {
+  id: string;
+  // the outline of the wash, in the drawing's own coordinates
+  shape: string;
+  washes: [fill: string, opacity: number, d: string][];
+  scene: Drawing;
+  // where the scene sits behind the little me
+  place: string;
+};
+
+// a spot of watercolour behind the little me, the rest of the page left as
+// paper; a piece of the page's scene shows through it and fades at its edges
+function PatchBehind({ patch }: { patch: Patch }) {
+  const h = patch.scene.size[1];
   return (
-    <svg className={styles.scene} viewBox={view} aria-hidden>
+    <g>
+      <defs>
+        <filter id={`${patch.id}-soft`} x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="46" />
+        </filter>
+        <mask id={`${patch.id}-mask`} maskUnits="userSpaceOnUse" x="-400" y="-400" width="2200" height="2200">
+          <path fill="#fff" d={patch.shape} filter={`url(#${patch.id}-soft)`} />
+        </mask>
+      </defs>
+      <g filter="url(#sb-wash)">
+        <path fill={patch.washes[1][0]} opacity={patch.washes[1][1]} d={patch.washes[1][2]} />
+        <path fill={patch.washes[0][0]} opacity={patch.washes[0][1]} d={patch.shape} />
+        {patch.washes.slice(2).map(([fill, opacity, d]) => (
+          <path key={d.length} fill={fill} opacity={opacity} d={d} />
+        ))}
+      </g>
+      <g mask={`url(#${patch.id}-mask)`}>
+        <g transform={patch.place}>
+          <path transform={`translate(0 ${h}) scale(1 -1)`} fill="rgba(42,42,46,.42)" d={patch.scene.ink} />
+        </g>
+      </g>
+    </g>
+  );
+}
+
+// a traced drawing: washes under the ink, the ink on top
+function Art({ drawing, view, patch, children }: { drawing: Drawing; view: string; patch?: Patch; children?: ReactNode }) {
+  return (
+    <svg className={`${styles.scene} ${patch ? styles.patched : ""}`} viewBox={view} aria-hidden>
+      {patch && <PatchBehind patch={patch} />}
       {children}
       <g className={styles.drift}>
         {drawing.under.map(([fill, opacity, d]) => (
@@ -95,32 +136,25 @@ function Title({ id, title, script }: { id: string; title: string; script: strin
 
 // ---- 长文: lying on a cloud, writing ----
 
+const ESSAYS_PATCH: Patch = {
+  id: "essays-patch",
+  shape:
+    "M-20 600 C-70 420 30 230 200 160 C330 100 420 140 520 90 C640 30 820 20 960 60 C1110 100 1180 40 1280 120 C1380 200 1350 330 1300 420 C1250 520 1340 620 1300 740 C1250 880 1100 930 980 990 C850 1060 640 1060 480 1020 C330 980 230 1030 110 960 C10 900 30 760 -20 600 Z",
+  washes: [
+    ["#a8cbe6", 0.82, ""],
+    ["#dcebf6", 0.55, "M-110 620 C-150 360 20 120 260 70 C520 10 700 -40 980 0 C1240 40 1420 160 1420 420 C1420 640 1440 860 1240 1000 C1040 1140 660 1150 400 1110 C150 1070 -80 920 -110 620 Z"],
+    ["#cfe3f2", 0.8, "M150 540 C160 340 360 210 600 200 C860 190 1070 310 1100 520 C1120 700 960 820 700 840 C420 860 140 740 150 540 Z"],
+    ["#f4cdbf", 0.6, "M40 840 C90 760 250 770 330 850 C390 910 300 990 190 985 C90 980 10 920 40 840 Z"],
+    ["#a8cbe6", 0.8, "M1318 160 a14 14 0 1 0 28 0 a14 14 0 1 0 -28 0 M1352 236 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 M-52 830 a12 12 0 1 0 24 0 a12 12 0 1 0 -24 0 M28 1046 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0 M1300 960 a10 10 0 1 0 20 0 a10 10 0 1 0 -20 0"],
+  ],
+  scene: BG_ESSAYS,
+  place: "translate(-150 -40) scale(0.86)",
+};
+
 function EssaysPage({ locale, essays, total }: { locale: Locale; essays: Essay[]; total: number }) {
   const zh = locale === "zh";
   return (
-    <BookPage label="writing" tone="#d6e7f3">
-      <Sky>
-        <g filter="url(#sb-wash)">
-          <path fill="#8dbadc" opacity={0.7} d="M-80 -60 H1520 V250 C1200 210 900 300 600 250 C380 214 160 280 -80 240 Z" />
-          <path fill="#b3d1e8" opacity={0.6} d="M-80 200 C200 260 520 200 820 250 C1080 290 1300 230 1520 260 V520 C1200 480 860 560 520 510 C260 470 80 530 -80 500 Z" />
-          <path fill="#f4cdbf" opacity={0.55} d="M-80 600 C260 560 620 640 980 600 C1220 574 1380 610 1520 596 V760 H-80 Z" />
-          <path fill="#fbf6ec" opacity={0.95} d="M-80 790 C120 740 260 800 420 760 C600 716 760 800 940 756 C1120 714 1300 790 1520 750 V980 H-80 Z" />
-        </g>
-        <g className={styles.sun}>
-          <circle cx="1230" cy="150" r="66" fill="#f4c95a" filter="url(#sb-fill)" />
-          <circle cx="1230" cy="150" r="66" fill="none" stroke={INK} strokeWidth={1.4} />
-        </g>
-        <g fill="none" stroke={INK} strokeWidth={1.4} strokeLinecap="round">
-          <path className={styles.small} fill="#fffaf0" d="M160 140 c10-16 34-16 44 0 c10-12 30-8 34 6 c14 0 18 18 4 20 h-92 c-14-2-12-24 10-26 z" />
-          <path className={styles.small} fill="#fffaf0" d="M760 96 c8-12 26-12 34 0 c8-9 23-6 26 5 c11 0 14 14 3 15 h-70 c-11-1-9-18 7-20 z" />
-          <g className={styles.small} transform="rotate(-10 380 120)">
-            <path fill="#fffaf0" d="M340 130 L420 104 L376 140 Z" />
-            <path fill="#e8e1d3" d="M376 140 L420 104 L372 128 Z" />
-            <path stroke={SOFT} strokeWidth={1} strokeDasharray="3 6" d="M330 134 C300 140 280 128 250 136" />
-          </g>
-        </g>
-      </Sky>
-
+    <BookPage label="writing" tone="#f8f4ea">
       <div className={styles.copy}>
         <Title id="writing" title={zh ? "长文" : "Essays"} script="Essays" />
         <p className={styles.line}>{zh ? "想得比较久的一些事，一篇写一件。" : "Things I've thought about for a while, one per essay."}</p>
@@ -139,7 +173,7 @@ function EssaysPage({ locale, essays, total }: { locale: Locale; essays: Essay[]
         </EraseLink>
       </div>
 
-      <Art drawing={WRITER} view="40 120 1180 1060">
+      <Art drawing={WRITER} view="-90 -30 1440 1260" patch={ESSAYS_PATCH}>
         {/* pages that slipped off the cloud */}
         <g className={styles.falling} stroke={INK} strokeWidth={3.4} strokeLinejoin="round" strokeLinecap="round">
           <path fill={PAPER} transform="rotate(-18 1110 1110)" d="M1070 1080 h80 v60 h-80z" />
