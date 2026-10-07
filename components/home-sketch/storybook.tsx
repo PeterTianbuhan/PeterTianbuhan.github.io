@@ -118,7 +118,6 @@ export function EssaysScreen({ locale, essays, total }: { locale: Locale; essays
         <g fill="none" stroke={INK} strokeWidth={1.4} strokeLinecap="round">
           <path className={styles.small} fill="#fffaf0" d="M160 140 c10-16 34-16 44 0 c10-12 30-8 34 6 c14 0 18 18 4 20 h-92 c-14-2-12-24 10-26 z" />
           <path className={styles.small} fill="#fffaf0" d="M760 96 c8-12 26-12 34 0 c8-9 23-6 26 5 c11 0 14 14 3 15 h-70 c-11-1-9-18 7-20 z" />
-          <path d="M1160 420 q9-7 18 0 q9-7 18 0 M1215 448 q6-5 12 0 q6-5 12 0" />
           {/* a paper plane, folded from one of the pages */}
           <g className={styles.small} transform="rotate(-10 380 120)">
             <path fill="#fffaf0" d="M340 130 L420 104 L376 140 Z" />
