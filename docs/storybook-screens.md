@@ -1,6 +1,6 @@
 # 首页的绘本页
 
-首页封面往下是一本绘本：长文、项目、我觉得、关于，一栏一页。每页铺满一种颜色，有一张小人在做这一栏的事的画，旁边是这一栏的几条内容和进入列表的链接。
+首页封面往下是一本绘本：长文、项目、我觉得、关于，一栏一页。每页是和封面一样的米白纸，小人在做这一栏的事，身后晕开一块这一页颜色的水彩，里面透出一点场景；旁边是这一栏的几条内容和进入列表的链接，字都在纸上。
 
 代码在 `components/home-sketch/storybook.tsx`（每一页）、`storybook-page.tsx`（滚动时让画轻轻漂）、`storybook-drawings.ts`（画，脚本生成的，别手改）。
 
@@ -12,7 +12,8 @@
    > Same character, same style as before (same head, hair, big round glasses, face, t-shirt, trousers and shoes). Scene for my "XX" page: ……. Black ink line art only on pure white, no fills, no shading, no text, uniform line weight. Square, centred, generous margin.
 
    一次画两张让人挑。只要黑线白底，别让它上色，上色我们自己来。
-3. **要加点什么，就画成小贴纸。** 不画整幅背景（试过，见下面）。想让一页更热闹，就让它单独画一样小东西：风筝、风车、蘑菇、一座小塔，一张图只画一样，白底黑线。描好上色以后，在 `Sky` 里自己摆位置，躲开文字和小人。`scripts/storybook/art/backgrounds/` 里有四张没用上的整幅背景线稿，可以从里面挑东西让它单独重画。
+3. **身后那块水彩和场景。** 再让它画一张这一页的整幅背景线稿（"BACKGROUND only, no character, wide landscape format"），只取小人身后的一小块：在 `storybook.tsx` 里给这一页写一个 `Patch`，`shape` 是一块不规则的水彩形状，`washes` 是几层颜色（外圈更淡的晕、一两块深浅、几点溅出来的颜料），`scene` 是背景线稿，`place` 决定它在小人身后哪个位置（可以用负的 scale 左右翻过来）。线稿会被那块水彩的形状遮住、边缘淡掉，不会跑到字底下。背景线稿放在 `scripts/storybook/art/backgrounds/`。
+   要再加点什么，就让它单独画小贴纸（风筝、风车、蘑菇），一张一样，自己摆。
 4. **存下来。** Chrome 只让网页自动下载一次，后面会拦。用图下面的「Copy image」，再在终端里把剪贴板存成文件：
 
    ```bash
@@ -44,11 +45,11 @@
 
    把输出贴进 `storybook-drawings.ts`。需要 `brew install potrace`，Python 要有 numpy、scipy、pillow。
 
-7. **放进页面。** 在 `storybook.tsx` 里照已有的几页加一个 `XxxPage`：`BookPage` 给底色，`Sky` 里铺几条水彩色带，`Art` 放画（`view` 是 viewBox，用来裁掉画四周的空白）。电脑上画和文字左右交替，用 `flip`。
+7. **放进页面。** 在 `storybook.tsx` 里照已有的几页加一个 `XxxPage`：`BookPage` 用纸色，`Art` 放画和它的 `patch`（`view` 是 viewBox，四周要给水彩留出地方）。电脑上画和文字左右交替，用 `flip`。
 8. **看一眼。** `npm run dev`，电脑宽 1280、手机宽 390 都截图看：字不能压在画上，没有横向滚动，脸不能透出背景色。然后 `npm run build`、`npm run lint`。
 
 ## 为什么这么做
 
 试过在代码里手写坐标画小人的身体，比例和动作都不对，看着粗糙。人物交给图像模型画线稿，代码只负责描线、上色和排版，这样画得好，又能保持同一套线条和颜色。
 
-也试过每页让它画一整幅背景（云海、山坡小镇、小树林、湖边），叠在小人后面。背景和小人、文字搭不到一起：线从字底下穿过，湖和塔跟小人画里的重复，手机上又被裁掉一半。所以每页只放小人，要加东西就一样一样摆。
+也试过整页铺满颜色、再把整幅背景叠在小人后面：太满，线从字底下穿过，手机上又被裁掉一半。现在整页是纸，只在小人身后一块水彩里露一点场景，安静，字也清楚。

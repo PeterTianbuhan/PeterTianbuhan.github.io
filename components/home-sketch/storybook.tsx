@@ -5,7 +5,7 @@ import type { Thing } from "@/lib/i-think";
 import { EraseLink } from "./eraser";
 import type { Essay } from "./gallery";
 import { BookPage } from "./storybook-page";
-import { BG_ESSAYS, BUILDER, CHAT, LAKE, WRITER, type Drawing } from "./storybook-drawings";
+import { BG_ABOUT, BG_ESSAYS, BG_ITHINK, BG_PROJECTS, BUILDER, CHAT, LAKE, WRITER, type Drawing } from "./storybook-drawings";
 import styles from "./storybook.module.css";
 
 // The pages of a picture book under the cover, one per section, each with the
@@ -116,15 +116,6 @@ function Art({ drawing, view, patch, children }: { drawing: Drawing; view: strin
   );
 }
 
-function Sky({ children }: { children: ReactNode }) {
-  return (
-    <svg className={styles.sky} viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden>
-      {children}
-      <rect width="1440" height="900" filter="url(#sb-grain)" />
-    </svg>
-  );
-}
-
 function Title({ id, title, script }: { id: string; title: string; script: string }) {
   return (
     <h2 id={id} className={styles.title}>
@@ -149,6 +140,50 @@ const ESSAYS_PATCH: Patch = {
   ],
   scene: BG_ESSAYS,
   place: "translate(-150 -40) scale(0.86)",
+};
+
+const PROJECTS_PATCH: Patch = {
+  id: "projects-patch",
+  shape:
+    "M-30 640 C-60 430 60 250 240 200 C380 160 470 220 600 170 C760 110 960 120 1120 220 C1260 310 1320 460 1290 610 C1270 720 1330 820 1260 930 C1180 1060 960 1110 740 1100 C560 1092 430 1140 260 1100 C80 1060 -10 900 -30 640 Z",
+  washes: [
+    ["#cfe3b4", 0.85, ""],
+    ["#f7e8bf", 0.6, "M-120 660 C-150 400 40 150 300 110 C560 70 720 30 980 80 C1240 130 1420 300 1410 560 C1400 800 1440 1000 1220 1120 C1000 1240 640 1220 380 1190 C120 1160 -90 960 -120 660 Z"],
+    ["#e6f0d6", 0.7, "M200 560 C220 400 420 300 640 300 C880 300 1060 400 1080 580 C1100 740 920 840 660 850 C400 860 180 740 200 560 Z"],
+    ["#f2c14e", 0.45, "M1100 260 C1150 210 1250 230 1270 300 C1290 370 1210 410 1150 390 C1090 370 1060 310 1100 260 Z"],
+    ["#cfe3b4", 0.8, "M-60 520 a12 12 0 1 0 24 0 a12 12 0 1 0 -24 0 M1310 700 a10 10 0 1 0 20 0 a10 10 0 1 0 -20 0 M1280 1010 a14 14 0 1 0 28 0 a14 14 0 1 0 -28 0"],
+  ],
+  scene: BG_PROJECTS,
+  place: "translate(1480 120) scale(-0.84 0.84)",
+};
+
+const THINK_PATCH: Patch = {
+  id: "think-patch",
+  shape:
+    "M-20 600 C-50 400 80 230 260 190 C400 160 500 220 640 180 C800 130 1000 150 1150 260 C1290 360 1320 520 1280 650 C1250 760 1310 880 1220 980 C1110 1100 880 1110 680 1090 C500 1072 360 1120 200 1060 C40 1000 0 820 -20 600 Z",
+  washes: [
+    ["#f6cdb4", 0.82, ""],
+    ["#fae4d4", 0.6, "M-120 620 C-160 360 30 120 300 80 C560 40 760 10 1000 60 C1250 110 1420 300 1400 560 C1380 800 1430 1000 1210 1110 C990 1220 640 1210 380 1180 C120 1150 -90 930 -120 620 Z"],
+    ["#d3e4bb", 0.75, "M60 900 C220 840 520 860 760 880 C1000 900 1200 860 1250 920 C1290 980 1150 1060 900 1080 C640 1100 300 1100 140 1050 C40 1020 0 940 60 900 Z"],
+    ["#f6cdb4", 0.8, "M-50 520 a12 12 0 1 0 24 0 a12 12 0 1 0 -24 0 M1320 420 a14 14 0 1 0 28 0 a14 14 0 1 0 -28 0 M1300 1020 a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0"],
+  ],
+  scene: BG_ITHINK,
+  place: "translate(-360 -40) scale(0.95)",
+};
+
+const ABOUT_PATCH: Patch = {
+  id: "about-patch",
+  shape:
+    "M-10 620 C-40 420 80 240 260 190 C400 150 520 200 650 150 C810 90 1000 120 1140 230 C1270 330 1300 500 1260 640 C1230 760 1290 880 1200 980 C1090 1100 860 1110 660 1090 C480 1072 340 1120 190 1060 C30 1000 10 830 -10 620 Z",
+  washes: [
+    ["#c9dfe2", 0.85, ""],
+    ["#ddd6ee", 0.65, "M-120 640 C-160 380 30 130 300 90 C560 50 760 10 1000 60 C1250 110 1420 300 1400 570 C1380 810 1430 1010 1210 1120 C990 1230 640 1220 380 1190 C120 1160 -90 940 -120 640 Z"],
+    ["#f1cfc8", 0.55, "M260 300 C360 230 560 230 640 300 C700 360 620 420 480 420 C340 420 200 380 260 300 Z"],
+    ["#c4dda5", 0.8, "M10 930 C180 860 520 880 760 900 C900 910 1060 960 1180 1010 C1230 1040 1150 1100 960 1110 C700 1124 360 1120 160 1080 C40 1056 -20 980 10 930 Z"],
+    ["#c9dfe2", 0.8, "M-50 560 a12 12 0 1 0 24 0 a12 12 0 1 0 -24 0 M1300 380 a10 10 0 1 0 20 0 a10 10 0 1 0 -20 0 M1270 1020 a14 14 0 1 0 28 0 a14 14 0 1 0 -28 0"],
+  ],
+  scene: BG_ABOUT,
+  place: "translate(-60 -120) scale(0.9)",
 };
 
 function EssaysPage({ locale, essays, total }: { locale: Locale; essays: Essay[]; total: number }) {
@@ -190,23 +225,7 @@ function EssaysPage({ locale, essays, total }: { locale: Locale; essays: Essay[]
 function ProjectsPage({ locale, exhibits }: { locale: Locale; exhibits: Exhibit[] }) {
   const zh = locale === "zh";
   return (
-    <BookPage label="projects" tone="#f6efd9" flip>
-      <Sky>
-        <g filter="url(#sb-wash)">
-          <path fill="#f7e2a8" opacity={0.6} d="M-80 -60 H1520 V300 C1200 260 900 340 600 300 C380 270 160 330 -80 290 Z" />
-          <path fill="#cfe3b4" opacity={0.75} d="M-80 640 C240 590 560 660 900 620 C1160 590 1340 630 1520 610 V980 H-80 Z" />
-          <path fill="#b6d397" opacity={0.6} d="M-80 790 C300 740 760 820 1100 770 C1300 742 1420 770 1520 760 V980 H-80 Z" />
-        </g>
-        <g fill="none" stroke={INK} strokeWidth={1.4} strokeLinecap="round">
-          <path className={styles.small} fill="#fffaf0" d="M1060 130 c10-16 34-16 44 0 c10-12 30-8 34 6 c14 0 18 18 4 20 h-92 c-14-2-12-24 10-26 z" />
-          <g className={styles.small}>
-            <path fill="#e9a6a0" d="M520 120 L560 80 L600 120 L560 170 Z" />
-            <path d="M560 170 C550 210 580 240 560 290" />
-            <path d="M556 200 l-10 6 M564 238 l10 4" />
-          </g>
-        </g>
-      </Sky>
-
+    <BookPage label="projects" tone="#f8f4ea" flip>
       <div className={styles.copy}>
         <Title id="projects" title={zh ? "项目" : "Projects"} script="Works" />
         <p className={styles.line}>{zh ? "自己做的几样东西。" : "A few things I've made."}</p>
@@ -226,7 +245,7 @@ function ProjectsPage({ locale, exhibits }: { locale: Locale; exhibits: Exhibit[
         </EraseLink>
       </div>
 
-      <Art drawing={BUILDER} view="0 120 1254 1080" />
+      <Art drawing={BUILDER} view="-120 40 1500 1200" patch={PROJECTS_PATCH} />
     </BookPage>
   );
 }
@@ -236,22 +255,7 @@ function ProjectsPage({ locale, exhibits }: { locale: Locale; exhibits: Exhibit[
 function ThinkPage({ locale, things }: { locale: Locale; things: Thing[] }) {
   const zh = locale === "zh";
   return (
-    <BookPage label="i-think" tone="#f7e3d6">
-      <Sky>
-        <g filter="url(#sb-wash)">
-          <path fill="#f2c2a8" opacity={0.6} d="M-80 -60 H1520 V280 C1200 240 900 320 600 280 C380 250 160 310 -80 270 Z" />
-          <path fill="#f6d9c4" opacity={0.6} d="M-80 260 C260 320 620 250 980 300 C1220 330 1380 290 1520 300 V560 C1200 520 860 590 520 550 C260 520 80 570 -80 540 Z" />
-          <path fill="#d3e4bb" opacity={0.75} d="M-80 700 C260 650 620 720 980 680 C1220 654 1380 690 1520 676 V980 H-80 Z" />
-        </g>
-        <g className={styles.sun}>
-          <circle cx="1260" cy="130" r="54" fill="#f6b97a" filter="url(#sb-fill)" />
-          <circle cx="1260" cy="130" r="54" fill="none" stroke={INK} strokeWidth={1.4} />
-        </g>
-        <g fill="none" stroke={INK} strokeWidth={1.4} strokeLinecap="round">
-          <path className={styles.small} fill="#fffaf0" d="M640 90 c10-16 34-16 44 0 c10-12 30-8 34 6 c14 0 18 18 4 20 h-92 c-14-2-12-24 10-26 z" />
-        </g>
-      </Sky>
-
+    <BookPage label="i-think" tone="#f8f4ea">
       <div className={styles.copy}>
         <Title id="i-think" title={zh ? "我觉得" : "I think"} script="I think" />
         <p className={styles.line}>
@@ -272,7 +276,7 @@ function ThinkPage({ locale, things }: { locale: Locale; things: Thing[] }) {
         </EraseLink>
       </div>
 
-      <Art drawing={CHAT} view="0 160 1254 960" />
+      <Art drawing={CHAT} view="-120 80 1500 1140" patch={THINK_PATCH} />
     </BookPage>
   );
 }
@@ -282,19 +286,7 @@ function ThinkPage({ locale, things }: { locale: Locale; things: Thing[] }) {
 function AboutPage({ locale, role, bio, email, github, x }: { locale: Locale; role: string; bio: string[]; email: string; github: string; x?: string }) {
   const zh = locale === "zh";
   return (
-    <BookPage label="about" tone="#e6e1f1" flip>
-      <Sky>
-        <g filter="url(#sb-wash)">
-          <path fill="#c4bde3" opacity={0.6} d="M-80 -60 H1520 V300 C1200 260 900 340 600 300 C380 270 160 330 -80 290 Z" />
-          <path fill="#f1cfc8" opacity={0.6} d="M-80 300 C260 360 620 290 980 340 C1220 370 1380 330 1520 340 V620 H-80 Z" />
-          <path fill="#a9cfd0" opacity={0.6} d="M-80 640 C260 620 620 660 980 630 C1220 610 1380 640 1520 630 V980 H-80 Z" />
-        </g>
-        <g fill="none" stroke={INK} strokeWidth={1.4} strokeLinecap="round">
-          <path className={styles.small} d="M1180 140 a40 40 0 1 0 30 70 a32 32 0 1 1 -30 -70z" fill="#f6e2a0" />
-          <path stroke={SOFT} strokeWidth={1.1} d="M980 760 h60 M1120 800 h44 M260 790 h70 M140 830 h40" />
-        </g>
-      </Sky>
-
+    <BookPage label="about" tone="#f8f4ea" flip>
       <div className={styles.copy}>
         <Title id="about" title={zh ? "关于" : "About"} script="Hello" />
         <p className={styles.lead}>{role}</p>
@@ -332,7 +324,7 @@ function AboutPage({ locale, role, bio, email, github, x }: { locale: Locale; ro
         </dl>
       </div>
 
-      <Art drawing={LAKE} view="20 160 1234 1000" />
+      <Art drawing={{ ...LAKE, under: [] }} view="-110 60 1490 1170" patch={ABOUT_PATCH} />
     </BookPage>
   );
 }
