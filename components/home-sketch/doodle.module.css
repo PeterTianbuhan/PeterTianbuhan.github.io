@@ -217,3 +217,9 @@
     animation: none !important;
   }
 }
+
+@media print {
+  .corner {
+    display: none;
+  }
+}
