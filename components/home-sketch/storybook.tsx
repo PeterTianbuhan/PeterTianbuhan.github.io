@@ -70,6 +70,10 @@ function Filters() {
 function Head() {
   return (
     <g>
+      {/* the corner one sits on paper, so its forehead and ears were never
+          filled; on a coloured sky they have to be */}
+      <path fill={PAPER} stroke="none" d="M23.5 40 C22 24 30 14 40.5 14 C51 14 59 24 57.2 40 Z" />
+      <path fill={PAPER} stroke="none" d="M23 44 C19.5 44 19.5 51 23.8 51.5 Z M57.2 44 C60.8 44 60.8 51 56.6 51.5 Z" />
       <path fill={PAPER} d="M23.5 40 C22.5 53 30 64.5 40.5 64.5 C51 64.5 58.5 53 57.2 40" />
       <path d="M23 44 C19.5 44 19.5 51 23.8 51.5 M57.2 44 C60.8 44 60.8 51 56.6 51.5" />
       <g fill="#f2b731" stroke="none" opacity={0.8}>
