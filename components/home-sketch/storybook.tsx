@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import type { Locale } from "@/lib/i18n";
 import { EraseLink } from "./eraser";
 import type { Essay } from "./gallery";
+import { WRITER_INK, WRITER_WASHES } from "./cloud-writer-paths";
 import styles from "./storybook.module.css";
 
 // One screen per section under the cover, each a full page of a picture book
@@ -58,6 +59,10 @@ function Filters() {
         <feDisplacementMap in="SourceGraphic" in2="n" scale="7" />
         <feGaussianBlur stdDeviation=".6" />
       </filter>
+      <filter id="sb-wash-fine" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency=".02" numOctaves="2" seed="3" result="n" />
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="10" />
+      </filter>
       <filter id="sb-grain">
         <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="1" />
         <feColorMatrix values="0 0 0 0 .16  0 0 0 0 .16  0 0 0 0 .18  0 0 0 .06 0" />
@@ -66,88 +71,26 @@ function Filters() {
   );
 }
 
-// the same head as the one in the corner, looking down at the page
-function Head() {
-  return (
-    <g>
-      {/* the corner one sits on paper, so its forehead and ears were never
-          filled; on a coloured sky they have to be */}
-      <path fill={PAPER} stroke="none" d="M23.5 40 C22 24 30 14 40.5 14 C51 14 59 24 57.2 40 Z" />
-      <path fill={PAPER} stroke="none" d="M23 44 C19.5 44 19.5 51 23.8 51.5 Z M57.2 44 C60.8 44 60.8 51 56.6 51.5 Z" />
-      <path fill={PAPER} d="M23.5 40 C22.5 53 30 64.5 40.5 64.5 C51 64.5 58.5 53 57.2 40" />
-      <path d="M23 44 C19.5 44 19.5 51 23.8 51.5 M57.2 44 C60.8 44 60.8 51 56.6 51.5" />
-      <g fill="#f2b731" stroke="none" opacity={0.8}>
-        <ellipse cx="28" cy="53" rx="3.4" ry="2" />
-        <ellipse cx="53" cy="53" rx="3.4" ry="2" />
-      </g>
-      <path strokeWidth={1.15} d="M28.5 37.8 Q32.5 36.2 36.5 37.6 M44.5 37.6 Q48.5 36.2 52.5 37.8" />
-      <path strokeWidth={1.15} d="M40.8 49 Q39.6 52.6 41.8 53" />
-      <circle fill={INK} stroke="none" cx="32.8" cy="47.2" r="2.7" />
-      <circle fill={INK} stroke="none" cx="48.8" cy="47.2" r="2.7" />
-      <path strokeWidth={1.15} d="M28.6 45.6 Q32.8 43 37 45.6 M44.6 45.6 Q48.8 43 53 45.6" />
-      <path d="M38.2 57.4 Q40.8 58.8 43.4 57.2" />
-      <circle cx="32.5" cy="44.5" r="7" />
-      <circle cx="48.5" cy="44.5" r="7" />
-      <path d="M39.5 44 Q40.5 42.6 41.5 44 M25.5 43.5 L22.8 43 M55.5 43.5 L57.8 43" />
-      <path
-        fill={INK}
-        strokeWidth={1}
-        d="M22.5 45 C18 38 16.5 29 20 22.5 C19.5 19.5 21 17 23.5 16 C24.5 17.5 25.5 18 27 17.5 C28 13 31 10.5 34.5 10.2 C34.2 11.6 35 12.6 36.5 12.6 C39 9.6 43 8.6 47 9.4 C46.4 10.8 46.8 11.8 48 12.2 C51.5 11.2 55.5 12.4 57.6 14.6 C56.8 15.4 56.6 16.4 57.2 17.2 C59.8 18.4 61.6 20.6 62 23 C61.2 23.2 60.6 23.8 60.6 25 C62.5 30 61.5 38 58 45 C57.5 40 56.5 36 55 34 C54 36.5 52.5 37 51 35.5 C50 33 48.5 31 47 30.5 C46.5 33.5 44.5 35.5 42 35.5 C42.5 33 41.5 31 39.5 30 C38 32.5 35.5 34.5 33 34.5 C34 32 33.5 30.5 32 29.5 C30.5 32.5 28 35 25.5 35.5 C26 33 25.5 31.5 24.5 31 C23.5 36 23 41 22.5 45 Z"
-      />
-      <path stroke={PAPER} strokeWidth={1} opacity={0.7} d="M29 17 C33 14 38 13.5 41 15 M46 15.5 C50 15 53 16.5 55 19 M24 26 C25 23 27 21 29 20" />
-    </g>
-  );
-}
-
-const CLOUD =
-  "M70 300 C40 300 34 262 66 254 C60 222 100 206 124 224 C134 186 190 178 212 206 C232 170 300 168 320 204 C344 176 404 184 410 222 C446 210 482 236 470 266 C508 270 506 312 470 314 C440 336 380 330 360 318 C330 340 262 338 240 322 C210 340 150 336 132 318 C110 330 72 324 70 300 Z";
-
 function Scene() {
   return (
-    <svg className={styles.scene} viewBox="0 0 540 380" aria-hidden fill="none" stroke={INK} strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+    <svg className={styles.scene} viewBox="40 120 1180 1060" aria-hidden>
       {/* pages that slipped off the cloud */}
-      <g className={styles.falling}>
-        <path fill={PAPER} transform="rotate(-18 470 340)" d="M452 326 h34 v26 h-34z" />
-        <path stroke={SOFT} strokeWidth={1} transform="rotate(-18 470 340)" d="M458 334 h20 M458 341 h14" />
-        <path fill={PAPER} transform="rotate(22 60 360)" d="M44 348 h30 v22 h-30z" />
+      <g className={styles.falling} stroke={INK} strokeWidth={3.4} strokeLinejoin="round" strokeLinecap="round">
+        <path fill={PAPER} transform="rotate(-18 1110 1110)" d="M1070 1080 h80 v60 h-80z" />
+        <path fill="none" stroke={SOFT} strokeWidth={2.4} transform="rotate(-18 1110 1110)" d="M1084 1100 h46 M1084 1116 h32" />
+        <path fill={PAPER} transform="rotate(22 150 1130)" d="M116 1104 h68 v50 h-68z" />
       </g>
 
       <g className={styles.drift}>
-        {/* the cloud: a wash first, then the line */}
-        <path filter="url(#sb-fill)" fill="#bcd3e8" stroke="none" transform="translate(6 12)" d={CLOUD} opacity={0.75} />
-        <path fill="#fffaf0" d={CLOUD} />
-        <path stroke={SOFT} strokeWidth={1.1} d="M150 300 C190 310 230 308 262 300 M300 306 C340 312 380 308 410 300" />
-
-        <g transform="translate(270 222) scale(1.3) translate(-270 -222)">
-        {/* a page already written, lying on the cloud */}
-        <path fill={PAPER} d="M346 214 L436 208 L444 238 L352 244 Z" />
-        <path
-          strokeWidth={1.2}
-          d="M360 226 C364 221 367 228 371 223 C375 219 378 226 382 221 C386 217 389 224 393 220 C397 216 400 222 404 218"
-        />
-        <path stroke={SOFT} strokeWidth={1} d="M362 236 h50" />
-
-        {/* shoulders behind the folded arms */}
-        <path filter="url(#sb-fill)" fill="#f1b98a" stroke="none" d="M216 226 C220 206 244 198 268 198 C292 198 318 206 322 226 Z" />
-        <path d="M216 226 C220 206 244 198 268 198 C292 198 318 206 322 226" />
-
-        {/* the head, the same one as in the corner */}
-        <g transform="translate(198 98) scale(1.75)">
-          <Head />
-        </g>
-
-        {/* arms folded on the cloud, chin resting on them */}
-        <path filter="url(#sb-fill)" fill="#f1b98a" stroke="none" d="M228 208 C250 203 290 203 312 208 C318 214 318 226 312 232 C290 236 250 236 228 232 C222 226 222 214 228 208 Z" />
-        <path d="M228 208 C250 203 290 203 312 208 C318 214 318 226 312 232 C290 236 250 236 228 232 C222 226 222 214 228 208 Z" />
-        <path stroke={SOFT} strokeWidth={1.1} d="M268 210 C266 218 266 226 270 232" />
-        <path fill={PAPER} d="M216 226 C212 219 217 212 225 212 C233 213 236 221 233 227 C229 233 219 233 216 226 Z" />
-
-        {/* the right hand holds the pen up, tapping while it thinks */}
-        <g className={styles.pen}>
-          <path fill={INK} strokeWidth={1} d="M318 220 L340 192 L343.5 194.6 L322 222.4 Z" />
-          <path d="M318 220 L316.4 224.4 L322 222.4" />
-        </g>
-        <path fill={PAPER} d="M310 226 C306 219 311 212 319 212 C327 213 330 221 327 227 C323 233 313 233 310 226 Z" />
+        <g transform="translate(0 1254) scale(1 -1)">
+          <g filter="url(#sb-wash-fine)">
+            {WRITER_WASHES.map(([fill, d]) => (
+              <path key={fill + d.length} fill={fill} d={d} />
+            ))}
+          </g>
+          <ellipse cx="400" cy="654" rx="26" ry="14" fill="#f2b731" opacity={0.8} />
+          <ellipse cx="668" cy="656" rx="22" ry="13" fill="#f2b731" opacity={0.8} />
+          <path fill={INK} d={WRITER_INK} />
         </g>
       </g>
     </svg>
