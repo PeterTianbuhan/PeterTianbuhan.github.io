@@ -10,6 +10,7 @@ import {
   type ComponentProps,
   type ReactNode,
 } from "react";
+import { Doodle } from "./doodle";
 import styles from "./eraser.module.css";
 
 // Turning a page in the sketchbook: an eraser scrubs the current page back to
@@ -57,6 +58,7 @@ export function EraserProvider({ children }: { children: ReactNode }) {
   return (
     <EraserContext.Provider value={erase}>
       {children}
+      <Doodle erasing={pass !== null} />
       {pass && (
         <div
           className={styles.veil}

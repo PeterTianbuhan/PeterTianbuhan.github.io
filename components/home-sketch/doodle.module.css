@@ -1,0 +1,219 @@
+/* the little me in the bottom-right corner, see doodle.tsx */
+
+.corner {
+  position: fixed;
+  right: calc(16px + env(safe-area-inset-right, 0px));
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  width: 112px;
+  /* above the eraser's veil, so he can be seen rubbing the page out */
+  z-index: 101;
+}
+
+/* where the page is too narrow to keep him clear of the words, he waits at
+   the end of the page instead of following along */
+@media (max-width: 1159px) {
+  .corner {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 84px;
+    margin: 0 calc(16px + env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) auto;
+  }
+}
+
+.corner svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.pose {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.corner[data-pose="idle"] .idle,
+.corner[data-pose="read"] .read,
+.corner[data-pose="look"] .look,
+.corner[data-pose="wave"] .wave,
+.corner[data-pose="write"] .write,
+.corner[data-pose="erase"] .erase,
+.corner[data-pose="doze"] .doze {
+  opacity: 1;
+}
+
+.cheeks {
+  opacity: 0;
+  mix-blend-mode: multiply;
+  transition: opacity 0.5s ease;
+}
+
+.corner[data-pose="look"] .cheeks,
+.corner[data-pose="wave"] .cheeks {
+  opacity: 0.55;
+}
+
+.bounce {
+  transform-box: view-box;
+  transform-origin: 40px 88px;
+  animation: bounce 0.32s ease-out;
+}
+
+@keyframes bounce {
+  40% {
+    transform: translateY(-2px) scale(1.015, 0.985);
+  }
+}
+
+.blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 5.5s infinite;
+}
+
+@keyframes blink {
+  0%,
+  94%,
+  100% {
+    transform: scaleY(1);
+  }
+  96.5% {
+    transform: scaleY(0.1);
+  }
+}
+
+.head {
+  transform-box: view-box;
+  transform-origin: 40px 66px;
+}
+
+.corner[data-pose="doze"] .head {
+  animation: nod 2.8s ease-in-out infinite;
+}
+
+@keyframes nod {
+  50% {
+    transform: rotate(5deg) translateY(1.5px);
+  }
+}
+
+.writing {
+  transform-box: view-box;
+  animation: write 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes write {
+  from {
+    transform: translate(-3px, 0);
+  }
+  to {
+    transform: translate(3px, -0.8px);
+  }
+}
+
+.inkLine {
+  stroke-dasharray: 1;
+  animation: ink 2.1s linear infinite;
+}
+
+@keyframes ink {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  70%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.rubbing {
+  transform-box: view-box;
+  animation: rub 0.28s ease-in-out infinite alternate;
+}
+
+@keyframes rub {
+  from {
+    transform: translateX(-7px) rotate(-2deg);
+  }
+  to {
+    transform: translateX(5px) rotate(2deg);
+  }
+}
+
+.waving {
+  transform-box: view-box;
+  transform-origin: 56px 78px;
+  animation: wave 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes wave {
+  from {
+    transform: rotate(-9deg);
+  }
+  to {
+    transform: rotate(7deg);
+  }
+}
+
+.zz {
+  animation: zz 2.8s ease-in-out infinite;
+}
+
+.z2 {
+  animation-delay: 1.4s;
+}
+
+@keyframes zz {
+  0% {
+    opacity: 0;
+    transform: translate(0, 4px);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(4px, -6px);
+  }
+}
+
+.hello {
+  position: absolute;
+  right: 92px;
+  bottom: 74px;
+  font-family: var(--font-signature), cursive;
+  font-size: 28px;
+  color: #1f2430;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+}
+
+.corner[data-pose="wave"] .hello {
+  opacity: 1;
+  transform: none;
+}
+
+.hit {
+  position: absolute;
+  inset: 10% 15% 0;
+  padding: 0;
+  border: 0;
+  border-radius: 40%;
+  background: none;
+  cursor: default;
+}
+
+.hit:focus-visible {
+  outline: 1.5px solid #2a2a2e;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .corner * {
+    animation: none !important;
+  }
+}
