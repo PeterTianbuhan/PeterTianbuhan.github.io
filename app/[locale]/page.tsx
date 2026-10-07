@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
-import { Gallery } from "@/components/home-sketch/gallery";
+import { HomeFooter } from "@/components/home-sketch/gallery";
 import { SketchHome } from "@/components/home-sketch/sketch-home";
+import { StoryPages } from "@/components/home-sketch/storybook";
 import { getPostsByLocale } from "@/lib/content";
 import { getExhibits } from "@/lib/exhibits";
 import { getIThink, shelvesIn } from "@/lib/i-think";
@@ -42,7 +43,7 @@ export default async function LocaleHomePage({
           { href: "#about", label: dict.nav.contact },
         ]}
       />
-      <Gallery
+      <StoryPages
         locale={typedLocale}
         things={shelvesIn(notes).flatMap((shelf) => shelf.things)}
         role={site.role}
@@ -61,6 +62,7 @@ export default async function LocaleHomePage({
         github={site.social.github}
         x={site.social.x}
       />
+      <HomeFooter locale={typedLocale} />
     </>
   );
 }

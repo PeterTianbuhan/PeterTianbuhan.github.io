@@ -6,7 +6,6 @@ import type { Exhibit } from "@/lib/exhibits";
 import type { Locale } from "@/lib/i18n";
 import { EraseLink } from "./eraser";
 import { InkFrame, InkRule, Seen } from "./ink";
-import { EssaysScreen } from "./storybook";
 import { Vignette } from "./vignettes";
 import styles from "./gallery.module.css";
 
@@ -20,8 +19,6 @@ export type Essay = {
   featured?: boolean;
 };
 
-// the home page shows the newest few; the rest are a page turn away
-const ON_HOME = 3;
 
 export function Heading({ id, title, script, as: Title = "h2" }: { id?: string; title: string; script: string; as?: "h1" | "h2" }) {
   return (
@@ -126,102 +123,13 @@ export function Wall({ locale, exhibits }: { locale: Locale; exhibits: Exhibit[]
   );
 }
 
-type Props = {
-  locale: Locale;
-  things: { name: string; gist?: string; id: string }[];
-  role: string;
-  bio: string[];
-  essays: Essay[];
-  exhibits: Exhibit[];
-  email: string;
-  github: string;
-  x?: string;
-};
-
-export function Gallery({ locale, things, role, bio, essays, exhibits, email, github, x }: Props) {
-  const zh = locale === "zh";
+// the last line of the home page, on plain paper under the picture book
+export function HomeFooter({ locale }: { locale: Locale }) {
   return (
-    <>
-      <div className={signature.variable}>
-        <EssaysScreen locale={locale} essays={picks(essays)} total={essays.length} />
-      </div>
-      <div className={`${styles.paper} ${signature.variable}`}>
-        <section className={styles.room}>
-          <Heading id="projects" title={zh ? "项目" : "Projects"} script="Works" />
-          <Wall locale={locale} exhibits={exhibits} />
-        </section>
-
-        <section className={styles.room}>
-          <Heading id="i-think" title={zh ? "我觉得" : "I think"} script="I think" />
-          <Seen className={styles.about}>
-            <p className={styles.excerpt}>
-              {zh ? "对模型、工具和别人项目的一些很主观的感觉，改主意了就划掉重写。" : "Very subjective feelings about models, tools and other people's projects, crossed out and rewritten when I change my mind."}
-            </p>
-            <ul className={styles.things}>
-              {things.map((t) => (
-                <li key={t.id}>
-                  <EraseLink href={`/${locale}/i-think/#${t.id}`}>
-                    {t.name}
-                    {t.gist && <span>{t.gist}</span>}
-                  </EraseLink>
-                </li>
-              ))}
-            </ul>
-            <EraseLink href={`/${locale}/i-think/`} className={styles.read}>
-              {zh ? "看看我怎么说" : "Read them"} →
-            </EraseLink>
-          </Seen>
-        </section>
-
-        <section className={styles.room}>
-          <Heading id="about" title={zh ? "关于" : "About"} script="Hello" />
-          <Seen className={styles.about}>
-            <p className={styles.lead}>{role}</p>
-            <div className={styles.bio}>
-              {bio.map((line) => (
-                <p key={line}>{line}</p>
-              ))}
-            </div>
-            <dl className={styles.contact}>
-              <div>
-                <dt>{zh ? "邮箱" : "Email"}</dt>
-                <dd>
-                  <a href={`mailto:${email}`}>{email}</a>
-                </dd>
-              </div>
-              <div>
-                <dt>GitHub</dt>
-                <dd>
-                  <a href={github} target="_blank" rel="noreferrer">
-                    {github.replace(/^https:\/\//, "")}
-                  </a>
-                </dd>
-              </div>
-              {x && (
-                <div>
-                  <dt>X</dt>
-                  <dd>
-                    <a href={x} target="_blank" rel="noreferrer">
-                      {x.replace(/^https:\/\/x\.com\//, "@")}
-                    </a>
-                    <span className={styles.aside}>{zh ? "随手的想法在这里" : "for the passing thoughts"}</span>
-                  </dd>
-                </div>
-              )}
-            </dl>
-          </Seen>
-        </section>
-
-        <Colophon locale={locale} />
-      </div>
-    </>
+    <div className={`${styles.paper} ${styles.footer} ${signature.variable}`}>
+      <Colophon locale={locale} />
+    </div>
   );
-}
-
-// the ones Peter marked as featured; until he marks any, the newest few
-function picks(essays: Essay[]) {
-  const featured = essays.filter((e) => e.featured);
-  return (featured.length > 0 ? featured : essays).slice(0, ON_HOME);
 }
 
 // a page of its own: a running head with the way back, the page, and the last line
