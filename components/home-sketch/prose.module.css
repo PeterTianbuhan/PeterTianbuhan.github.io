@@ -76,7 +76,7 @@
 
 .prose ol > li::marker {
   font-size: 0.9em;
-  color: rgba(42, 42, 46, 0.6);
+  color: rgba(42, 42, 46, 0.66);
 }
 
 .prose li {
@@ -148,7 +148,7 @@
   margin-left: 0.8em;
   font-size: 0.62em;
   letter-spacing: 0.12em;
-  color: rgba(42, 42, 46, 0.5);
+  color: rgba(42, 42, 46, 0.66);
 }
 
 .notes h2 + h3 {
