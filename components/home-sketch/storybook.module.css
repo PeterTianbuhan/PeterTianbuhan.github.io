@@ -131,38 +131,25 @@
   transform: translateX(calc((var(--p) - 0.5) * 70px));
 }
 
-/* the pen keeps writing a line, over and over */
-.script {
-  stroke-dasharray: 1;
-  animation: write 3.2s ease-in-out infinite;
-}
-
+/* the pen taps while he thinks */
 .pen {
-  animation: nib 3.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 8% 92%;
+  animation: tap 2.8s ease-in-out infinite;
 }
 
-@keyframes write {
-  0% {
-    stroke-dashoffset: 1;
+@keyframes tap {
+  0%,
+  60%,
+  100% {
+    transform: rotate(0deg);
   }
   70%,
-  100% {
-    stroke-dashoffset: 0;
+  90% {
+    transform: rotate(-9deg);
   }
-}
-
-@keyframes nib {
-  0% {
-    transform: translate(-44px, 4px);
-  }
-  70% {
-    transform: translate(0, 0);
-  }
-  85% {
-    transform: translate(0, -3px);
-  }
-  100% {
-    transform: translate(-44px, 4px);
+  80% {
+    transform: rotate(2deg);
   }
 }
 
@@ -181,7 +168,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .script,
   .pen {
     animation: none;
   }

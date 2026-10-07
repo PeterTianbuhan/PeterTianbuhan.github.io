@@ -112,40 +112,38 @@ function Scene() {
         {/* the cloud: a wash first, then the line */}
         <path filter="url(#sb-fill)" fill="#bcd3e8" stroke="none" transform="translate(6 12)" d={CLOUD} opacity={0.75} />
         <path fill="#fffaf0" d={CLOUD} />
-        <path stroke={SOFT} strokeWidth={1.1} d="M150 296 C190 306 230 304 262 296 M300 304 C340 310 380 306 410 296" />
+        <path stroke={SOFT} strokeWidth={1.1} d="M150 300 C190 310 230 308 262 300 M300 306 C340 312 380 308 410 300" />
 
-        {/* legs kicked up behind */}
-        <path filter="url(#sb-fill)" fill="#6f8299" stroke="none" opacity={0.85} d="M318 226 L366 220 L360 168 L374 166 L384 230 L322 244 Z" />
-        <path d="M318 226 C340 222 352 222 366 220 L360 168 M384 230 L374 166 M366 220 C372 226 378 230 384 230 M322 244 C345 240 365 236 384 230" />
-        <path fill={PAPER} d="M354 168 C350 158 362 152 372 156 C378 159 376 166 368 168 Z" />
-        <path filter="url(#sb-fill)" fill="#6f8299" stroke="none" opacity={0.85} d="M330 236 L396 228 L404 178 L416 180 L410 238 L334 250 Z" />
-        <path d="M396 228 L404 178 M410 238 L416 180 M334 250 C360 246 390 242 410 238" />
-        <path fill={PAPER} d="M398 178 C396 168 408 164 418 168 C422 172 420 178 414 180 Z" />
-
-        {/* body lying along the cloud, in a wash of shirt */}
-        <path filter="url(#sb-fill)" fill="#f1b98a" stroke="none" d="M196 214 C230 206 290 206 326 216 C334 228 332 242 322 248 C280 254 226 254 196 246 Z" />
-        <path d="M196 214 C230 206 290 206 326 216 C334 228 332 242 322 248 C280 254 226 254 196 246" />
-
-        {/* the page, the arm and the pen */}
-        <path fill={PAPER} d="M118 238 L222 230 L232 262 L124 270 Z" />
+        <g transform="translate(270 222) scale(1.3) translate(-270 -222)">
+        {/* a page already written, lying on the cloud */}
+        <path fill={PAPER} d="M346 214 L436 208 L444 238 L352 244 Z" />
         <path
-          className={styles.script}
-          pathLength={1}
           strokeWidth={1.2}
-          d="M132 256 C136 251 139 258 143 253 C147 249 150 256 154 251 C158 247 161 254 165 250 C169 246 172 252 176 248"
+          d="M360 226 C364 221 367 228 371 223 C375 219 378 226 382 221 C386 217 389 224 393 220 C397 216 400 222 404 218"
         />
-        <path stroke={SOFT} strokeWidth={1} d="M134 246 h40 M140 263 h30" />
-        <path filter="url(#sb-fill)" fill="#f1b98a" stroke="none" d="M206 224 C214 236 212 250 196 256 L188 248 C198 244 200 236 198 228 Z" />
-        <path d="M206 224 C214 236 212 250 196 256 M198 228 C200 236 198 244 188 248" />
-        <path fill={PAPER} d="M182 252 C178 246 184 240 192 242 C198 244 198 252 192 255 C188 256 184 255 182 252 Z" />
-        <g className={styles.pen}>
-          <path fill={INK} strokeWidth={1} d="M178 252 L196 226 L199.5 228.4 L182 254.6 Z" />
-          <path d="M178 252 L176.6 256.4 L182 254.6" />
+        <path stroke={SOFT} strokeWidth={1} d="M362 236 h50" />
+
+        {/* shoulders behind the folded arms */}
+        <path filter="url(#sb-fill)" fill="#f1b98a" stroke="none" d="M216 226 C220 206 244 198 268 198 C292 198 318 206 322 226 Z" />
+        <path d="M216 226 C220 206 244 198 268 198 C292 198 318 206 322 226" />
+
+        {/* the head, the same one as in the corner */}
+        <g transform="translate(198 98) scale(1.75)">
+          <Head />
         </g>
 
-        {/* head propped up over the page */}
-        <g transform="translate(150 150) scale(1.35)">
-          <Head />
+        {/* arms folded on the cloud, chin resting on them */}
+        <path filter="url(#sb-fill)" fill="#f1b98a" stroke="none" d="M228 208 C250 203 290 203 312 208 C318 214 318 226 312 232 C290 236 250 236 228 232 C222 226 222 214 228 208 Z" />
+        <path d="M228 208 C250 203 290 203 312 208 C318 214 318 226 312 232 C290 236 250 236 228 232 C222 226 222 214 228 208 Z" />
+        <path stroke={SOFT} strokeWidth={1.1} d="M268 210 C266 218 266 226 270 232" />
+        <path fill={PAPER} d="M216 226 C212 219 217 212 225 212 C233 213 236 221 233 227 C229 233 219 233 216 226 Z" />
+
+        {/* the right hand holds the pen up, tapping while it thinks */}
+        <g className={styles.pen}>
+          <path fill={INK} strokeWidth={1} d="M318 220 L340 192 L343.5 194.6 L322 222.4 Z" />
+          <path d="M318 220 L316.4 224.4 L322 222.4" />
+        </g>
+        <path fill={PAPER} d="M310 226 C306 219 311 212 319 212 C327 213 330 221 327 227 C323 233 313 233 310 226 Z" />
         </g>
       </g>
     </svg>
@@ -173,7 +171,7 @@ export function EssaysScreen({ locale, essays, total }: { locale: Locale; essays
         <g fill="none" stroke={INK} strokeWidth={1.4} strokeLinecap="round">
           <path className={styles.small} fill="#fffaf0" d="M160 140 c10-16 34-16 44 0 c10-12 30-8 34 6 c14 0 18 18 4 20 h-92 c-14-2-12-24 10-26 z" />
           <path className={styles.small} fill="#fffaf0" d="M760 96 c8-12 26-12 34 0 c8-9 23-6 26 5 c11 0 14 14 3 15 h-70 c-11-1-9-18 7-20 z" />
-          <path d="M1000 330 q9-7 18 0 q9-7 18 0 M1060 360 q6-5 12 0 q6-5 12 0" />
+          <path d="M1160 420 q9-7 18 0 q9-7 18 0 M1215 448 q6-5 12 0 q6-5 12 0" />
           {/* a paper plane, folded from one of the pages */}
           <g className={styles.small} transform="rotate(-10 380 120)">
             <path fill="#fffaf0" d="M340 130 L420 104 L376 140 Z" />
