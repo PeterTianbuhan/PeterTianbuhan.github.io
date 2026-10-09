@@ -99,6 +99,8 @@
   gap: clamp(36px, 6vh, 56px);
 }
 
+.essays + .essays { margin-top: clamp(36px, 6vh, 56px); }
+
 .essayBody {
   padding-top: 22px;
   opacity: 0;

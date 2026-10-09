@@ -126,3 +126,16 @@ export function IThinkPage({ locale, source }: { locale: Locale; source: string 
     </PageShell>
   );
 }
+
+// 生活太极拳 · 每日一式: small habits, one line each, added to the end as they come
+export function DailyPage({ locale, source }: { locale: Locale; source: string }) {
+  const zh = locale === "zh";
+  return (
+    <PageShell locale={locale} other={`/${zh ? "en" : "zh"}/daily/`}>
+      <article className={styles.reading}>
+        <Heading as="h1" title={zh ? "每日一式" : "One move a day"} script="Everyday tai chi" />
+        <Prose source={source} />
+      </article>
+    </PageShell>
+  );
+}

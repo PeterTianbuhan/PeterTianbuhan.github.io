@@ -19,8 +19,17 @@ export type Essay = {
   featured?: boolean;
 };
 
-
-export function Heading({ id, title, script, as: Title = "h2" }: { id?: string; title: string; script: string; as?: "h1" | "h2" }) {
+export function Heading({
+  id,
+  title,
+  script,
+  as: Title = "h2",
+}: {
+  id?: string;
+  title: string;
+  script: string;
+  as?: "h1" | "h2";
+}) {
   return (
     <Seen className={styles.heading}>
       <Title id={id}>{title}</Title>
@@ -181,6 +190,22 @@ export function EssaysPage({ locale, essays }: { locale: Locale; essays: Essay[]
       <section className={styles.room}>
         <Heading as="h1" title={zh ? "长文" : "Essays"} script="Essays" />
         <EssayList locale={locale} essays={essays} />
+        <div className={styles.essays}>
+          <Seen as="article" className={styles.essay}>
+            <InkRule seed="daily" />
+            <div className={styles.essayBody}>
+              <h3>
+                <EraseLink href={`/${locale}/daily/`}>{zh ? "每日一式" : "One move a day"}</EraseLink>
+              </h3>
+              <p className={styles.excerpt}>
+                {zh ? "一行一个小习惯，想到就加。" : "Small habits, one per line, added as they come."}
+              </p>
+              <EraseLink href={`/${locale}/daily/`} className={styles.read}>
+                {zh ? "看清单" : "See the list"} →
+              </EraseLink>
+            </div>
+          </Seen>
+        </div>
       </section>
     </PageShell>
   );
