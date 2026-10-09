@@ -3,6 +3,7 @@ import type { Exhibit } from "@/lib/exhibits";
 import { shelvesIn } from "@/lib/i-think";
 import type { Locale } from "@/lib/i18n";
 import { getWritingSeries } from "@/lib/writing-series";
+import { ChapterArt, hasChapterArt } from "./chapter-art";
 import { EraseLink } from "./eraser";
 import { Heading, PageShell } from "./gallery";
 import { InkFrame, InkRule, Seen } from "./ink";
@@ -31,7 +32,11 @@ export function SketchArticle({
   return (
     <PageShell locale={locale} other={other}>
       <article className={styles.reading}>
-        <Seen as="header" className={styles.readingHead}>
+        <Seen
+          as="header"
+          className={`${styles.readingHead} ${hasChapterArt(post.meta.translationKey) ? styles.chapterHead : ""}`}
+        >
+          <ChapterArt id={post.meta.translationKey} />
           <p className={styles.label}>
             {series && <span>{series.title}</span>}
             <time dateTime={post.meta.publishedAt}>{post.meta.publishedAtLabel}</time>

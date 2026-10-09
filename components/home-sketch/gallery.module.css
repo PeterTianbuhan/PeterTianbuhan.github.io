@@ -414,6 +414,25 @@
   margin-bottom: clamp(40px, 7vh, 64px);
 }
 
+/* an essay with a chapter picture opens like a picture-book chapter: the
+   picture sits above the title, wider than the text column */
+.chapterHead {
+  max-width: none;
+}
+
+.chapterHead > :not(.chapterArt) {
+  max-width: 36em;
+}
+
+.chapterArt {
+  display: block;
+  width: 100%;
+  max-width: 820px;
+  max-height: 44svh;
+  height: auto;
+  margin: 0 0 clamp(16px, 3vh, 36px) -12px;
+}
+
 .readingHead h1,
 .projectFacts h1 {
   margin: 0 0 18px;
