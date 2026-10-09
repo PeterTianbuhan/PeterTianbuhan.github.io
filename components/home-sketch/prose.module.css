@@ -121,6 +121,16 @@
   height: auto;
 }
 
+.prose :global(.katex-display) {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.3em 0;
+}
+
+.prose :global(.katex-display > .katex) {
+  text-align: left;
+}
+
 .prose table {
   display: block;
   overflow-x: auto;

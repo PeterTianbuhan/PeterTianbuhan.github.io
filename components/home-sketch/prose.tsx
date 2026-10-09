@@ -1,6 +1,9 @@
 import type { ReactNode } from "react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
 import { splitThing } from "@/lib/i-think";
 import { InkBreak, InkHeading, InkStrike } from "./ink";
 import styles from "./prose.module.css";
@@ -45,7 +48,7 @@ const components = { h2: InkHeading, h3: Thing, hr: InkBreak, del: InkStrike };
 export function Prose({ source, className }: { source: string; className?: string }) {
   return (
     <div className={`${styles.prose} ${className ?? ""}`}>
-      <MDXRemote source={source} components={components} options={{ mdxOptions: { remarkPlugins: [remarkGfm, numberSections] } }} />
+      <MDXRemote source={source} components={components} options={{ mdxOptions: { remarkPlugins: [remarkGfm, remarkMath, numberSections], rehypePlugins: [[rehypeKatex, { strict: false }]] } }} />
     </div>
   );
 }
