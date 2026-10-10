@@ -1,0 +1,8 @@
+1:"$Sreact.fragment"
+2:I[75152,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0d3shmwh5_nmn.js","/_next/static/chunks/0hgnuhfhd71n8.js","/_next/static/chunks/0pu6xgl0t.okr.js"],"PageShell"]
+3:I[75152,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0d3shmwh5_nmn.js","/_next/static/chunks/0hgnuhfhd71n8.js","/_next/static/chunks/0pu6xgl0t.okr.js"],"Heading"]
+4:I[97367,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+:HL["/_next/static/chunks/0n3g8u-gvnak7.css","style"]
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"locale":"en","other":"/zh/daily/","children":["$","article",null,{"className":"gallery-module__3h_Zma__reading","children":[["$","$L3",null,{"as":"h1","title":"One move a day","script":"Everyday tai chi"}],["$","div",null,{"className":"prose-module__31PT3q__prose ","children":["$","ol",null,{"children":["\n",["$","li",null,{"children":"No phone in bed"}],"\n"]}]}]]}]}],[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0n3g8u-gvnak7.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/0pu6xgl0t.okr.js","async":true}]],["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"-m11H3U0xb0ycttpV8-SP"}
+6:null
