@@ -28,7 +28,6 @@ export function SketchArticle({
 }) {
   const zh = locale === "zh";
   const series = getWritingSeries(post.meta.series, locale);
-  const minutes = Math.max(1, Math.ceil(post.content.replace(/https?:\/\/\S+/g, "").length / (zh ? 420 : 1100)));
   return (
     <PageShell locale={locale} other={other}>
       <article className={styles.reading}>
@@ -40,7 +39,6 @@ export function SketchArticle({
           <p className={styles.label}>
             {series && <span>{series.title}</span>}
             <time dateTime={post.meta.publishedAt}>{post.meta.publishedAtLabel}</time>
-            <span>{zh ? `约 ${minutes} 分钟` : `${minutes} min read`}</span>
             {post.meta.preview && <span className={styles.draft}>{zh ? "草稿" : "draft"}</span>}
           </p>
           <h1>{post.meta.title}</h1>

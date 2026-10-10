@@ -52,12 +52,11 @@ export function EssayList({ locale, essays }: { locale: Locale; essays: Essay[] 
   }
   return (
     <div className={styles.essays}>
-      {essays.map((essay, i) => (
+      {essays.map((essay) => (
         <Seen as="article" key={essay.href} className={styles.essay}>
           <InkRule seed={essay.href} />
           <div className={styles.essayBody}>
             <p className={styles.label}>
-              <span>No. {String(i + 1).padStart(2, "0")}</span>
               <span>{essay.date}</span>
               {essay.series && <span>{essay.series}</span>}
               {essay.draft && <span className={styles.draft}>{zh ? "草稿" : "draft"}</span>}
@@ -66,9 +65,6 @@ export function EssayList({ locale, essays }: { locale: Locale; essays: Essay[] 
               <EraseLink href={essay.href}>{essay.title}</EraseLink>
             </h3>
             <p className={styles.excerpt}>{essay.excerpt}</p>
-            <EraseLink href={essay.href} className={styles.read}>
-              {zh ? "读这篇" : "Read"} →
-            </EraseLink>
           </div>
         </Seen>
       ))}
@@ -76,13 +72,13 @@ export function EssayList({ locale, essays }: { locale: Locale; essays: Essay[] 
   );
 }
 
-export function Colophon({ locale }: { locale: Locale }) {
+export function Colophon() {
   return (
     <Seen as="footer" className={styles.colophon}>
       <InkRule seed="colophon" />
       <p>
         <span className={styles.sign}>Peter</span>
-        <span>{locale === "zh" ? "这本速写本还在慢慢画。" : "This sketchbook is still being drawn."}</span>
+        <span>To be continued</span>
       </p>
     </Seen>
   );
@@ -133,10 +129,10 @@ export function Wall({ locale, exhibits }: { locale: Locale; exhibits: Exhibit[]
 }
 
 // the last line of the home page, on plain paper under the picture book
-export function HomeFooter({ locale }: { locale: Locale }) {
+export function HomeFooter() {
   return (
     <div className={`${styles.paper} ${styles.footer} ${signature.variable}`}>
-      <Colophon locale={locale} />
+      <Colophon />
     </div>
   );
 }
@@ -177,7 +173,7 @@ export function PageShell({
         </nav>
       </header>
       {children}
-      <Colophon locale={locale} />
+      <Colophon />
     </div>
   );
 }
@@ -200,9 +196,6 @@ export function EssaysPage({ locale, essays }: { locale: Locale; essays: Essay[]
               <p className={styles.excerpt}>
                 {zh ? "一行一个小习惯，想到就加。" : "Small habits, one per line, added as they come."}
               </p>
-              <EraseLink href={`/${locale}/daily/`} className={styles.read}>
-                {zh ? "看清单" : "See the list"} →
-              </EraseLink>
             </div>
           </Seen>
         </div>

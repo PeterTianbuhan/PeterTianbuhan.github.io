@@ -62,7 +62,7 @@ export default async function LocaleHomePage({
         github={site.social.github}
         x={site.social.x}
       />
-      <HomeFooter locale={typedLocale} />
+      <HomeFooter />
     </>
   );
 }
