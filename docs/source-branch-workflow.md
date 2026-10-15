@@ -48,7 +48,7 @@ After the wrapper commits, pushes, and opens the draft PR, PR evidence must incl
 Source branch:
 
 - `app/`, `components/`, `content/`, `lib/`
-- `docs/`, `scripts/`, `templates/`
+- `docs/`, `scripts/`
 - `package.json`, lockfiles, TypeScript, ESLint, and Next.js config
 
 Main branch:

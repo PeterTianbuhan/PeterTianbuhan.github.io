@@ -13,7 +13,7 @@ lib/                      content.ts 长文，exhibits.ts 项目，i-think.ts �
                           i18n.ts 中英文案，writing-series.ts 系列
 content/                  blog/ 长文（从 vault 同步），projects/ 项目正文，i-think/ 「我觉得」
 app/fonts/                签名字体
-scripts/ templates/       发布链路：publish-from-vault、sync-vault-*、verify-*、prepare-github-pages、*-intake
+scripts/                  发布链路：publish-from-vault、sync-vault-articles、verify-*、prepare-github-pages
 docs/                     工作流说明；tried.md 记录试过但没用上的方向；storybook-screens.md 首页绘本页怎么加
 scripts/storybook/        绘本页的画：线稿原图、上色配置和描线脚本
 .github/                  publish-site.yml：push 到 source → 构建 → 发布到 main
@@ -34,4 +34,4 @@ npm run lint
 - `source`：源码和内容。push 到这里会自动构建并上线。
 - `main`：GitHub Pages 的静态产物，由 workflow 写入，不要手改。
 
-长文的真实来源是私有的 life vault，`content/blog/**` 是同步出来的副本（`source: homepage` 的几篇是直接写在这里的）。随想的同步链路还在 CI 里跑，但网站目前不展示随想。
+长文的真实来源是私有的 life vault，`content/blog/**` 是同步出来的副本（`source: homepage` 的几篇是直接写在这里的）。随想发在 X 上，网站只放一个链接，不再同步。

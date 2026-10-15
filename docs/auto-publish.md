@@ -6,12 +6,6 @@ For normal article edits, prefer the automatic workflow in `.github/workflows/pu
 
 ## Commands
 
-If you are adding a new article, write it first:
-
-```bash
-npm run post:intake -- ./templates/post-intake.template.json
-```
-
 Check that every live route has a single source MDX file:
 
 ```bash
@@ -29,8 +23,6 @@ Then prepare the final GitHub Pages bundle:
 ```bash
 npm run publish:bundle
 ```
-
-If the target post already exists, add `--force` to the `post:intake` step.
 
 ## What it does
 

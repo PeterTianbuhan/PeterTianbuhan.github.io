@@ -21,7 +21,7 @@
 ## 流程
 
 - 在 `source` 分支工作。push 到 `source` 就会上线，push 前先问 Peter。commit 也等他说了再做。
-- 改完跑 `npm run build` 和 `npm run lint`。改到发布脚本的话，再跑 `npm run workflow:check`、`articles:check`、`thoughts:check`。
+- 改完跑 `npm run build` 和 `npm run lint`。改到发布脚本的话，再跑 `npm run workflow:check` 和 `articles:check`。
 - 长文正文以 vault 为准，`content/blog/` 一般不要手改。
 - 如果 push 之后没有触发 Publish Site（用 `gh run list` 看），运行 `gh workflow run publish-site.yml --ref source`。
 
