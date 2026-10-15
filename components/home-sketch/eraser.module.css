@@ -15,7 +15,7 @@
 }
 
 .veil[data-clearing="true"] {
-  animation: lift 0.35s ease both;
+  animation: lift 0.22s ease both;
 }
 
 .rub {
@@ -25,7 +25,7 @@
   stroke-linejoin: round;
   stroke-dasharray: 1 1;
   stroke-dashoffset: 1;
-  animation: rub 1.05s cubic-bezier(0.45, 0.1, 0.55, 0.9) both;
+  animation: rub 0.62s cubic-bezier(0.45, 0.1, 0.55, 0.9) both;
 }
 
 .eraser {
@@ -35,11 +35,11 @@
   offset-rotate: 0deg;
   offset-anchor: 45% 70%;
   filter: drop-shadow(2px 3px 0 rgba(42, 42, 46, 0.08));
-  animation: follow 1.05s cubic-bezier(0.45, 0.1, 0.55, 0.9) both;
+  animation: follow 0.62s cubic-bezier(0.45, 0.1, 0.55, 0.9) both;
 }
 
 .veil[data-covered="true"] .eraser {
-  animation: follow 1.05s cubic-bezier(0.45, 0.1, 0.55, 0.9) both, away 0.25s ease 1.05s both;
+  animation: follow 0.62s cubic-bezier(0.45, 0.1, 0.55, 0.9) both, away 0.18s ease 0.62s both;
 }
 
 .eraser svg {

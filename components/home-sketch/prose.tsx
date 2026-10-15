@@ -42,8 +42,12 @@ function Thing({ id, children, "data-gist": gist }: { id?: string; children?: Re
   );
 }
 
-// ~~words~~ are crossed out by hand
-const components = { h2: InkHeading, h3: Thing, hr: InkBreak, del: InkStrike };
+function Aside({ children }: { children?: ReactNode }) {
+  return <aside className={styles.asideNote}>{children}</aside>;
+}
+
+// ~~words~~ are crossed out by hand; <Aside> leaves a slanted note in the margin
+const components = { h2: InkHeading, h3: Thing, hr: InkBreak, del: InkStrike, Aside };
 
 export function Prose({ source, className }: { source: string; className?: string }) {
   return (

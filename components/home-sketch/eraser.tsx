@@ -22,7 +22,7 @@ const EraserContext = createContext<(href: string) => void>(() => {});
 
 // back and forth down the page, each pass a little lower than the last
 function scrub(w: number, h: number) {
-  const rows = w < 700 ? 6 : 5;
+  const rows = w < 700 ? 5 : 4;
   const band = h / rows;
   const pts: string[] = [];
   for (let i = 0; i < rows; i++) {
@@ -80,7 +80,7 @@ export function EraserProvider({ children }: { children: ReactNode }) {
               d={pass.d}
               pathLength={1}
               className={styles.rub}
-              strokeWidth={pass.band * 1.6}
+              strokeWidth={pass.band * 1.75}
               filter="url(#rubbed)"
               onAnimationEnd={() => {
                 setPass((p) => (p ? { ...p, covered: true } : p));

@@ -110,7 +110,7 @@ export function InkRule({ seed, delay = 0, reach = false }: { seed: string; dela
     <div ref={ref} className={styles.rule} aria-hidden>
       {w > 0 && (
         <svg className={styles.ink} width={w} height={12}>
-          <path d={stroke(r, [0, 6], [w - tail, 6 + (r() - 0.5) * 3], 2.4)} pathLength={1} style={timing(delay, 0.9)} />
+          <path d={stroke(r, [0, 6], [w - tail, 6 + (r() - 0.5) * 3], 2.4)} pathLength={1} style={timing(delay, 0.6)} />
         </svg>
       )}
     </div>
@@ -142,7 +142,7 @@ export function InkFrame({
     stroke(r, [w + o(), h + j()], [-o(), h + j()], 2.2),
     stroke(r, [j(), h + o()], [j(), -o()], 2.2),
   ] : [];
-  const lead = hung ? 0.55 : 0;
+  const lead = hung ? 0.38 : 0;
   const nail: Pt = [w / 2 + j(), -56];
   return (
     <div ref={ref} className={`${styles.frame} ${className ?? ""}`}>
@@ -155,18 +155,18 @@ export function InkFrame({
                   d={`M${f(nail[0] - w * 0.26)},0 L${f(nail[0])},${nail[1]} L${f(nail[0] + w * 0.26)},0`}
                   pathLength={1}
                   className={styles.string}
-                  style={timing(delay, 0.5)}
+                  style={timing(delay, 0.35)}
                 />
-                <circle cx={nail[0]} cy={nail[1]} r={2.4} style={timing(delay, 0.2)} />
+                <circle cx={nail[0]} cy={nail[1]} r={2.4} style={timing(delay, 0.16)} />
               </>
             )}
             {sides.map((d, i) => (
-              <path key={i} d={d} pathLength={1} style={timing(delay + lead + i * 0.26, 0.42)} />
+              <path key={i} d={d} pathLength={1} style={timing(delay + lead + i * 0.18, 0.3)} />
             ))}
           </g>
         </svg>
       )}
-      <div className={styles.inside} style={{ "--after": `${delay + lead + 0.9}s` } as CSSProperties}>
+      <div className={styles.inside} style={{ "--after": `${delay + lead + 0.6}s` } as CSSProperties}>
         {children}
       </div>
     </div>

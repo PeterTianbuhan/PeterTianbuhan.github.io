@@ -8,7 +8,8 @@ import styles from "./gallery.module.css";
 type Line = { d: string; t: number; dur?: number };
 type Tint = { d: string; fill: string; t: number };
 
-const at = (t: number, dur = 0.4) => ({ "--t": `${t}s`, "--d": `${dur}s` }) as CSSProperties;
+const PACE = 0.7;
+const at = (t: number, dur = 0.4) => ({ "--t": `${t * PACE}s`, "--d": `${dur * PACE}s` }) as CSSProperties;
 
 const drawings: Record<Exhibit["slug"], { lines: Line[]; tints: Tint[]; extra?: (t: number) => React.ReactNode }> = {
   // a laptop playing back a lecture, subtitles under the picture, course files stacked beside it

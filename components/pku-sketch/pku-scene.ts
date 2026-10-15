@@ -392,8 +392,8 @@ const WALL = "M1360,392 L1430,378 L1466,394 L1458,412 L1485,414 L1480,560 L1384,
   washes.push({ d: "M1450,140 m-34,0 a34,34 0 1,0 68,0 a34,34 0 1,0 -68,0", color: "#ffd35c", t: 17.0, dur: 0.3, box: [1410, 100, 1490, 180], opacity: 0.95 });
 }
 
-// the times above are the drawing at a leisurely pace; it plays twice as fast
-const PACE = 0.5;
+// the times above are the drawing at a leisurely pace; it plays briskly
+const PACE = 0.35;
 for (const x of [...strokes, ...washes, ...streaks]) {
   x.t *= PACE;
   x.dur *= PACE;

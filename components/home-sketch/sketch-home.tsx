@@ -18,7 +18,7 @@ type Props = {
 
 const SEEN = "home-sketch-seen";
 // the signature goes on while the seal is being stamped
-const SIGN_AT = DONE_AT - 1.4;
+const SIGN_AT = DONE_AT - 1.1;
 
 export function SketchHome({ locale, name, role, nav }: Props) {
   const [finished, setFinished] = useState(false);
@@ -37,12 +37,12 @@ export function SketchHome({ locale, name, role, nav }: Props) {
     const id = window.setTimeout(() => {
       sessionStorage.setItem(SEEN, "1");
       setDone(true);
-    }, (SIGN_AT + 2.4) * 1000);
+    }, (SIGN_AT + 1.6) * 1000);
     return () => window.clearTimeout(id);
   }, [run]);
 
   const other = locale === "zh" ? { href: "/en/", label: "EN" } : { href: "/zh/", label: "中" };
-  const timing = { "--sign": `${SIGN_AT}s`, "--after": `${SIGN_AT + 2.2}s` } as CSSProperties;
+  const timing = { "--sign": `${SIGN_AT}s`, "--after": `${SIGN_AT + 1.4}s` } as CSSProperties;
 
   return (
     <main

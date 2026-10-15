@@ -72,7 +72,7 @@ export function ProjectDetail({ locale, piece, body }: { locale: Locale; piece: 
       <article className={styles.reading}>
         <Seen as="header" className={styles.projectHead}>
           <InkFrame seed={`detail:${piece.slug}`} hung className={styles.canvas}>
-            <Vignette slug={piece.slug} delay={1.7} />
+            <Vignette slug={piece.slug} delay={1.1} />
           </InkFrame>
           <div className={styles.projectFacts}>
             <p className={styles.label}>

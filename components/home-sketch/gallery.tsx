@@ -92,7 +92,7 @@ function Piece({ locale, piece, flip }: { locale: Locale; piece: Exhibit; flip: 
     <Seen as="article" className={`${styles.piece} ${flip ? styles.flip : ""}`}>
       <InkFrame seed={piece.slug} hung className={styles.canvas}>
         <EraseLink href={href} className={styles.canvasLink} aria-label={piece.name}>
-          <Vignette slug={piece.slug} delay={1.7} />
+          <Vignette slug={piece.slug} delay={1.1} />
         </EraseLink>
       </InkFrame>
       <div className={styles.placard}>

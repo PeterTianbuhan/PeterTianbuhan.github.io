@@ -91,7 +91,7 @@ export function Doodle({ erasing }: { erasing: boolean }) {
     const t = setTimeout(() => {
       s.drawing = false;
       update.current();
-    }, 2600);
+    }, 1800);
     return () => clearTimeout(t);
   }, [pathname]);
 
