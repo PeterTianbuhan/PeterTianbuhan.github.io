@@ -26,6 +26,16 @@ export const writingSeries: WritingSeries[] = [{
     title: "How I Understand Agents",
     description: "How I use agents, their relationship with models, thoughts on building them, and how I imagine the future of intelligence.",
   },
+}, {
+  id: "reading-papers",
+  zh: {
+    title: "读论文",
+    description: "每天读几篇论文，和 AI 一起从原文读起，记下搞懂的东西和自己的看法。",
+  },
+  en: {
+    title: "Reading Papers",
+    description: "A few papers a day, read from the source together with AI, with what I understood and what I think.",
+  },
 }];
 
 export function getWritingSeries(id: string | undefined, locale: Locale) {
