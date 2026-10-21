@@ -100,7 +100,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           git worktree add ../publish-main origin/main
-          rsync -a --delete --exclude ".git" "$PUBLISH_DIR"/ ../publish-main/
+          # compare by content: a rebuilt page can keep the same size and timestamp
+          rsync -a --checksum --delete --exclude ".git" "$PUBLISH_DIR"/ ../publish-main/
 
           cd ../publish-main
           if [ -z "$(git status --porcelain)" ]; then
