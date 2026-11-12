@@ -5,6 +5,8 @@
   background: #f8f4ea;
   color: #2a2a2e;
   font-family: var(--font-serif);
+  /* a ruled line between things in a list, pulled by hand rather than printed */
+  --pen-line: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='6'%3E%3Cpath d='M0,3 Q40,1.7 80,3 T160,3.1 T240,2.9 T320,3' fill='none' stroke='%232a2a2e' stroke-opacity='.72' stroke-width='1.25' stroke-linecap='round'/%3E%3C/svg%3E");
   padding: clamp(72px, 12vh, 140px) clamp(24px, 7vw, 120px) clamp(96px, 18vh, 180px);
 }
 
@@ -127,9 +129,9 @@
   flex-wrap: wrap;
   gap: 6px 18px;
   margin: 0 0 12px;
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.18em;
-  color: rgba(42, 42, 46, 0.66);
+  color: #4a5f86;
 }
 
 .draft {
@@ -149,7 +151,7 @@
   max-width: 44em;
   font-size: 15px;
   line-height: 1.95;
-  color: rgba(42, 42, 46, 0.78);
+  color: rgba(42, 42, 46, 0.9);
 }
 
 .read,
@@ -193,7 +195,7 @@
 .empty > p {
   margin: 22px 0 0;
   opacity: 0;
-  color: rgba(42, 42, 46, 0.66);
+  color: #4a5f86;
   letter-spacing: 0.16em;
 }
 
@@ -350,7 +352,7 @@
   margin: 0 0 14px;
   font-size: 15px;
   line-height: 1.95;
-  color: rgba(42, 42, 46, 0.82);
+  color: rgba(42, 42, 46, 0.9);
 }
 
 .contact {
@@ -366,9 +368,9 @@
 }
 
 .contact dt {
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.18em;
-  color: rgba(42, 42, 46, 0.66);
+  color: #4a5f86;
 }
 
 .contact dd {
@@ -381,7 +383,7 @@
 
 .aside {
   font-size: 13px;
-  color: rgba(42, 42, 46, 0.66);
+  color: #4a5f86;
 }
 
 /* ---- a page of its own: a small running head instead of the sketch ---- */
@@ -444,7 +446,7 @@
   margin: 0 0 28px;
   font-size: 15.5px;
   line-height: 1.95;
-  color: rgba(42, 42, 46, 0.68);
+  color: rgba(42, 42, 46, 0.9);
 }
 
 .projectHead {
@@ -542,7 +544,7 @@
   margin: 18px 0 0;
   font-size: 13px;
   letter-spacing: 0.14em;
-  color: rgba(42, 42, 46, 0.66);
+  color: #4a5f86;
   opacity: 0;
 }
 
@@ -654,7 +656,7 @@
 /* crossed-out words: the text fades a little and the pen goes through it */
 .strike {
   text-decoration: none;
-  color: rgba(42, 42, 46, 0.66);
+  color: #4a5f86;
 }
 
 .strikeInk {
@@ -688,9 +690,9 @@
 .thingsIndex a span {
   display: block;
   margin-top: 2px;
-  font-size: 12.5px;
+  font-size: 13px;
   letter-spacing: 0.12em;
-  color: rgba(42, 42, 46, 0.66);
+  color: #4a5f86;
 }
 
 /* the "I think" page: the notes, with an index of names in the right margin */
@@ -720,7 +722,7 @@
   border-left: 1.5px solid transparent;
   font-size: 14.5px;
   line-height: 1.35;
-  color: rgba(42, 42, 46, 0.66);
+  color: #4a5f86;
   transition: color 0.3s, border-color 0.3s;
 }
 
@@ -730,7 +732,7 @@
 }
 
 .thingsIndex a span {
-  font-size: 11.5px;
+  font-size: 12.5px;
 }
 
 @media (max-width: 1000px) {
