@@ -225,3 +225,11 @@
     transform: none;
   }
 }
+
+/* fun facts: the line under each entry's title is its date */
+.facts h3 + p {
+  margin: -0.4em 0 0.9em;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: rgba(42, 42, 46, 0.6);
+}

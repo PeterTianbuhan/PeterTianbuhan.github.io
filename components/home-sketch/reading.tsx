@@ -3,9 +3,9 @@ import type { Exhibit } from "@/lib/exhibits";
 import { shelvesIn } from "@/lib/i-think";
 import type { Locale } from "@/lib/i18n";
 import { getWritingSeries } from "@/lib/writing-series";
-import { ChapterArt, hasChapterArt } from "./chapter-art";
 import { EraseLink } from "./eraser";
 import { Heading, PageShell } from "./gallery";
+import { Motif, motifFor } from "./garden";
 import { InkFrame, InkRule, Seen } from "./ink";
 import { Prose } from "./prose";
 import { ThingsIndex } from "./things-index";
@@ -31,11 +31,8 @@ export function SketchArticle({
   return (
     <PageShell locale={locale} other={other}>
       <article className={styles.reading}>
-        <Seen
-          as="header"
-          className={`${styles.readingHead} ${hasChapterArt(post.meta.translationKey) ? styles.chapterHead : ""}`}
-        >
-          <ChapterArt id={post.meta.translationKey} />
+        <Seen as="header" className={styles.readingHead}>
+          <Motif name={motifFor(post.meta.translationKey ?? post.slug)} className={styles.headMotif} />
           <p className={styles.label}>
             {series && <span>{series.title}</span>}
             <time dateTime={post.meta.publishedAt}>{post.meta.publishedAtLabel}</time>
@@ -106,7 +103,7 @@ export function IThinkPage({ locale, source }: { locale: Locale; source: string 
   return (
     <PageShell locale={locale} other={`/${zh ? "en" : "zh"}/i-think/`}>
       <article className={styles.reading}>
-        <Heading as="h1" title={zh ? "我觉得" : "I think"} script={zh ? "I think" : "I feel"} />
+        <Heading as="h1" title={zh ? "我觉得" : "I think"} script={zh ? "I think" : "I feel"} motif="dandelion" />
         <Seen as="header" className={styles.readingHead}>
           <p className={styles.standfirst}>
             {zh
@@ -125,14 +122,14 @@ export function IThinkPage({ locale, source }: { locale: Locale; source: string 
   );
 }
 
-// 生活太极拳 · 每日一式: small habits, one line each, added to the end as they come
-export function DailyPage({ locale, source }: { locale: Locale; source: string }) {
+// Fun facts: small things worth knowing, one entry each, and a few small habits at the end
+export function FunfactPage({ locale, source }: { locale: Locale; source: string }) {
   const zh = locale === "zh";
   return (
-    <PageShell locale={locale} other={`/${zh ? "en" : "zh"}/daily/`}>
+    <PageShell locale={locale} other={`/${zh ? "en" : "zh"}/funfact/`}>
       <article className={styles.reading}>
-        <Heading as="h1" title={zh ? "每日一式" : "One move a day"} script="Everyday tai chi" />
-        <Prose source={source} />
+        <Heading as="h1" title={zh ? "趣闻" : "Fun facts"} script="Fun facts" motif="butterfly" />
+        <Prose source={source} className={prose.facts} />
       </article>
     </PageShell>
   );

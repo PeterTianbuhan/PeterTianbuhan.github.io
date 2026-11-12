@@ -185,12 +185,14 @@ export function InkHeading({ id, children }: { id?: string; children?: ReactNode
   );
 }
 
-// a scene break: a small wave in the middle of the page
+// a scene break: a short vine with two leaves in the middle of the page
 export function InkBreak() {
   return (
     <Seen className={styles.inkBreak}>
-      <svg className={styles.ink} width={64} height={14} viewBox="0 0 64 14" aria-hidden>
-        <path d="M2,8 Q9,1 16,7 T30,7 T44,7 T58,6" pathLength={1} style={timing(0, 0.7)} />
+      <svg className={styles.ink} width={64} height={18} viewBox="0 0 64 18" aria-hidden>
+        <path d="M2,10 Q16,4 32,10 T62,9" pathLength={1} style={timing(0, 0.6)} />
+        <path d="M21,7 Q22,0 29,1 Q28,7 21,7" pathLength={1} style={timing(0.45, 0.25)} />
+        <path d="M41,11 Q43,17 50,16 Q48,10 41,11" pathLength={1} style={timing(0.6, 0.25)} />
       </svg>
     </Seen>
   );

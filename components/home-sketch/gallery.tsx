@@ -5,6 +5,7 @@ import { signature } from "@/app/fonts/signature";
 import type { Exhibit } from "@/lib/exhibits";
 import type { Locale } from "@/lib/i18n";
 import { EraseLink } from "./eraser";
+import { GardenBed, Motif, type MotifName } from "./garden";
 import { InkFrame, InkRule, Seen } from "./ink";
 import { Vignette } from "./vignettes";
 import styles from "./gallery.module.css";
@@ -23,19 +24,23 @@ export function Heading({
   id,
   title,
   script,
+  motif,
   as: Title = "h2",
 }: {
   id?: string;
   title: string;
   script: string;
+  // the plant from the garden that stands at the end of the heading
+  motif?: MotifName;
   as?: "h1" | "h2";
 }) {
   return (
     <Seen className={styles.heading}>
       <Title id={id}>{title}</Title>
       <span className={styles.script} aria-hidden>
-        <span>{script}</span>
+               <span>{script}</span>
       </span>
+      {motif && <Motif name={motif} delay={0.5} />}
     </Seen>
   );
 }
@@ -75,6 +80,7 @@ export function EssayList({ locale, essays }: { locale: Locale; essays: Essay[] 
 export function Colophon() {
   return (
     <Seen as="footer" className={styles.colophon}>
+      <GardenBed />
       <InkRule seed="colophon" />
       <p>
         <span className={styles.sign}>Peter</span>
@@ -128,7 +134,7 @@ export function Wall({ locale, exhibits }: { locale: Locale; exhibits: Exhibit[]
   );
 }
 
-// the last line of the home page, on plain paper under the picture book
+// the last line of the home page, on the same paper as the rooms
 export function HomeFooter() {
   return (
     <div className={`${styles.paper} ${styles.footer} ${signature.variable}`}>
@@ -165,6 +171,9 @@ export function PageShell({
           <EraseLink href={`/${locale}/i-think/`} className={styles.read}>
             {zh ? "我觉得" : "I think"}
           </EraseLink>
+          <EraseLink href={`/${locale}/funfact/`} className={styles.read}>
+            {zh ? "趣闻" : "Fun facts"}
+          </EraseLink>
           {other && (
             <EraseLink href={other} className={styles.read}>
               {zh ? "EN" : "中"}
@@ -184,21 +193,8 @@ export function EssaysPage({ locale, essays }: { locale: Locale; essays: Essay[]
   return (
     <PageShell locale={locale} other={zh ? "/en/writing/" : "/zh/writing/"}>
       <section className={styles.room}>
-        <Heading as="h1" title={zh ? "长文" : "Essays"} script="Essays" />
+        <Heading as="h1" title={zh ? "长文" : "Essays"} script="Essays" motif="daisy" />
         <EssayList locale={locale} essays={essays} />
-        <div className={styles.essays}>
-          <Seen as="article" className={styles.essay}>
-            <InkRule seed="daily" />
-            <div className={styles.essayBody}>
-              <h3>
-                <EraseLink href={`/${locale}/daily/`}>{zh ? "每日一式" : "One move a day"}</EraseLink>
-              </h3>
-              <p className={styles.excerpt}>
-                {zh ? "一行一个小习惯，想到就加。" : "Small habits, one per line, added as they come."}
-              </p>
-            </div>
-          </Seen>
-        </div>
       </section>
     </PageShell>
   );
@@ -210,7 +206,7 @@ export function ProjectsPage({ locale, exhibits }: { locale: Locale; exhibits: E
   return (
     <PageShell locale={locale} other={zh ? "/en/projects/" : "/zh/projects/"}>
       <section className={styles.room}>
-        <Heading as="h1" title={zh ? "项目" : "Projects"} script="Works" />
+        <Heading as="h1" title={zh ? "项目" : "Projects"} script="Works" motif="mushroom" />
         <Wall locale={locale} exhibits={exhibits} />
       </section>
     </PageShell>

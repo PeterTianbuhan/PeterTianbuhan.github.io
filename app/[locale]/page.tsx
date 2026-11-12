@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import { HomeFooter } from "@/components/home-sketch/gallery";
 import { SketchHome } from "@/components/home-sketch/sketch-home";
-import { StoryPages } from "@/components/home-sketch/storybook";
+import { HomeRooms } from "@/components/home-sketch/home-rooms";
 import { getPostsByLocale } from "@/lib/content";
 import { getExhibits } from "@/lib/exhibits";
+import { factsIn, getFunfact } from "@/lib/funfact";
 import { getIThink, shelvesIn } from "@/lib/i-think";
 import { isSupportedLocale, type Locale } from "@/lib/i18n";
 import { getSiteContent } from "@/lib/site";
@@ -21,10 +22,11 @@ export default async function LocaleHomePage({
   }
 
   const typedLocale = locale as Locale;
-  const [site, posts, notes] = await Promise.all([
+  const [site, posts, notes, facts] = await Promise.all([
     getSiteContent(typedLocale),
     getPostsByLocale(typedLocale),
     getIThink(typedLocale),
+    getFunfact(typedLocale),
   ]);
   const base = `/${typedLocale}`;
   const zh = typedLocale === "zh";
@@ -39,12 +41,14 @@ export default async function LocaleHomePage({
           { href: "#writing", label: zh ? "长文" : "Essays" },
           { href: "#projects", label: zh ? "项目" : "Projects" },
           { href: "#i-think", label: zh ? "我觉得" : "I think" },
+          { href: "#funfact", label: zh ? "趣闻" : "Fun facts" },
           { href: "#about", label: zh ? "关于" : "About" },
         ]}
       />
-      <StoryPages
+      <HomeRooms
         locale={typedLocale}
         things={shelvesIn(notes).flatMap((shelf) => shelf.things)}
+        facts={factsIn(facts)}
         role={site.role}
         bio={site.bio}
         essays={posts.map((post) => ({

@@ -1,13 +1,13 @@
 # homepage
 
-Peter Tian 的个人主页（petertianwork.me）。Next.js 静态站，整站是一本速写本：首页是一幅自己画出来的钢笔水彩北大，下面同一张纸上接着放长文、项目、「我觉得」和关于。换页时橡皮擦把纸擦白，下一页再画出来。
+Peter Tian 的个人主页（petertianwork.me）。Next.js 静态站，整站是一本速写本：首页是一幅自己画出来的钢笔水彩北大，下面同一张纸上接着放长文、项目、「我觉得」、趣闻和关于，旁边点缀几样钢笔画的小花草。换页时橡皮擦把纸擦白，下一页再画出来。
 
 ## 目录
 
 ```
 app/                      路由：/{zh,en}/ 首页，/writing 长文列表，/blog/<slug> 长文，
-                          /projects 和 /projects/<slug> 项目，/i-think 「我觉得」；/ 跳到 /zh/，其余走 404「这一页还没画」
-components/home-sketch/   速写本的一切：首页、画廊、正文排版、墨线动画、橡皮擦换页
+                          /projects 和 /projects/<slug> 项目，/i-think 「我觉得」，/funfact 趣闻；/ 跳到 /zh/，其余走 404「这一页还没画」
+components/home-sketch/   速写本的一切：首页、画廊、正文排版、墨线动画、橡皮擦换页，garden.tsx 是那几样小花草
 components/pku-sketch/    首屏那幅北大速写（一笔一笔画出来再上水彩）
 lib/                      content.ts 长文，exhibits.ts 项目，i-think.ts 「我觉得」，site.ts 个人信息，
                           i18n.ts 中英文案，writing-series.ts 系列
@@ -19,7 +19,7 @@ scripts/storybook/        绘本页的画：线稿原图、上色配置和描线
 .github/                  publish-site.yml：push 到 source → 构建 → 发布到 main
 ```
 
-没用上的探索（终端首页、未名湖场景、来处、故事短片）不在这个仓库里，在 `../homepage-lab/`，理由见 `docs/tried.md`。
+没用上的探索（终端首页、未名湖场景、来处、故事短片、绘本页）不在这个仓库里，在 `../homepage-lab/`，理由见 `docs/tried.md`。
 
 ## 日常
 
